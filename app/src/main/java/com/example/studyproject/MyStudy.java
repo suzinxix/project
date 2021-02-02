@@ -24,7 +24,7 @@ public class MyStudy extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 popupMenu = new PopupMenu(getApplicationContext(), v);
-                getMenuInflater().inflate(R.menu.menu, popupMenu.getMenu());
+                getMenuInflater().inflate(R.menu.menu_mystudy, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {

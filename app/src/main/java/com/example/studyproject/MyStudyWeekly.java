@@ -34,12 +34,12 @@ public class MyStudyWeekly extends AppCompatActivity {
         toolbar = findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false); //기본 제목을 없앰
-        actionBar.setDisplayHomeAsUpEnabled(false); //뒤로 가기
+        //actionBar.setDisplayShowCustomEnabled(false);
+        //actionBar.setDisplayShowTitleEnabled(false); //기본 제목을 없앰
+        //actionBar.setDisplayHomeAsUpEnabled(false); //뒤로 가기
 
         ActionBar.LayoutParams layout = new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        actionbarView = getLayoutInflater().inflate(R.layout.actionbar_custom, null);
+        actionbarView = getLayoutInflater().inflate(R.layout.actionbar_mystudy, null);
 
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(actionbarView, layout);
@@ -49,7 +49,7 @@ public class MyStudyWeekly extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 popupMenu = new PopupMenu(getApplicationContext(), v);
-                getMenuInflater().inflate(R.menu.menu, popupMenu.getMenu());
+                getMenuInflater().inflate(R.menu.menu_mystudy, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
