@@ -4,12 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
+    StudySearchFragment fragment_studysearch;
+    PersonalPageFragment fragment_personal;
 
 
     @Override
@@ -18,6 +23,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         fragment_home = new HomeFragment();
+        fragment_studysearch = new StudySearchFragment();
+        fragment_personal = new PersonalPageFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
 
@@ -32,9 +39,13 @@ public class HomeActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.tab2:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, fragment_studysearch).commit();
 
                         return true;
                     case R.id.tab3:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, fragment_personal).commit();
 
 
                         return true;
