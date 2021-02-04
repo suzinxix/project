@@ -1,21 +1,38 @@
 package com.example.studyproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeFragment extends Fragment{
     private Toolbar toolbar_home;
     View actionbarView;
+    Button bt_logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        // 로그아웃 구현
+        bt_logout = (Button)view.findViewById(R.id.bt_logout);
+        bt_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+            }
+        });
+        return view;
 
 //        //툴바(액션바) 추가
 //        toolbar_home = findViewById(R.id.toolbarHome);

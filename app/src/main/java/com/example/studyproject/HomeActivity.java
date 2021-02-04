@@ -3,18 +3,22 @@ package com.example.studyproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
     StudySearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
+    Button bt_logout;
 
 
     @Override
@@ -25,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
         fragment_home = new HomeFragment();
         fragment_studysearch = new StudySearchFragment();
         fragment_personal = new PersonalPageFragment();
+
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
 
