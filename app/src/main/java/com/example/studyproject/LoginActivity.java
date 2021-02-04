@@ -31,19 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance(); // firebase 인스턴스
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        };
-        firebaseAuth.addAuthStateListener(mAuthListener);
-
         bt_login = (Button)findViewById(R.id.buttonLogin);
         bt_find = (Button)findViewById(R.id.buttonFind);
         bt_join = (Button)findViewById(R.id.buttonJoin);
@@ -71,9 +58,9 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()) {
-                                    Intent intent = new Intent(LoginActivity.this, MyStudyRoom.class);
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(intent);
-                                    finish();
+                                    //finish();
                                 }
                                 else {
                                     Toast.makeText(LoginActivity.this, "로그인 오류", Toast.LENGTH_SHORT).show();
