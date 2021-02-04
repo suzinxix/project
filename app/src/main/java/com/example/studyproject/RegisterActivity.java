@@ -30,9 +30,11 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         et_id =(EditText)findViewById(R.id.et_id);
         et_pw = (EditText)findViewById(R.id.et_pw);
         et_name = (EditText)findViewById(R.id.et_name);
+        button3 = (Button)findViewById(R.id.button3);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -48,9 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()) {
-                                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     startActivity(intent);
-                                    finish();
                                 } else{
                                     Toast.makeText(RegisterActivity.this, "회원가입을 실패했습니다.", Toast.LENGTH_SHORT).show();
                                     return;

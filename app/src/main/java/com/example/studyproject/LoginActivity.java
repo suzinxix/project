@@ -24,22 +24,11 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
-
-    private void updateUI(FirebaseUser currentUser) {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance(); // firebase 인스턴스
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -53,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-
         firebaseAuth.addAuthStateListener(mAuthListener);
 
         bt_login = (Button)findViewById(R.id.buttonLogin);
@@ -62,7 +50,13 @@ public class LoginActivity extends AppCompatActivity {
         editTextId = (EditText)findViewById(R.id.editTextId);
         editTextPw = (EditText)findViewById(R.id.editTextPw);
 
-
+        //회원가입
+        bt_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+            }
+        });
 
         // 로그인 버튼
         bt_login.setOnClickListener(new View.OnClickListener() {
@@ -77,29 +71,18 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()) {
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, MyStudyRoom.class);
                                     startActivity(intent);
                                     finish();
-                                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                                    updateUI(currentUser);
                                 }
                                 else {
                                     Toast.makeText(LoginActivity.this, "로그인 오류", Toast.LENGTH_SHORT).show();
-                                    updateUI(null);
                                 }
                             }
                         });
             }
         });
 
-        //회원가입
-        bt_join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //찾기
         bt_find.setOnClickListener(new View.OnClickListener() {
