@@ -34,9 +34,9 @@ public class MyStudyWeekly extends AppCompatActivity {
         toolbar = findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayShowCustomEnabled(false);
-        //actionBar.setDisplayShowTitleEnabled(false); //기본 제목을 없앰
-        //actionBar.setDisplayHomeAsUpEnabled(false); //뒤로 가기
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false); //기본 제목을 없앰
+        actionBar.setDisplayHomeAsUpEnabled(false); //뒤로 가기
 
         ActionBar.LayoutParams layout = new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         actionbarView = getLayoutInflater().inflate(R.layout.actionbar_mystudy, null);

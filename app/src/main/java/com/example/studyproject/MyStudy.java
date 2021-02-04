@@ -1,59 +1,24 @@
 package com.example.studyproject;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
-public class MyStudy extends AppCompatActivity {
+public class MyStudy extends Fragment {
     PopupMenu popupMenu;
+    private androidx.appcompat.widget.Toolbar toolbar;
     ImageButton ibt_popup, ibt_info;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mystudy);
 
-        ibt_popup = (ImageButton)findViewById(R.id.imageButtonMenu);
-        ibt_popup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupMenu = new PopupMenu(getApplicationContext(), v);
-                getMenuInflater().inflate(R.menu.menu_mystudy, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId( )) {
-                            case 0: //리스트 첫번째 클릭시 호출
-                                Intent intentWeekly = new Intent(MyStudy.this, MainActivity.class); //수정
-                                startActivity(intentWeekly);
-                                break;
-                            case 1: //리스트 두번째 클릭시 호출
-                                break;
-                            case 2: //리스트 세번째 클릭시 호출
-                                break;
-                        }
-
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
-        });
-
-        ibt_info = (ImageButton)findViewById(R.id.imageButtonInfo);
-        ibt_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentInfo = new Intent(MyStudy.this, MainActivity.class); //수정
-                startActivity(intentInfo);
-            }
-        });
 
 //        popupMenu = new PopupMenu(this, null, Gravity.END, 0, R.style.MyPopupMenu);
 //        popupMenu.getMenu( ).add( 0, 0, 0, "리스트 첫번째" );
@@ -75,6 +40,62 @@ public class MyStudy extends AppCompatActivity {
 //            }
 //        });
 
-    }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
+
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_mystudy);
+        MyStudyRoom studyRoom = (MyStudyRoom) getActivity();
+        studyRoom.setSupportActionBar(toolbar);
+        ActionBar actionBar = ((MyStudyRoom) getActivity()).getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        View viewToolbar = getActivity().getLayoutInflater().inflate(R.layout.actionbar_mystudy, null);
+        ibt_popup = (ImageButton)viewToolbar.findViewById(R.id.imageButtonMenu);
+//        ibt_popup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupMenu = new PopupMenu(getApplicationContext(), v);
+//                getMenuInflater().inflate(R.menu.menu, popupMenu.getMenu());
+//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId( )) {
+//                            case R.id.weekly:
+//                                Intent intentWeekly = new Intent(WeeklyPlan.this, MainActivity.class); //수정
+//                                startActivity(intentWeekly);
+//                                break;
+//                            case R.id.chat:
+//                                // d
+//                                break;
+//                            case R.id.board:
+//                                break;
+//                            case R.id.setting:
+//                                break;
+//                            case R.id.ranking:
+//                                break;
+//                        }
+//
+//                        return false;
+//                    }
+//                });
+//                popupMenu.show();
+//            }
+//        });
+
+        ibt_info = (ImageButton)viewToolbar.findViewById(R.id.imageButtonInfo);
+        ibt_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+        return view;
+    }
 }
