@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(task.isSuccessful()) {
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 } else{
                                     Toast.makeText(RegisterActivity.this, "회원가입을 실패했습니다.", Toast.LENGTH_SHORT).show();
                                     return;
