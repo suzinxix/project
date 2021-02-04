@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,15 +28,15 @@ public class MyStudyRoom extends AppCompatActivity {
         fragment_study = new MyStudy();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_mystudy, fragment_study).commit();
 
-        toolbar = findViewById(R.id.app_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); //기본 제목을 없앰
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false); //뒤로 가기
-
-        View viewToolbar = getLayoutInflater().inflate(R.layout.actionbar_home, null);
-        actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+//        toolbar = findViewById(R.id.include_toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        getSupportActionBar().setDisplayShowCustomEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false); //기본 제목을 없앰
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false); //뒤로 가기
+//
+//        View viewToolbar = getLayoutInflater().inflate(R.layout.actionbar_home, null);
+        //actionBar.setCustomView(viewToolbar, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
 //
 //            ibt_info = (ImageButton) findViewById(R.id.imageButtonNews);
 //            ibt_info.setOnClickListener(new View.OnClickListener() {
@@ -48,4 +50,9 @@ public class MyStudyRoom extends AppCompatActivity {
 
 
     }
+//
+//    @Override
+//    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+//        getDelegate().setSupportActionBar(toolbar);
+//    }
 }
