@@ -31,6 +31,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/personalButton"/>
+        android:text="프로필 저장"
+        android:id="@+id/bt_save"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름: "/>
+
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
