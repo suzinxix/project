@@ -23,5 +23,14 @@
         android:layout_height="wrap_content"
         android:hint="이름을 입력하세요."
         android:id="@+id/personalName"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="사용할 닉네임을 입력해주세요."
+        android:id="@+id/personalNick"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/personalButton"/>
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
