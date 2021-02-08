@@ -2,6 +2,7 @@ package com.example.studyproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,9 +21,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
+        setContentView(R.layout.activity_home);
         fragment_home = new HomeFragment();
+
         fragment_studysearch = new StudySearchFragment();
         fragment_personal = new PersonalPageFragment();
 
