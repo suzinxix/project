@@ -4,6 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFC107"
+        app:layout_constraintTop_toTopOf="@+id/container_mystudy"></androidx.appcompat.widget.Toolbar>
+
     <FrameLayout
         android:id="@+id/container_mystudy"
         android:layout_width="match_parent"

@@ -27,7 +27,7 @@ public class MyStudy extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setHasOptionsMenu(true); // 메뉴가 있음을 알림
         View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
 
         toolbar = (Toolbar) view.findViewById(R.id.include_toolbar);

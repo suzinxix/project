@@ -26,12 +26,18 @@ public class HomeFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); // 메뉴가 있음을 알림
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // 툴바 추가
         toolbar_home = (Toolbar) view.findViewById(R.id.toolbarHome);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_home);
+
+        ((AppCompatActivity)getActivity()).setTitle("");
+        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);
+
+
 
         // 로그아웃 구현
         bt_logout = (Button) view.findViewById(R.id.bt_logout);
@@ -43,14 +49,17 @@ public class HomeFragment extends Fragment{
             }
         });
 
+
         return view;
     }
+    // 메뉴 생성
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // TODO Add your menu entries here
-        inflater.inflate(R.menu.menu_mystudy, menu) ;
+        inflater.inflate(R.menu.menu_home, menu) ;
         super.onCreateOptionsMenu(menu, inflater);
     }
+    // 메뉴 이벤트 생성
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
