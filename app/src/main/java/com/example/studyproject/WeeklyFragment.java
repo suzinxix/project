@@ -8,10 +8,10 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
-public class FragmentWeekly extends Fragment implements View.OnClickListener {
+public class WeeklyFragment extends Fragment implements View.OnClickListener {
 
 
-    public FragmentWeekly() {
+    public WeeklyFragment() {
         // Required empty public constructor
     }
 
@@ -19,7 +19,7 @@ public class FragmentWeekly extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_weekly, container, false);
+        ViewGroup view = (ViewGroup)inflater.inflate(R.layout.fragment_weekly, container, false);
         ImageButton ibt_camera = (ImageButton)view.findViewById(R.id.imageButtonCamera);
         ibt_camera.setOnClickListener(this);
 

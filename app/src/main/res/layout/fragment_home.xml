@@ -51,11 +51,25 @@
             android:text="My 스터디"
             android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/bt_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그아웃" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그아웃" />
+
+            <Button
+                android:id="@+id/bt_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MyStudy임시" />
+        </LinearLayout>
+
     </FrameLayout>
 
 </LinearLayout>
