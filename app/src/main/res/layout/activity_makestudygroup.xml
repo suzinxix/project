@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="291dp"
+        android:layout_height="273dp"
+        android:gravity="left"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="5dp">
+
+        <EditText
+            android:id="@+id/studyname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="스터디룸 이름을 적어주세요"
+            tools:layout_editor_absoluteX="92dp"
+            tools:layout_editor_absoluteY="25dp" />
+
+        <EditText
+            android:id="@+id/studyauth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="주 몇 회 스터디 활동을 인증하겠습니까?"
+            tools:layout_editor_absoluteX="54dp"
+            tools:layout_editor_absoluteY="100dp" />
+
+        <EditText
+            android:id="@+id/studycategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="스터디룸의 카테고리를 설정해 주세요" />
+
+        <EditText
+            android:id="@+id/studyintro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="스터디룸에 대한 소개글을 작성해 주세요" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="145dp"
+        android:layout_height="266dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="291dp">
+
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 요일 설정" />
+
+        <RadioButton
+            android:id="@+id/bt_mon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월요일" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="화요일" />
+
+        <RadioButton
+            android:id="@+id/bt_wed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수요일" />
+
+        <RadioButton
+            android:id="@+id/bt_thu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목요일" />
+
+        <RadioButton
+            android:id="@+id/bt_fri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="금요일" />
+
+        <RadioButton
+            android:id="@+id/bt_sat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="토요일" />
+
+        <RadioButton
+            android:id="@+id/bt_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일요일" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="291dp">
+
+        <Switch
+            android:id="@+id/authtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 시간 설정" />
+
+        <TextView
+            android:id="@+id/text_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시작 시간" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 방식" />
+
+        <TextView
+            android:id="@+id/text_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="종료 시간" />
+
+        <RadioButton
+            android:id="@+id/bt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
+            android:text="횟수"
+            app:layout_constraintEnd_toEndOf="@+id/text_end"
+            app:layout_constraintTop_toTopOf="@+id/bt_time" />
+
+        <RadioButton
+            android:id="@+id/bt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간" />
+
+        <Button
+            android:id="@+id/makegroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개설하기" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
