@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFAAAA">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:text="Fragment B"
+        android:text="주차별 계획"
         android:gravity="center" />
 
     <LinearLayout

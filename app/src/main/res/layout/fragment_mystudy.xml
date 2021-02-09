@@ -7,10 +7,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarMystudy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFC107"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/container_mystudy">
 
-    <include
-        android:id="@+id/include_toolbar"
-        layout="@layout/toolbar"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <Button
         android:id="@+id/buttonbutton"

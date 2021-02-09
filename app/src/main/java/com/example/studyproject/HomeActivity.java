@@ -2,7 +2,9 @@ package com.example.studyproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,14 +23,16 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
-        fragment_home = new HomeFragment();
 
+        fragment_home = new HomeFragment();
         fragment_studysearch = new StudySearchFragment();
         fragment_personal = new PersonalPageFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.container, HomeFragment.newInstance()).commit();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,6 +61,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
+    }
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
     }
 }
