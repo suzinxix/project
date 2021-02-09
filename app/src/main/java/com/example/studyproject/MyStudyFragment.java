@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +27,7 @@ public class MyStudyFragment extends Fragment {
     //View viewToolbar;
     Toolbar toolbar_mystudy;
 
-    //Fragment 변경위해
+    //Fragment 변경위한 함수
     public static MyStudyFragment newInstance() {
         return new MyStudyFragment();
     }
@@ -42,7 +40,6 @@ public class MyStudyFragment extends Fragment {
         // 툴바 추가
         toolbar_mystudy = (Toolbar) view.findViewById(R.id.toolbarMystudy);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_mystudy);
-        setHasOptionsMenu(true);
 
 //        toolbar = (Toolbar) view.findViewById(R.id.include_toolbar);
 //        studyRoom = (MyStudyRoom) getActivity();
@@ -118,7 +115,7 @@ public class MyStudyFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.weekly:
-                ((HomeActivity)getActivity()).replaceFragment(BoardFragment.newInstance());    // 새로 불러올 Fragment의 Instance를 MyStudyRoom으로 전달
+                ((HomeActivity)getActivity()).replaceFragment(BoardFragment.newInstance()); //Fragment 변경
                 break;
             case R.id.chat:
                 // d
