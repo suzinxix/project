@@ -8,13 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-public class StudySearchFragment extends Fragment {
+public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_studysearch, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Button button2 = (Button) view.findViewById(R.id.button2);
+        Fragment searchRankingFragment = new SearchRankingFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, searchRankingFragment).commit();
+
+        Button button2 = view.findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -23,7 +28,5 @@ public class StudySearchFragment extends Fragment {
             }
         });
         return view;
-        //return inflater.inflate(R.layout.fragment_studysearch, container, false);
-        //}
     }
 }

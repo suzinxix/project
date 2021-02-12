@@ -7,16 +7,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
-    StudySearchFragment fragment_studysearch;
+    SearchFragment fragment_search;
     PersonalPageFragment fragment_personal;
 
 
@@ -26,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         fragment_home = new HomeFragment();
-        fragment_studysearch = new StudySearchFragment();
+        fragment_search = new SearchFragment();
         fragment_personal = new PersonalPageFragment();
 
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
@@ -46,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     case R.id.tab2:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, fragment_studysearch).commit();
+                                .replace(R.id.container, fragment_search).commit();
 
                         return true;
                     case R.id.tab3:
