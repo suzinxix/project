@@ -19,12 +19,14 @@ public class SearchFragment extends Fragment {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.container, searchRankingFragment).commit();
 
-        Button button2 = view.findViewById(R.id.button2);
+        Button button2 = (Button)view.findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentMake = new Intent(getActivity(), MakeStudyRoom.class);
-                startActivity(intentMake);
+                // fragment 에서 Activity 이동해야함
+                getActivity().startActivity(new Intent(getActivity(), MakeStudyRoom.class));
+                //Intent intentMake = new Intent(getActivity(), MakeStudyRoom.class);
+                //startActivity(intentMake);
             }
         });
         return view;
