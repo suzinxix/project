@@ -24,9 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-//@IgnoreExtraProperties
+@IgnoreExtraProperties
 public class MakeStudyRoom extends AppCompatActivity {
 
+    //여럽운 이거 실패한 자바파일이에여 MakeRoom파일로 교체했슴다
+    /*
     private DatabaseReference mDatabase;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -39,13 +41,10 @@ public class MakeStudyRoom extends AppCompatActivity {
     //public boolean g_privacy;
     public Map<String, Boolean> stars = new HashMap<>();
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_makestudygroup);
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         bt_make = (Button)findViewById(R.id.makegroup);
@@ -73,8 +72,6 @@ public class MakeStudyRoom extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public MakeStudyRoom() {
@@ -156,8 +153,5 @@ public class MakeStudyRoom extends AppCompatActivity {
                 Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
         });
-    }
-
-
-
+    }*/
 }
