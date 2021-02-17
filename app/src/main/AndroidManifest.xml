@@ -18,7 +18,7 @@
         <activity android:name=".MyStudyRoom">
 
         </activity>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".MakeStudyRoom">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
+        <activity android:name=".HomeActivity"/>
 
     </application>
 
