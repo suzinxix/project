@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/et_roomname"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/et_roomcategory"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_roominfo"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_roomauth"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_makeroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="개설" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="368dp"
+        android:layout_height="495dp">
+        <ListView
+            android:id="@+id/db_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+    </ScrollView>
+</LinearLayout>

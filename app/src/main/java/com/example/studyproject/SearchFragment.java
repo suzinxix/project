@@ -24,7 +24,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // fragment 에서 Activity 이동해야함
-                getActivity().startActivity(new Intent(getActivity(), MakeStudyRoom.class));
+                getActivity().startActivity(new Intent(getActivity(), MakeRoom.class));
                 //Intent intentMake = new Intent(getActivity(), MakeStudyRoom.class);
                 //startActivity(intentMake);
             }

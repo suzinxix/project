@@ -26,6 +26,9 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class MakeStudyRoom extends AppCompatActivity {
+
+    //여럽운 이거 실패한 자바파일이에여 MakeRoom파일로 교체했슴다
+    /*
     private DatabaseReference mDatabase;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -150,5 +153,5 @@ public class MakeStudyRoom extends AppCompatActivity {
                 Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
         });
-    }
+    }*/
 }

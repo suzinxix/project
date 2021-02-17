@@ -18,6 +18,7 @@
         <activity android:name=".MyStudyRoom">
 
         </activity>
+        <activity android:name=".MakeRoom"></activity>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
