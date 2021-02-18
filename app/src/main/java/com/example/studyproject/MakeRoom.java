@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,12 +44,14 @@ public class MakeRoom extends AppCompatActivity{
     EditText et_roomcategory;
     EditText et_roominfo;
     EditText et_roomauth;
+    CheckBox[] cb=new CheckBox[7]; Switch sw_day; boolean day = false;
 
     String roomname;
     String roomcategory;
     String roominfo;
     String roomauth;
     String sort = "roomcategory";
+    int[] roomDay = {0,0,0,0,0,0,0};
 
     private DatabaseReference mDatabase;
 
@@ -60,9 +66,42 @@ public class MakeRoom extends AppCompatActivity{
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
         et_roomauth = (EditText) findViewById(R.id.et_roomauth);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // 인증 요일
+        sw_day = (Switch)findViewById(R.id.switch1);
+        cb[0] = (CheckBox)findViewById(R.id.bt_mon); cb[1] = (CheckBox)findViewById(R.id.bt_tus);
+        cb[2] = (CheckBox)findViewById(R.id.bt_wed); cb[3] = (CheckBox)findViewById(R.id.bt_thu);
+        cb[4] = (CheckBox)findViewById(R.id.bt_fri); cb[5] = (CheckBox)findViewById(R.id.bt_sat);
+        cb[6] = (CheckBox)findViewById(R.id.bt_sun);
+        for(int i =0;i<cb.length;i++) cb[i].setEnabled(false); // 체크박스 비활성화
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         readUser();
+
+
+        sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    for (int i = 0; i < cb.length; i++) cb[i].setEnabled(true); // 체크박스 활성화
+                    day = true;
+                }else {
+                    for (int i = 0; i < cb.length; i++) cb[i].setEnabled(false); // 체크박스 비활성화
+                    day = false;
+                }
+            }
+        });
+        for(int i =0;i<cb.length;i++) {
+            final int k = i;
+            cb[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) roomDay[k]=1;
+                    else roomDay[k]=0;
+                }
+            });
+        }
+
+    // timepicker 설정하기
 
         bt_makeroom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +110,7 @@ public class MakeRoom extends AppCompatActivity{
                 String getRoomcategory = et_roomcategory.getText().toString();
                 String getRoominfo = et_roominfo.getText().toString();
                 String getRoomauth = et_roomauth.getText().toString();
+                boolean getDay = day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
                 /*
