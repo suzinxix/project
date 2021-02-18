@@ -13,6 +13,7 @@ public class MakeRoomDB {
     public String roomcategory;
     public String roominfo;
     public String roomauth;
+    public Map<String, Boolean> stars = new HashMap<>();
 
     public MakeRoomDB(){
 
@@ -24,7 +25,50 @@ public class MakeRoomDB {
         this.roominfo = roominfo;
         this.roomauth = roomauth;
     }
+/*
+    public String getRoomname() {
+        return roomname;
+    }
 
+    public void setRoomName(String roomname) {
+        this.roomname = roomname;
+    }
+
+    public String getRoomcategory() {
+        return roomcategory;
+    }
+
+    public void setRoomcategory(String roomcategory) {
+        this.roomcategory = roomcategory;
+    }
+
+    public String getRoominfo() {
+        return roominfo;
+    }
+
+    public void setRoominfo(String roominfo) {
+        this.roominfo = roominfo;
+    }
+
+    public String getRoomauth() {
+        return roomauth;
+    }
+
+    public void setRoomauth(String roomauth) {
+        this.roomauth = roomauth;
+    }
+
+    @Override
+    public String toString() {
+        return "MakeRoomDB{" +
+                "roomname='" + roomname + '\'' +
+                ", roomcategory='" + roomcategory + '\'' +
+                ", roominfo='" + roominfo + '\'' +
+                ", roomauth='" + roomauth + '\'' +
+                '}';
+    }
+
+  */
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();

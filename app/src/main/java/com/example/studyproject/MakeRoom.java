@@ -16,10 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -28,7 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
+//@IgnoreExtraProperties
+public class MakeRoom extends AppCompatActivity{
+//public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
     private DatabaseReference mPostReference;
     Button bt_makeroom;
     EditText et_roomname;
@@ -41,6 +46,95 @@ public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
     String roominfo;
     String roomauth;
     String sort = "roomcategory";
+
+    private DatabaseReference mDatabase;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_makeroom);
+
+        bt_makeroom = (Button) findViewById(R.id.bt_makeroom);
+        et_roomname = (EditText) findViewById(R.id.et_roomname);
+        et_roomcategory = (EditText) findViewById(R.id.et_roomcategory);
+        et_roominfo = (EditText) findViewById(R.id.et_roominfo);
+        et_roomauth = (EditText) findViewById(R.id.et_roomauth);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        readUser();
+
+        bt_makeroom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String getRoomname = et_roomname.getText().toString();
+                String getRoomcategory = et_roomcategory.getText().toString();
+                String getRoominfo = et_roominfo.getText().toString();
+                String getRoomauth = et_roomauth.getText().toString();
+
+                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
+                /*
+                //hashmap 만들기
+                HashMap result = new HashMap<>();
+                result.put("roomname", getRoomname);
+                result.put("roomcategory", getRoomcategory);
+                result.put("roominfo", getRoominfo);
+                result.put("roomauth", getRoomauth);
+                */
+
+                //writeNewUser("1", getRoomname, getRoomcategory, getRoominfo, getRoomauth);
+            }
+        });
+    }
+
+    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth) {
+        //String key = mDatabase.child("rooms").push().getKey();
+        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
+        Map<String, Object> roomValues = roomDB.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        childUpdates.put("/study_rooms/" + roomname, roomValues);
+
+        mDatabase.updateChildren(childUpdates)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(MakeRoom.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MakeRoom.this, "저장을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
+
+    private void readUser(){
+        mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                if(dataSnapshot.getValue(MakeRoomDB.class) != null){
+                    MakeRoomDB post = dataSnapshot.getValue(MakeRoomDB.class);
+                    Log.w("FireBaseData", "getData" + post.toString());
+                } else {
+                    Toast.makeText(MakeRoom.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+
+    /*
 
     ArrayAdapter<String> arrayAdapter;
     static ArrayList<String> arrayIndex = new ArrayList<String>();
@@ -105,7 +199,7 @@ public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
                     .setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            postFirebaseDatabase(false);
+                            postFirebaseDatabase(roomname, roomcategory, roomauth, roominfo);
                             getFirebaseDatabase();
                             setInsertMode();
                             et_roomname.setEnabled(true);
@@ -132,16 +226,19 @@ public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
         return IsExist;
     }
 
-    public void postFirebaseDatabase(boolean add){
+    public void postFirebaseDatabase(String roomname, String roomcategory, String roominfo, String roomauth){
         mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
-        if(add){
-            MakeRoomDB post = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
-            postValues = post.toMap();
-        }
+//        if(add){
+//            MakeRoomDB post = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
+//            postValues = post.toMap();
+//        }
+        MakeRoomDB post = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
+        postValues = post.toMap();
+
         childUpdates.put("/study_room/" + roomname, postValues);
-        mPostReference.updateChildren(childUpdates);
+        mPostReference.updateChildren(childUpdates); // 다른 하위 노드를 덮어쓰지 않고 특정 하위 노드에 동시에 쓰는 메서드
     }
 
     public void getFirebaseDatabase(){
@@ -193,18 +290,23 @@ public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
                 roomcategory = et_roomcategory.getText().toString();
                 roominfo = et_roominfo.getText().toString();
                 roomauth = et_roomauth.getText().toString();
-                if(!IsExistName()){
-                    postFirebaseDatabase(true);
-                    getFirebaseDatabase();
-                    setInsertMode();
-                    et_roomname.setEnabled(true);
-                }
-                else{
-                    Toast.makeText(MakeRoom.this, "이미 존재하는 스터디룸 이름입니다. 다른 이름으로 변경해주세요.", Toast.LENGTH_LONG).show();
-                }
+                // 중복 체크 검사하는 기능인데 작동을 제대로 안해서 주석처리 했습니다ㅠ
+//                if(!IsExistName()){
+//                    postFirebaseDatabase(roomname, roomcategory, roominfo, roomauth);
+//                    getFirebaseDatabase();
+//                    setInsertMode();
+//                    et_roomname.setEnabled(true);
+//                }
+//                else{
+//                    Toast.makeText(MakeRoom.this, "이미 존재하는 스터디룸 이름입니다. 다른 이름으로 변경해주세요.", Toast.LENGTH_LONG).show();
+//                }
+
+                postFirebaseDatabase(roomname, roomcategory, roominfo, roomauth);
+                getFirebaseDatabase();
+                setInsertMode();
                 et_roomname.requestFocus();
                 et_roomname.setCursorVisible(true);
                 break;
         }
-    }
+    }*/
 }

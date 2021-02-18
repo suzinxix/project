@@ -50,6 +50,11 @@
             android:layout_height="362dp"
             android:layout_marginHorizontal="15dp">
 
+            <ListView
+                android:id="@+id/room_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
         </FrameLayout>
 
     </LinearLayout>
