@@ -37,8 +37,6 @@ import java.util.Map;
 
 //@IgnoreExtraProperties
 public class MakeRoom extends AppCompatActivity{
-//public class MakeRoom extends AppCompatActivity implements View.OnClickListener{
-    private DatabaseReference mPostReference;
     Button bt_makeroom;
     EditText et_roomname;
     EditText et_roomcategory;
@@ -46,12 +44,21 @@ public class MakeRoom extends AppCompatActivity{
     EditText et_roomauth;
     CheckBox[] cb=new CheckBox[7]; Switch sw_day; boolean day = false;
 
+    private ListView listView;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+    List roomList = new ArrayList<>();
+    private ArrayAdapter<String> dataAdapter;
+
     String roomname;
     String roomcategory;
     String roominfo;
     String roomauth;
     String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
+
+
 
     private DatabaseReference mDatabase;
 
@@ -75,8 +82,6 @@ public class MakeRoom extends AppCompatActivity{
         for(int i =0;i<cb.length;i++) cb[i].setEnabled(false); // 체크박스 비활성화
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        readUser();
-
 
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -113,16 +118,7 @@ public class MakeRoom extends AppCompatActivity{
                 boolean getDay = day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
-                /*
-                //hashmap 만들기
-                HashMap result = new HashMap<>();
-                result.put("roomname", getRoomname);
-                result.put("roomcategory", getRoomcategory);
-                result.put("roominfo", getRoominfo);
-                result.put("roomauth", getRoomauth);
-                */
-
-                //writeNewUser("1", getRoomname, getRoomcategory, getRoominfo, getRoomauth);
+                readRoomDB();
             }
         });
     }
@@ -152,7 +148,7 @@ public class MakeRoom extends AppCompatActivity{
 
     }
 
-    private void readUser(){
+    private void readRoomDB(){
         mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

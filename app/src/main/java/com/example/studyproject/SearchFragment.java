@@ -13,8 +13,10 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,10 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
-    private ListView listView;
-    List roomList = new ArrayList<>();
-    ArrayAdapter adapter;
-    static boolean calledAlready = false;
+
+    public SearchFragment(){
+
+    }
+
+    //static boolean calledAlready = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +43,8 @@ public class SearchFragment extends Fragment {
         transaction.replace(R.id.container, searchRankingFragment).commit();
 
         Button button2 = (Button)view.findViewById(R.id.button2);
+
+
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,19 +52,54 @@ public class SearchFragment extends Fragment {
                 getActivity().startActivity(new Intent(getActivity(), MakeRoom.class));
             }
         });
+
+
+
+
+        /*listView = (ListView)findViewById(R.id.room_list);
+        * //DB 변수 초기화
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference("study_rooms");
+
+                dataAdapter = new ArrayAdapter<String>(MakeRoom.this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>()); //아오!
+
+                listView.setAdapter(dataAdapter);
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        dataAdapter.clear();
+                        for(DataSnapshot messageData : snapshot.getChildren()){
+                            String msg = messageData.getValue().toString();
+                            dataAdapter.add(msg);
+                        }
+                        dataAdapter.notifyDataSetChanged();
+                        listView.setSelection(dataAdapter.getCount() - 1);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        *
+        * */
+
+
         // db 리스트뷰 띄우는 건데 SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length 에러 발생해서 주석 처리함
 /*
         if(!calledAlready){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
         }
-        listView = (ListView) getView().findViewById(R.id.room_list);
+        ListView listView = (ListView) view.findViewById(R.id.room_list);
 
         adapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 roomList
         );
+        /*
         listView.setAdapter(adapter);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -82,4 +123,5 @@ public class SearchFragment extends Fragment {
         });*/
         return view;
     }
+
 }

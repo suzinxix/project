@@ -37,6 +37,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //cardview
+    implementation "androidx.cardview:cardview:1.0.0"
+
     //room
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
@@ -56,6 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.firebase:firebase-core:10.2.1'
     implementation 'com.google.firebase:firebase-database:19.6.0'
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
 }
 
 buildscript {

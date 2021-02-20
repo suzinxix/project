@@ -25,12 +25,12 @@ public class MakeRoomDB {
         this.roominfo = roominfo;
         this.roomauth = roomauth;
     }
-/*
+
     public String getRoomname() {
         return roomname;
     }
 
-    public void setRoomName(String roomname) {
+    public void setRoomname(String roomname) {
         this.roomname = roomname;
     }
 
@@ -57,7 +57,7 @@ public class MakeRoomDB {
     public void setRoomauth(String roomauth) {
         this.roomauth = roomauth;
     }
-
+/*
     @Override
     public String toString() {
         return "MakeRoomDB{" +
@@ -67,8 +67,8 @@ public class MakeRoomDB {
                 ", roomauth='" + roomauth + '\'' +
                 '}';
     }
+*/
 
-  */
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
