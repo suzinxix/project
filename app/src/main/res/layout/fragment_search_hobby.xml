@@ -24,4 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="취미" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recview_4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
