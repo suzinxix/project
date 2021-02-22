@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <EditText
-            android:id="@+id/et_roomcategory"
+            android:id="@+id/et_roomauth"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
@@ -32,14 +32,30 @@
                 android:text="회"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_roomperson"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:hint="그룹 최대 인원"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="명"/>
+        </LinearLayout>
+
         <EditText
-            android:id="@+id/et_roominfo"
+            android:id="@+id/et_roomcategory"
             android:layout_width="378dp"
             android:layout_height="wrap_content"
             android:hint="스터디룸의 카테고리를 설정해 주세요"/>
 
         <EditText
-            android:id="@+id/et_roomauth"
+            android:id="@+id/et_roominfo"
             android:layout_width="378dp"
             android:layout_height="wrap_content"
             android:hint="스터디룸에 대한 소개글을 작성해 주세요"/>
@@ -50,7 +66,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal|center_vertical">
-
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="그룹 비공개" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
