@@ -1,5 +1,6 @@
 package com.example.studyproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class PersonalPageFragment extends Fragment {
     Button bt_personal;
+    Button bt_profileEdit;
     EditText personalName, personalNick;
     TextView tv_pname, tv_pnick;
     String myname;
@@ -27,6 +29,7 @@ public class PersonalPageFragment extends Fragment {
         bt_personal = (Button)view.findViewById(R.id.bt_save);
         tv_pname = (TextView) view.findViewById(R.id.tv_pname);
         tv_pnick = (TextView) view.findViewById(R.id.tv_pnick);
+        bt_profileEdit = view.findViewById(R.id.profileEdit);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -39,7 +42,13 @@ public class PersonalPageFragment extends Fragment {
         bt_personal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_pnick.setText("닉네임: "+personalNick.getText());
+                personalNick.setText(personalNick.getText());
+            }
+        });
+        bt_profileEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), ProfileEditActivity.class));
             }
         });
 
