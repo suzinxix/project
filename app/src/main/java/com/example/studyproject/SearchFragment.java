@@ -53,9 +53,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
-
-
         /*listView = (ListView)findViewById(R.id.room_list);
         * //DB 변수 초기화
                 database = FirebaseDatabase.getInstance();

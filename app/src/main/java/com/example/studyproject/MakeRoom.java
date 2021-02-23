@@ -43,6 +43,7 @@ public class MakeRoom extends AppCompatActivity{
     EditText et_roominfo;
     EditText et_roomauth;
     CheckBox[] cb=new CheckBox[7]; Switch sw_day; boolean day = false;
+    Button bt_stTime, bt_edTime;
 
     private ListView listView;
     private FirebaseDatabase database;
@@ -57,6 +58,8 @@ public class MakeRoom extends AppCompatActivity{
     String roomauth;
     String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
+    String roomTimeSt="0800";
+    String roomTimeFn="2200";
 
 
 
@@ -72,6 +75,8 @@ public class MakeRoom extends AppCompatActivity{
         et_roomcategory = (EditText) findViewById(R.id.et_roomcategory);
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
         et_roomauth = (EditText) findViewById(R.id.et_roomauth);
+        bt_stTime = (Button)findViewById(R.id.bt_stTime);
+        bt_edTime = (Button)findViewById(R.id.bt_edTime);
 
         // 인증 요일
         sw_day = (Switch)findViewById(R.id.switch1);
@@ -107,6 +112,21 @@ public class MakeRoom extends AppCompatActivity{
         }
 
     // timepicker 설정하기
+        bt_stTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerFragment timePickerFragment = new TimePickerFragment();
+                timePickerFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
+
+        bt_edTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerFragment2 timePickerFragment2 = new TimePickerFragment2();
+                timePickerFragment2.show(getSupportFragmentManager(), "timePicker2");
+            }
+        });
 
         bt_makeroom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +136,7 @@ public class MakeRoom extends AppCompatActivity{
                 String getRoominfo = et_roominfo.getText().toString();
                 String getRoomauth = et_roomauth.getText().toString();
                 boolean getDay = day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
+                // Timepicker로 정보 받아오기
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
                 readRoomDB();
@@ -168,6 +189,7 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
     }
+
 
 
     /*

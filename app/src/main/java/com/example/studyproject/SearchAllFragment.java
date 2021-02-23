@@ -36,9 +36,6 @@ public class SearchAllFragment extends Fragment {
     private RecyclerView recview;
     private View ContactsView;
     private DatabaseReference ContactsRef, RoomRef;
-//    Searchadapter adapter;
-
-
     public SearchAllFragment(){
 
     }
@@ -46,18 +43,13 @@ public class SearchAllFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//    //public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        //ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search_all, container, false);
         ContactsView = inflater.inflate(R.layout.fragment_search_all, container, false);
-
-//        //recview=(RecyclerView)rootView.findViewById(R.id.recview);
         recview=(RecyclerView)ContactsView.findViewById(R.id.recview);
         recview.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
         RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
 
-//        return rootView;
         return ContactsView;
     }
     @Override
@@ -65,8 +57,7 @@ public class SearchAllFragment extends Fragment {
         super.onStart();
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
-                        .setQuery(ContactsRef, MakeRoomDB.class)
-                        //.setQuery(FirebaseDatabase.getInstance().getReference().child("study_rooms"), MakeRoomDB.class) // setQuery 부분은 노드 데이터 읽어오는 것
+                        .setQuery(ContactsRef, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
         FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> (options) {
@@ -108,7 +99,6 @@ public class SearchAllFragment extends Fragment {
                 return viewHolder;
             }
         };
-//        adapter = new Searchadapter(options);
         recview.setAdapter(adapter);
         adapter.startListening();
     }
@@ -121,7 +111,4 @@ public class SearchAllFragment extends Fragment {
             roominfo = itemView.findViewById(R.id.text_2);
         }
     }
-
-
-
 }
