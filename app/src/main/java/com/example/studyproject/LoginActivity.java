@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance(); // firebase 인스턴스
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         bt_login = (Button)findViewById(R.id.buttonLogin);
         bt_find = (Button)findViewById(R.id.buttonFind);
