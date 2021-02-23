@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -15,6 +16,7 @@ public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
     SearchFragment fragment_search;
     PersonalPageFragment fragment_personal;
+    private long backBtnTime = 0;
 
 
     @Override
@@ -59,6 +61,21 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+whdf
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            //exitApp();
+            finishAffinity();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
