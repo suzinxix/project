@@ -18,7 +18,6 @@ public class HomeActivity extends AppCompatActivity {
     PersonalPageFragment fragment_personal;
     private long backBtnTime = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-whdf
+
     @Override
     public void onBackPressed() {
         long curTime = System.currentTimeMillis();
@@ -75,7 +74,6 @@ whdf
             Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
     }
-
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

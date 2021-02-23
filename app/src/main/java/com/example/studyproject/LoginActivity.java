@@ -89,6 +89,16 @@ public class LoginActivity extends AppCompatActivity {
 //                startActivity(intentJoin);
 //            }
 //        });
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            // User is signed in (getCurrentUser() will be null if not signed in)
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            // or do some other stuff that you want to do
+        }
     }
 
 
