@@ -12,7 +12,7 @@
         android:id="@+id/toolbarHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC107">
+        android:background="#F3C94E">
 
         <TextView
             android:id="@+id/toolbar_title"

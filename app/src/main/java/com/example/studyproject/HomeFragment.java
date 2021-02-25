@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +48,9 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                Intent i = new Intent(getActivity(), LoginActivity.class);
+                ActivityCompat.finishAffinity(getActivity()); // 모든 액티비티 종료
+                startActivity(i);
             }
         });
 

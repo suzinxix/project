@@ -11,16 +11,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
     StudySearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
-    private long lastTimeBackPressed;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +62,9 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
     }
-
 }

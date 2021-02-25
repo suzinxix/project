@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3C94E"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -11,16 +12,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
-        android:layout_gravity="center"
-        android:text="꿀터디" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="이동" />
+        android:text="꿀터디"
+        android:textColor="#ffffff"
+        android:textSize="70dp"/>
 
 </LinearLayout>

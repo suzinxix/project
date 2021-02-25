@@ -1,0 +1,29 @@
+{
+  "user": {
+    "id": "",
+    "name": "이름",
+    "nick": "닉네임이 설정되지 않았습니다.",
+    "registerDate": "20001014",
+    "studyTime": "0",
+    "groups": {
+
+    }
+  },
+  "group": {
+    "name": "스터디그룹",
+    "category": "그룹 분류",
+    "info": "그룹 소개",
+    "aWeek": "인증 횟수",
+    "dayTF": "0",
+    "day": "0000000",
+    "timeTF": "0",
+    "timeS": "1200",
+    "timeE": "2400",
+    "How": "0",
+    "date": "20001014",
+    "honey": "0",
+    "members": {
+    }
+  }
+
+}

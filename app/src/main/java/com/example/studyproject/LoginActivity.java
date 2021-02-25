@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance(); // firebase 인스턴스
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         bt_login = (Button)findViewById(R.id.buttonLogin);
         bt_find = (Button)findViewById(R.id.buttonFind);
@@ -88,5 +89,17 @@ public class LoginActivity extends AppCompatActivity {
 //                startActivity(intentJoin);
 //            }
 //        });
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            // User is signed in (getCurrentUser() will be null if not signed in)
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            // or do some other stuff that you want to do
+        }
     }
+
+
 }
