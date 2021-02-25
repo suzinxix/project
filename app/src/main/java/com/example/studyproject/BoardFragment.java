@@ -11,11 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
 
+
 public class BoardFragment extends Fragment {
     TabLayout tabs;
     Toolbar toolbar_board;
-    WeeklyFragment fragmentweekly;
-    GalleryFragment fragmentgallery;
+    WeeklyFragment fragment_weekly;
+    GalleryFragment fragment_gallery;
 
     //Fragment 변경위해
     public static BoardFragment newInstance() {
@@ -30,27 +31,23 @@ public class BoardFragment extends Fragment {
         // 툴바 추가
         toolbar_board = (Toolbar) view.findViewById(R.id.toolbarBoard);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_board);
-        setHasOptionsMenu(true);
 
-        fragmentweekly = new WeeklyFragment();
-        fragmentgallery = new GalleryFragment();
+        fragment_weekly = new WeeklyFragment();
+        fragment_gallery = new GalleryFragment();
 
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, fragmentweekly).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.containerTabs, fragment_weekly).commit();
 
         tabs = view.findViewById(R.id.tabs);
-        tabs.addTab(tabs.newTab().setText("주차별 목표"));
-        tabs.addTab(tabs.newTab().setText("갤러리"));
-
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 Fragment selected = null;
                 if(position == 0)
-                    selected = fragmentweekly;
+                    selected = fragment_weekly;
                 else if(position == 1)
-                    selected = fragmentgallery;
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
+                    selected = fragment_gallery;
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerTabs, selected).commit(); //오류-클릭,replace ok. 탭바가 사라짐
             }
 
             @Override
