@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
-    StudySearchFragment fragment_studysearch;
+    SearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
 
 
@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         fragment_home = new HomeFragment();
-        fragment_studysearch = new StudySearchFragment();
+        fragment_studysearch = new SearchFragment();
         fragment_personal = new PersonalPageFragment();
 
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
