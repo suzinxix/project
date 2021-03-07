@@ -12,8 +12,8 @@
         android:background="#FFC107"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/container_mystudy">
-
+        app:layout_constraintTop_toTopOf="@+id/container_mystudy"
+        app:tabMode="scrollable">
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
@@ -28,10 +28,22 @@
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextColor="@color/colorPrimary" />
+        app:tabTextColor="@color/colorPrimary">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주차별 목표"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="갤러리"/>
+
+    </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/containerTabs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </FrameLayout>
