@@ -7,16 +7,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
-    SearchFragment fragment_search;
+    SearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
-    private long backBtnTime = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         fragment_home = new HomeFragment();
-        fragment_search = new SearchFragment();
+        fragment_studysearch = new SearchFragment();
         fragment_personal = new PersonalPageFragment();
 
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
@@ -44,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     case R.id.tab2:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, fragment_search).commit();
+                                .replace(R.id.container, fragment_studysearch).commit();
 
                         return true;
                     case R.id.tab3:
@@ -59,20 +61,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        long curTime = System.currentTimeMillis();
-        long gapTime = curTime - backBtnTime;
-
-        if (0 <= gapTime && 2000 >= gapTime) {
-            //exitApp();
-            finishAffinity();
-        } else {
-            backBtnTime = curTime;
-            Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
-        }
     }
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
