@@ -1,5 +1,6 @@
 package com.example.studyproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -11,9 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
@@ -62,8 +65,21 @@ public class SearchAllFragment extends Fragment {
 
         FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> (options) {
             @Override
-            protected void onBindViewHolder(@NonNull final ContactsViewHolder holder, int position, @NonNull MakeRoomDB model) {
-                String roomID = getRef(position).getKey();
+            protected void onBindViewHolder(@NonNull final ContactsViewHolder holder, int position, @NonNull final MakeRoomDB model) {
+                final String roomID = getRef(position).getKey();
+                final String name = model.getRoomname();
+                final String info = model.getRoominfo();
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), SearchDetail.class);
+                        intent.putExtra("Roomname", ""+name);
+                        intent.putExtra("Roominfo", info);
+                        startActivity(intent);
+                    }
+                });
+
                 RoomRef.child(roomID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,12 +119,38 @@ public class SearchAllFragment extends Fragment {
         adapter.startListening();
     }
 
+
+
     public static class ContactsViewHolder extends RecyclerView.ViewHolder{
         TextView roomname, roominfo;
+        //View v;
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
             roomname = itemView.findViewById(R.id.text_1);
             roominfo = itemView.findViewById(R.id.text_2);
+
+            /*
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick();
+//                        Intent intent = new Intent(SearchAllFragment, SearchDetail.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        intent.putExtra("TEXT", roomname.get(pos));
+//                        AppCompatActivity activity = (AppCompatActivity)v.getContext();
+//                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new SearchDetail(model.getRoomname(), model.getRoominfo()));
+                    }
+                }
+            });*/
         }
     }
+    /*
+    public interface OnItemClickListener {
+        void onItemClick(DataSnapshot snapshot, int pos);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }*/
+
 }
