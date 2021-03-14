@@ -7,14 +7,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--title-->
 
-
-    <TextView
-        android:id="@+id/study_title"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:fontFamily="@font/applesdgothicneosb"
+
+        app:srcCompat="@drawable/study_title_rectangle" />
+
+        <TextView
+            android:id="@+id/study_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/study_picture"
@@ -69,20 +88,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:backgroundTint="#EB5757"
+            android:text="신고하기" />
 
         <Button
             android:id="@+id/bt_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:backgroundTint="#F2C94C"
+            android:text="신청하기" />
 
         <Button
             android:id="@+id/bt_ask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:backgroundTint="#BDBDBD"
+            android:text="문의하기" />
     </LinearLayout>
+
+
 </LinearLayout>
