@@ -99,7 +99,7 @@ public class MakeRoom extends AppCompatActivity{
         // switch 및 비활성화 설정
         sw_lock = (Switch)findViewById(R.id.switch3);
         sw_time = (Switch)findViewById(R.id.switch2);
-        bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
+       bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -129,7 +129,7 @@ public class MakeRoom extends AppCompatActivity{
         }
 
         // 시간 버튼 비활성화 설정
-        sw_lock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        sw_time.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -186,8 +186,10 @@ public class MakeRoom extends AppCompatActivity{
                 boolean getLock = bl_lock; // 비공개 여부
                 final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn;
 
+                // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
-                        +"\n인증 횟수: "+getRoomauth+"\n인증 요일 사용: "+getDay+"\n인증 시간 사용: "+getTime
+                        +"\n가입 인원: "+getRoomperson +"명\n인증 횟수: "+getRoomauth
+                        +"회\n인증 요일 사용: "+getDay+"\n인증 시간 사용: "+getTime
                         +"\n비공개 여부: "+getLock;
                 if(getDay){
                     String[] days = {"월", "화","수","목","금","토","일"};
