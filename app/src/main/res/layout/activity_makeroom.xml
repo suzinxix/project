@@ -47,12 +47,41 @@
                 android:layout_height="wrap_content"
                 android:text="명"/>
         </LinearLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="스터디룸의 카테고리를 설정해 주세요"/>
 
-        <EditText
-            android:id="@+id/et_roomcategory"
-            android:layout_width="378dp"
-            android:layout_height="wrap_content"
-            android:hint="스터디룸의 카테고리를 설정해 주세요"/>
+        <RadioGroup
+            android:id="@+id/rb_group2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/rb_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="습관"/>
+            <RadioButton
+                android:id="@+id/rb_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="공부"/>
+            <RadioButton
+                android:id="@+id/rb_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취미"/>
+            <RadioButton
+                android:id="@+id/rb_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="운동"/>
+            <RadioButton
+                android:id="@+id/rb_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기타"/>
+        </RadioGroup>
 
         <EditText
             android:id="@+id/et_roominfo"
@@ -192,7 +221,8 @@
             <RadioGroup
                 android:id="@+id/rb_group1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/rb_cnt"
                     android:layout_width="wrap_content"

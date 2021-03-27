@@ -1,6 +1,5 @@
 package com.example.studyproject;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,14 +10,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,8 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.IgnoreExtraProperties;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -40,7 +35,7 @@ import java.util.Map;
 public class MakeRoom extends AppCompatActivity{
     Button bt_makeroom;
     EditText et_roomname;
-    EditText et_roomcategory;
+    ListView lv_roomcategory;
     EditText et_roominfo;
     EditText et_roomauth;
     EditText et_roomperson;
@@ -63,7 +58,7 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
-    Integer roomperson;
+    String roomCate;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
     public static String roomTimeSt="0800";
@@ -80,7 +75,7 @@ public class MakeRoom extends AppCompatActivity{
 
         bt_makeroom = (Button) findViewById(R.id.bt_makeroom);
         et_roomname = (EditText) findViewById(R.id.et_roomname);
-        et_roomcategory = (EditText) findViewById(R.id.et_roomcategory);
+        // lv_roomcategory = (ListView) findViewById(R.id.et_roomcategory);
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
         et_roomauth = (EditText) findViewById(R.id.et_roomauth);
         et_roomperson = (EditText) findViewById(R.id.et_roomperson);
@@ -172,16 +167,34 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
 
+        // 카테고리 설정
+        /* listview 사용
+        String[] cates = {"습관","공부","취미","운동","기타"};
+        lv_roomcategory.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,cates));
+        lv_roomcategory.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lv_roomcategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                roomCate = (String)parent.getItemAtPosition(position);
+            }
+        }); */
+
+        // 카테고리 설정
+
+        // 방식 설정
+        // radiobutton
+
         // 개설
         bt_makeroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String getRoomname = et_roomname.getText().toString();
-                String getRoomcategory = et_roomcategory.getText().toString();
+
                 String getRoominfo = et_roominfo.getText().toString();
                 String getRoomauth = et_roomauth.getText().toString();
                 String getRoomperson = et_roomperson.getText().toString();
 
+                String getRoomcategory = roomCate; // 카테고리
                 boolean getDay = bl_day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
                 boolean getTime = bl_time; // 시간 사용 여부 / 인증 시간
                 boolean getLock = bl_lock; // 비공개 여부
@@ -204,15 +217,15 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
-                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth, getRoomperson, getDay, getTime, getLock);
-                readRoomDB();
+                //writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
+                //readRoomDB();
             }
         });
     }
 
-    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth, String roomperson, boolean roomday, boolean roomtime, boolean roomlock) {
+    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth) {
         //String key = mDatabase.child("rooms").push().getKey();
-        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson, roomday, roomtime, roomlock);
+        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 

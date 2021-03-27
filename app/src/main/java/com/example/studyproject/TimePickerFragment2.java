@@ -57,7 +57,7 @@ public class TimePickerFragment2 extends DialogFragment implements TimePickerDia
         } else curHour=hourOfDay;
         Button ed = (Button)getActivity().findViewById(R.id.bt_edTime);
         ed.setTag(String.valueOf(hourOfDay)+String.valueOf(minute));
-        ed.setText(amPm+String.valueOf(hourOfDay)+"시 "+String.valueOf(minute)+"분");
+        ed.setText(amPm+" "+String.valueOf(curHour)+":"+String.valueOf(minute));
         // MakeRoom 정보 전달
         roomTimeSt = String.valueOf(hourOfDay)+String.valueOf(minute);
         saveH = hourOfDay; saveM = minute; chk=true;
