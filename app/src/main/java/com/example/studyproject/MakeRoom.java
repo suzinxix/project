@@ -65,7 +65,7 @@ public class MakeRoom extends AppCompatActivity{
     boolean roomtime;
     boolean roomday;
     boolean roomlock;
-    int roomCate;
+    String roomCate;
     int roomHow;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
@@ -83,7 +83,6 @@ public class MakeRoom extends AppCompatActivity{
 
         bt_makeroom = (Button) findViewById(R.id.bt_makeroom);
         et_roomname = (EditText) findViewById(R.id.et_roomname);
-        // lv_roomcategory = (ListView) findViewById(R.id.et_roomcategory);
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
         et_roomauth = (EditText) findViewById(R.id.et_roomauth);
         et_roomperson = (EditText) findViewById(R.id.et_roomperson);
@@ -196,13 +195,14 @@ public class MakeRoom extends AppCompatActivity{
         }); */
 
         // 카테고리 설정
+        String[] cates = {"습관","공부","취미","운동","기타"};
         for(int i=0;i<5;i++){
             final int k = i;
             rbs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(rb_auth1.isChecked())
-                        roomCate = k; // 횟수 (0)
+                        roomCate = cates[k]; // 횟수 (0)
                 }
             });
         }
@@ -234,7 +234,7 @@ public class MakeRoom extends AppCompatActivity{
                 String getRoomperson = et_roomperson.getText().toString();
 
                 int getRoomauthHow = roomHow; // 인증방식
-                int getRoomcategory = roomCate; // 카테고리
+                String getRoomcategory = roomCate; // 카테고리
                 boolean getDay = bl_day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
                 boolean getTime = bl_time; // 시간 사용 여부
                 boolean getLock = bl_lock; // 비공개 여부
