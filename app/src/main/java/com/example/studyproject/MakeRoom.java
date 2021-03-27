@@ -257,15 +257,20 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
-                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth, getRoomperson, getTime, getDay, getLock);
+                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
+                        getRoomperson, getDay, getRoomDay, getTime,
+                        getLock, getRoomauthHow, getRoomTime1, getRoomTime2);
                 readRoomDB();
             }
         });
     }
 
-    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth, String roomperson, boolean roomday, boolean roomtime, boolean roomlock) {
+    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
+                              String roomperson, boolean roomday, int[] roomWhen, boolean roomtime,
+                              boolean roomlock, int roomHow, String time1, String time2) {
         //String key = mDatabase.child("rooms").push().getKey();
-        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson, roomday, roomtime, roomlock);
+        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
+                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 
