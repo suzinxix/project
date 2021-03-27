@@ -1,6 +1,7 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,8 @@ public class MakeRoom extends AppCompatActivity{
     boolean bl_lock=false; boolean bl_day = false; boolean bl_time=false;
     int how=0;
     Button bt_stTime, bt_edTime;
+    RadioButton rb_auth1, rb_auth2;
+    RadioButton[] rbs = new RadioButton[5];
 
     TextView tv_res; // 테스트용
 
@@ -58,7 +62,8 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
-    String roomCate;
+    int roomCate;
+    int roomHow;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
     public static String roomTimeSt="0800";
@@ -81,6 +86,8 @@ public class MakeRoom extends AppCompatActivity{
         et_roomperson = (EditText) findViewById(R.id.et_roomperson);
         bt_stTime = (Button)findViewById(R.id.bt_stTime);
         bt_edTime = (Button)findViewById(R.id.bt_edTime);
+        rb_auth1 = (RadioButton)findViewById(R.id.rb_cnt);
+        rb_auth2=(RadioButton)findViewById(R.id.rb_time);
 
         tv_res = (TextView)findViewById(R.id.tv_result); // 결과 확인
 
@@ -97,6 +104,10 @@ public class MakeRoom extends AppCompatActivity{
         sw_time = (Switch)findViewById(R.id.switch2);
        bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
 
+       // 카테고리
+        rbs[0] = (RadioButton)findViewById(R.id.rb_1); rbs[1] = (RadioButton)findViewById(R.id.rb_2);
+        rbs[2] = (RadioButton)findViewById(R.id.rb_3); rbs[3] = (RadioButton)findViewById(R.id.rb_4);
+        rbs[4] = (RadioButton)findViewById(R.id.rb_5);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -166,6 +177,8 @@ public class MakeRoom extends AppCompatActivity{
                 timePickerFragment2.show(getSupportFragmentManager(), "timePicker2");
             }
         });
+        // 시간이 stTime보다 빠르면 최솟값인 stTime으로 설정되도록...
+        // 다시 선택했을 때 현재 시간이 아니라 이전에 선택했던 시간으로 세팅되도록
 
         // 카테고리 설정
         /* listview 사용
@@ -180,32 +193,55 @@ public class MakeRoom extends AppCompatActivity{
         }); */
 
         // 카테고리 설정
+        for(int i=0;i<5;i++){
+            final int k = i;
+            rbs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(rb_auth1.isChecked())
+                        roomCate = k; // 횟수 (0)
+                }
+            });
+        }
 
         // 방식 설정
-        // radiobutton
+        rb_auth1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rb_auth1.isChecked())
+                    roomHow = 0; // 횟수 (0)
+            }
+        });
+        rb_auth2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rb_auth2.isChecked())
+                    roomHow = 1; // 시간 (1)
+            }
+        });
 
         // 개설
         bt_makeroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String getRoomname = et_roomname.getText().toString();
-
                 String getRoominfo = et_roominfo.getText().toString();
                 String getRoomauth = et_roomauth.getText().toString();
                 String getRoomperson = et_roomperson.getText().toString();
 
-                String getRoomcategory = roomCate; // 카테고리
+                int getRoomauthHow = roomHow; // 인증방식
+                int getRoomcategory = roomCate; // 카테고리
                 boolean getDay = bl_day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
-                boolean getTime = bl_time; // 시간 사용 여부 / 인증 시간
+                boolean getTime = bl_time; // 시간 사용 여부
                 boolean getLock = bl_lock; // 비공개 여부
-                final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn;
+                final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn; // 인증시간
 
                 // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
                         +"\n가입 인원: "+getRoomperson +"명\n인증 횟수: "+getRoomauth
                         +"회\n인증 요일 사용: "+getDay+"\n인증 시간 사용: "+getTime
-                        +"\n비공개 여부: "+getLock;
-                if(getDay){
+                        +"\n비공개 여부: "+getLock+"\n인증 방식: "+getRoomauthHow;
+                if(getDay){ // 요일 확인
                     String[] days = {"월", "화","수","목","금","토","일"};
                     res += "\n인증 요일: ";
                     for(int i=0;i<7;i++){
@@ -268,6 +304,7 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
     }
+
 
 
 
