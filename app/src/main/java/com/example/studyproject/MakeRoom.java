@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,8 +43,14 @@ public class MakeRoom extends AppCompatActivity{
     EditText et_roomcategory;
     EditText et_roominfo;
     EditText et_roomauth;
-    CheckBox[] cb=new CheckBox[7]; Switch sw_day; boolean day = false;
+    EditText et_roomperson;
+    CheckBox[] cb=new CheckBox[7];
+    Switch sw_day, sw_lock, sw_time;
+    boolean bl_lock=false; boolean bl_day = false; boolean bl_time=false;
+    int how=0;
     Button bt_stTime, bt_edTime;
+
+    TextView tv_res; // 테스트용
 
     private ListView listView;
     private FirebaseDatabase database;
@@ -56,10 +63,10 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
-    String sort = "roomcategory";
+    public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
-    String roomTimeSt="0800";
-    String roomTimeFn="2200";
+    public static String roomTimeSt="0800";
+    public static String roomTimeFn="2200";
 
 
 
@@ -75,8 +82,11 @@ public class MakeRoom extends AppCompatActivity{
         et_roomcategory = (EditText) findViewById(R.id.et_roomcategory);
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
         et_roomauth = (EditText) findViewById(R.id.et_roomauth);
+        et_roomperson = (EditText) findViewById(R.id.et_roomperson);
         bt_stTime = (Button)findViewById(R.id.bt_stTime);
         bt_edTime = (Button)findViewById(R.id.bt_edTime);
+
+        tv_res = (TextView)findViewById(R.id.tv_result); // 결과 확인
 
         // 인증 요일
         sw_day = (Switch)findViewById(R.id.switch1);
@@ -86,17 +96,24 @@ public class MakeRoom extends AppCompatActivity{
         cb[6] = (CheckBox)findViewById(R.id.bt_sun);
         for(int i =0;i<cb.length;i++) cb[i].setEnabled(false); // 체크박스 비활성화
 
+        // switch 및 비활성화 설정
+        sw_lock = (Switch)findViewById(R.id.switch3);
+        sw_time = (Switch)findViewById(R.id.switch2);
+        bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        // 요일 설정
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     for (int i = 0; i < cb.length; i++) cb[i].setEnabled(true); // 체크박스 활성화
-                    day = true;
+                    bl_day = true;
                 }else {
                     for (int i = 0; i < cb.length; i++) cb[i].setEnabled(false); // 체크박스 비활성화
-                    day = false;
+                    bl_day = false;
                 }
             }
         });
@@ -111,7 +128,33 @@ public class MakeRoom extends AppCompatActivity{
             });
         }
 
-    // timepicker 설정하기
+        // 시간 버튼 비활성화 설정
+        sw_lock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    bt_stTime.setEnabled(true); bt_edTime.setEnabled(true); // 체크박스 활성화
+                    bl_time = true;
+                }else {
+                    bt_stTime.setEnabled(false); bt_edTime.setEnabled(false); // 체크박스 비활성화
+                    bl_time = false;
+                }
+            }
+        });
+
+        // 비공개 여부 설정
+        sw_lock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    bl_lock = true;
+                }else {
+                    bl_lock = false;
+                }
+            }
+        });
+
+         // 시간 설정: timepicker 설정하기
         bt_stTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +171,7 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
 
+        // 개설
         bt_makeroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,11 +179,30 @@ public class MakeRoom extends AppCompatActivity{
                 String getRoomcategory = et_roomcategory.getText().toString();
                 String getRoominfo = et_roominfo.getText().toString();
                 String getRoomauth = et_roomauth.getText().toString();
-                boolean getDay = day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
-                // Timepicker로 정보 받아오기
+                String getRoomperson = et_roomperson.getText().toString();
 
-                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
-                readRoomDB();
+                boolean getDay = bl_day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
+                boolean getTime = bl_time; // 시간 사용 여부 / 인증 시간
+                boolean getLock = bl_lock; // 비공개 여부
+                final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn;
+
+                String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
+                        +"\n인증 횟수: "+getRoomauth+"\n인증 요일 사용: "+getDay+"\n인증 시간 사용: "+getTime
+                        +"\n비공개 여부: "+getLock;
+                if(getDay){
+                    String[] days = {"월", "화","수","목","금","토","일"};
+                    res += "\n인증 요일: ";
+                    for(int i=0;i<7;i++){
+                        if(getRoomDay[i]==1){
+                            res += days[i]+" ";
+                        }
+                    }
+                }
+                if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
+                tv_res.setText(res);
+
+                //writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
+                //readRoomDB();
             }
         });
     }

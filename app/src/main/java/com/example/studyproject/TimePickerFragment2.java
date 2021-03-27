@@ -19,6 +19,8 @@ import android.text.format.DateFormat;
 
 import java.util.Calendar;
 
+import static com.example.studyproject.MakeRoom.roomTimeFn;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@ link TimePickerFragment#newInstance} factory method to
@@ -50,5 +52,8 @@ public class TimePickerFragment2 extends DialogFragment implements TimePickerDia
         Button ed = (Button)getActivity().findViewById(R.id.bt_edTime);
         ed.setTag(String.valueOf(hourOfDay)+String.valueOf(minute));
         ed.setText(amPm+String.valueOf(hourOfDay)+"시 "+String.valueOf(minute)+"분");
+        // MakeRoom 정보 전달
+        roomTimeFn = String.valueOf(hourOfDay)+String.valueOf(minute);
+
     }
 }
