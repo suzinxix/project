@@ -14,6 +14,7 @@ public class SearchDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_detail);
         Roomname=findViewById(R.id.study_title);

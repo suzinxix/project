@@ -34,10 +34,13 @@
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
+                android:value="2.1"
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
         <activity android:name=".SearchDetail"></activity>
+        <activity android:name=".MakeRoom"></activity>
+
 
     </application>
 
