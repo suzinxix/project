@@ -62,6 +62,9 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
+    boolean roomtime;
+    boolean roomday;
+    boolean roomlock;
     int roomCate;
     int roomHow;
     public String sort = "roomcategory";
@@ -102,7 +105,7 @@ public class MakeRoom extends AppCompatActivity{
         // switch 및 비활성화 설정
         sw_lock = (Switch)findViewById(R.id.switch3);
         sw_time = (Switch)findViewById(R.id.switch2);
-       bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
+        bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
 
        // 카테고리
         rbs[0] = (RadioButton)findViewById(R.id.rb_1); rbs[1] = (RadioButton)findViewById(R.id.rb_2);
@@ -161,7 +164,7 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
 
-         // 시간 설정: timepicker 설정하기
+        // 시간 설정: timepicker 설정하기
         bt_stTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,6 +228,7 @@ public class MakeRoom extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 String getRoomname = et_roomname.getText().toString();
+
                 String getRoominfo = et_roominfo.getText().toString();
                 String getRoomauth = et_roomauth.getText().toString();
                 String getRoomperson = et_roomperson.getText().toString();
@@ -253,15 +257,15 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
-                //writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
-                //readRoomDB();
+                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth, getRoomperson, getTime, getDay, getLock);
+                readRoomDB();
             }
         });
     }
 
-    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth) {
+    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth, String roomperson, boolean roomday, boolean roomtime, boolean roomlock) {
         //String key = mDatabase.child("rooms").push().getKey();
-        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
+        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson, roomday, roomtime, roomlock);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 
@@ -304,7 +308,6 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
     }
-
 
 
 

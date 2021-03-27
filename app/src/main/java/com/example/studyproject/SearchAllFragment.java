@@ -39,6 +39,8 @@ public class SearchAllFragment extends Fragment {
     private RecyclerView recview;
     private View ContactsView;
     private DatabaseReference ContactsRef, RoomRef;
+
+
     public SearchAllFragment(){
 
     }
@@ -69,6 +71,8 @@ public class SearchAllFragment extends Fragment {
                 final String roomID = getRef(position).getKey();
                 final String name = model.getRoomname();
                 final String info = model.getRoominfo();
+                final String person = model.getRoomperson();
+
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -76,6 +80,7 @@ public class SearchAllFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), SearchDetail.class);
                         intent.putExtra("Roomname", ""+name);
                         intent.putExtra("Roominfo", info);
+                        intent.putExtra("Roomperson", person);
                         startActivity(intent);
                     }
                 });
@@ -83,19 +88,27 @@ public class SearchAllFragment extends Fragment {
                 RoomRef.child(roomID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int room_index=1;
                         if(snapshot.hasChild("study_rooms")){
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
+                            String room_person = snapshot.child("roomperson").getValue().toString();
 
+                            room_index++;
+                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
+                            holder.roomperson.setText("/" + room_person);
                         }
                         else{
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
+                            String room_person = snapshot.child("roomperson").getValue().toString();
 
+                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
+                            holder.roomperson.setText(room_person);
                         }
                     }
 
@@ -120,14 +133,16 @@ public class SearchAllFragment extends Fragment {
     }
 
 
-
+    // 홀더
     public static class ContactsViewHolder extends RecyclerView.ViewHolder{
-        TextView roomname, roominfo;
+        TextView roomindex, roomname, roominfo, roomperson;
         //View v;
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
+            roomindex = itemView.findViewById(R.id.text_index);
             roomname = itemView.findViewById(R.id.text_1);
             roominfo = itemView.findViewById(R.id.text_2);
+            roomperson = itemView.findViewById(R.id.text_3);
 
             /*
             itemView.setOnClickListener(new View.OnClickListener() {

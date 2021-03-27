@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class SearchDetail extends AppCompatActivity {
-    TextView Roomname, Roominfo;
+    TextView Roomname, Roominfo, Roomperson;
     public SearchDetail(){
     }
 
@@ -19,12 +19,15 @@ public class SearchDetail extends AppCompatActivity {
         setContentView(R.layout.search_detail);
         Roomname=findViewById(R.id.study_title);
         Roominfo=findViewById(R.id.study_info);
+        Roomperson=findViewById(R.id.study_member);
 
         String name = getIntent().getStringExtra("Roomname");
         String info = getIntent().getStringExtra("Roominfo");
+        String person = getIntent().getStringExtra("Roomperson");
 
         Roomname.setText(name);
         Roominfo.setText(info);
+        Roomperson.setText(person);
     }
 
     /*
