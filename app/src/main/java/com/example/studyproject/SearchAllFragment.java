@@ -39,6 +39,8 @@ public class SearchAllFragment extends Fragment {
     private RecyclerView recview;
     private View ContactsView;
     private DatabaseReference ContactsRef, RoomRef;
+
+
     public SearchAllFragment(){
 
     }
@@ -71,6 +73,7 @@ public class SearchAllFragment extends Fragment {
                 final String info = model.getRoominfo();
                 final String person = model.getRoomperson();
 
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -85,7 +88,7 @@ public class SearchAllFragment extends Fragment {
                 RoomRef.child(roomID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int room_index = 0;
+                        int room_index=1;
                         if(snapshot.hasChild("study_rooms")){
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
@@ -102,6 +105,7 @@ public class SearchAllFragment extends Fragment {
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
 
+                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                             holder.roomperson.setText(room_person);

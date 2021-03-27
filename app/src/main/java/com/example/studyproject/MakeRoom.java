@@ -58,6 +58,9 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
+    boolean roomtime;
+    boolean roomday;
+    boolean roomlock;
     String roomCate;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
@@ -95,7 +98,7 @@ public class MakeRoom extends AppCompatActivity{
         // switch 및 비활성화 설정
         sw_lock = (Switch)findViewById(R.id.switch3);
         sw_time = (Switch)findViewById(R.id.switch2);
-       bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
+        bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -150,7 +153,7 @@ public class MakeRoom extends AppCompatActivity{
             }
         });
 
-         // 시간 설정: timepicker 설정하기
+        // 시간 설정: timepicker 설정하기
         bt_stTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,15 +220,15 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
-                //writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
-                //readRoomDB();
+                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth, getRoomperson, getTime, getDay, getLock);
+                readRoomDB();
             }
         });
     }
 
-    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth) {
+    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth, String roomperson, boolean roomday, boolean roomtime, boolean roomlock) {
         //String key = mDatabase.child("rooms").push().getKey();
-        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
+        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson, roomday, roomtime, roomlock);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 
@@ -272,31 +275,25 @@ public class MakeRoom extends AppCompatActivity{
 
 
     /*
-
     ArrayAdapter<String> arrayAdapter;
     static ArrayList<String> arrayIndex = new ArrayList<String>();
     static ArrayList<String> arrayData = new ArrayList<String>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_makeroom);
-
         bt_makeroom = (Button) findViewById(R.id.bt_makeroom);
         et_roomname = (EditText) findViewById(R.id.et_roomname);
         et_roomcategory = (EditText) findViewById(R.id.et_roomcategory);
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
         et_roomauth = (EditText) findViewById(R.id.et_roomauth);
-
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         ListView listView = (ListView) findViewById(R.id.db_list_view);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemLongClickListener(longClickListener);
-
         getFirebaseDatabase();
         bt_makeroom.setEnabled(true);
     }
-
     public void setInsertMode(){
         et_roomname.setText("");
         et_roomcategory.setText("");
@@ -304,7 +301,6 @@ public class MakeRoom extends AppCompatActivity{
         et_roominfo.setText("");
         bt_makeroom.setEnabled(true);
     }
-
     private AdapterView.OnItemClickListener onClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -316,12 +312,10 @@ public class MakeRoom extends AppCompatActivity{
             et_roomcategory.setText(tempData[1].trim());
             et_roominfo.setText(tempData[2].trim());
             et_roomauth.setText(tempData[3].trim());
-
             et_roomname.setEnabled(false);
             bt_makeroom.setEnabled(false);
         }
     };
-
     // 길게 누르면 데이터 삭제하는 기능
     private AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -356,13 +350,11 @@ public class MakeRoom extends AppCompatActivity{
             return false;
         }
     };
-
     // 중복 체크
     public boolean IsExistName(){
         boolean IsExist = arrayIndex.contains(roomname);
         return IsExist;
     }
-
     public void postFirebaseDatabase(String roomname, String roomcategory, String roominfo, String roomauth){
         mPostReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> childUpdates = new HashMap<>();
@@ -373,11 +365,9 @@ public class MakeRoom extends AppCompatActivity{
 //        }
         MakeRoomDB post = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
         postValues = post.toMap();
-
         childUpdates.put("/study_room/" + roomname, postValues);
         mPostReference.updateChildren(childUpdates); // 다른 하위 노드를 덮어쓰지 않고 특정 하위 노드에 동시에 쓰는 메서드
     }
-
     public void getFirebaseDatabase(){
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -399,7 +389,6 @@ public class MakeRoom extends AppCompatActivity{
                 arrayAdapter.addAll(arrayData);
                 arrayAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("getFirebaseDatabase", "loadPost:onCancelled", databaseError.toException());
@@ -408,7 +397,6 @@ public class MakeRoom extends AppCompatActivity{
         Query sortbyCategory = FirebaseDatabase.getInstance().getReference().child("study_room").orderByChild(sort);
         sortbyCategory.addListenerForSingleValueEvent(postListener);
     }
-
     public String setTextLength(String text, int length) {
         if(text.length()< length){
             int gap = length - text.length();
@@ -418,7 +406,6 @@ public class MakeRoom extends AppCompatActivity{
         }
         return text;
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -437,7 +424,6 @@ public class MakeRoom extends AppCompatActivity{
 //                else{
 //                    Toast.makeText(MakeRoom.this, "이미 존재하는 스터디룸 이름입니다. 다른 이름으로 변경해주세요.", Toast.LENGTH_LONG).show();
 //                }
-
                 postFirebaseDatabase(roomname, roomcategory, roominfo, roomauth);
                 getFirebaseDatabase();
                 setInsertMode();
