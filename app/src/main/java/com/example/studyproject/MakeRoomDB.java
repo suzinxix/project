@@ -1,7 +1,6 @@
 package com.example.studyproject;
 
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
@@ -13,17 +12,26 @@ public class MakeRoomDB {
     public String roomcategory;
     public String roominfo;
     public String roomauth;
+    public String roomperson;
+    public boolean roomday;
+    public boolean roomtime;
+    public boolean roomlock;
+
     public Map<String, Boolean> stars = new HashMap<>();
 
     public MakeRoomDB(){
 
     }
 
-    public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth){
+    public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth, String roomperson, boolean roomday,boolean roomtime, boolean roomlock){
         this.roomname = roomname;
         this.roomcategory = roomcategory;
         this.roominfo = roominfo;
         this.roomauth = roomauth;
+        this.roomperson = roomperson;
+        this.roomday = roomday;
+        this.roomtime = roomtime;
+        this.roomlock = roomlock;
     }
 
     public String getRoomname() {
@@ -50,13 +58,27 @@ public class MakeRoomDB {
         this.roominfo = roominfo;
     }
 
-    public String getRoomauth() {
-        return roomauth;
+    public String getRoomauth() { return roomauth;
     }
 
-    public void setRoomauth(String roomauth) {
-        this.roomauth = roomauth;
+    public void setRoomauth(String roomauth) { this.roomauth = roomauth;
     }
+
+    public String getRoomperson() {return roomperson;}
+
+    public void setRoomperson(String roomperson) {this.roomperson = roomperson;}
+
+    public boolean getRoomday() {return roomday;}
+
+    public void setRoomday() {this.roomday = roomday;}
+
+    public boolean getRoomtime() {return roomtime;}
+
+    public void setRoomtime() {this.roomtime = roomtime;}
+
+    public boolean getRoomlock() {return roomlock;}
+
+    public void setRoomlock() {this.roomlock = roomlock;}
 /*
     @Override
     public String toString() {
@@ -76,6 +98,10 @@ public class MakeRoomDB {
         result.put("roomcategory", roomcategory);
         result.put("roominfo", roominfo);
         result.put("roomauth", roomauth);
+        result.put("roomperson", roomperson);
+        result.put("roomtime", roomtime);
+        result.put("roomday", roomday);
+        result.put("roomlock", roomlock);
         return result;
     }
 }

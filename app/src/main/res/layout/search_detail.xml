@@ -119,18 +119,11 @@
                     android:text="모은 꿀" />
 
                 <TextView
-                    android:id="@+id/study_curriculum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:text="멤버" />
-
-                <TextView
                     android:id="@+id/study_member"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
-                    android:text="주차별 커리큘럼" />
+                    android:text="멤버" />
 
 
             </LinearLayout>

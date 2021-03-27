@@ -63,6 +63,7 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
+    Integer roomperson;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
     public static String roomTimeSt="0800";
@@ -203,15 +204,15 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
-                //writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth);
-                //readRoomDB();
+                writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth, getRoomperson, getDay, getTime, getLock);
+                readRoomDB();
             }
         });
     }
 
-    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth) {
+    private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth, String roomperson, boolean roomday, boolean roomtime, boolean roomlock) {
         //String key = mDatabase.child("rooms").push().getKey();
-        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth);
+        MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson, roomday, roomtime, roomlock);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 
