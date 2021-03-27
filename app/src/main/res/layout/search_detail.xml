@@ -60,113 +60,120 @@
 
     <FrameLayout
         android:id="@+id/fourth"
+        android:layout_width="314.61dp"
+        android:layout_height="461.59dp"
         android:layout_below="@id/third"
-        android:layout_width="wrap_content"
-        android:layout_height="550dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/rectangle_582"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="172dp"
+        android:background="@drawable/rectangle582"
+        android:elevation="1.97dp"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/study_picture"
+            android:layout_width="272.83dp"
+            android:layout_height="102dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <FrameLayout
+            android:id="@+id/rectangle_5"
+            android:layout_width="286.59dp"
+            android:layout_height="257.59dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="140dp"
+            android:background="@drawable/rectangle_575">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/study_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="소개" />
+
+                <TextView
+                    android:id="@+id/study_make"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="개설" />
+
+                <TextView
+                    android:id="@+id/study_honey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="모은 꿀" />
+
+                <TextView
+                    android:id="@+id/study_curriculum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="멤버" />
+
+                <TextView
+                    android:id="@+id/study_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="주차별 커리큘럼" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/study_picture"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="15dp"
-                android:layout_gravity="center"
-                tools:srcCompat="@tools:sample/avatars" />
+            <Button
+                android:id="@+id/bt_report"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_report"
+                android:text="신고하기" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_margin="15dp"
-                android:layout_gravity="center"
-                android:background="@drawable/rectangle_575">
+            <Button
+                android:id="@+id/bt_apply"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_apply"
+                android:text="신청하기" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="15dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/study_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="소개" />
-
-                    <TextView
-                        android:id="@+id/study_make"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="개설" />
-
-                    <TextView
-                        android:id="@+id/study_honey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="모은 꿀" />
-
-                    <TextView
-                        android:id="@+id/study_curriculum"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="멤버" />
-
-                    <TextView
-                        android:id="@+id/study_member"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="주차별 커리큘럼" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/bt_report"
-                            android:layout_width="280dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_report"
-                            android:text="신고하기" />
-
-                        <Button
-                            android:id="@+id/bt_apply"
-                            android:layout_width="280dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_apply"
-                            android:text="신청하기" />
-
-                        <Button
-                            android:id="@+id/bt_ask"
-                            android:layout_width="280dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_ask"
-                            android:text="문의하기" />
-                        />
-                    </LinearLayout>
-                </LinearLayout>
-
-            </FrameLayout>
-
+            <Button
+                android:id="@+id/bt_ask"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_ask"
+                android:text="문의하기" />
+            />
         </LinearLayout>
+
 
     </FrameLayout>
 
