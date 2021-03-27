@@ -21,6 +21,13 @@
             android:text="개인페이지"
             android:textSize="20sp" />
 
+        <ImageButton
+            android:id="@+id/ib_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/btn_red_round" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
@@ -29,24 +36,38 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/img_default" />
 
-        <TextView
-            android:id="@+id/tv_pnick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="닉네임: -"
-            android:textSize="20dp"
-            android:textColor="#000000"
-            android:layout_margin="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_pnick"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:text="닉네임: -"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tv_plevels"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:text="level: -"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/profileEdit"
+        android:id="@+id/bt_profileEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="프로필 편집"
@@ -55,38 +76,46 @@
         android:background="@drawable/btn_stroke"
         android:layout_marginHorizontal="20dp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/bt_myStudyList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:text="내 스터디 목록"
+        android:textColor="#000000"
+        android:layout_marginHorizontal="20dp"/>
 
-        <EditText
-            android:id="@+id/et_pnick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="사용할 닉네임을 입력해주세요." />
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
 
-        <Button
-            android:id="@+id/bt_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로필 저장" />
+<!--        <EditText-->
+<!--            android:id="@+id/et_pnick"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="사용할 닉네임을 입력해주세요." />-->
 
-
-        <TextView
-            android:id="@+id/tv_pname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이름: -" />
-
-        <TextView
-            android:id="@+id/tv_plevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="레벨: 0" />
+<!--        <Button-->
+<!--            android:id="@+id/bt_save"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="프로필 저장" />-->
 
 
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/tv_pname"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="이름: -" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_plevel"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="레벨: 0" />-->
+
+
+<!--    </LinearLayout>-->
 
 </LinearLayout>

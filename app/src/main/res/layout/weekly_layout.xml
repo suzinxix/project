@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="주차별 계획"
-        android:gravity="center" />
+    android:layout_marginBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,35 +15,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Week" />
 
         <TextView
             android:id="@+id/textViewTodo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Todo" />
 
         <ImageButton
             android:id="@+id/imageButtonCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/imageButtonTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_weight="1" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageViewTempGallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:srcCompat="@tools:sample/avatars" />
 
 </RelativeLayout>
