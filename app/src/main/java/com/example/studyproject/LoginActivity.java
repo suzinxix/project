@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // 자동 로그인
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
@@ -100,6 +101,5 @@ public class LoginActivity extends AppCompatActivity {
             // or do some other stuff that you want to do
         }
     }
-
 
 }

@@ -53,7 +53,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     //firebase
-    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
