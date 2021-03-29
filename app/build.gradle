@@ -21,6 +21,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
 }
 
 dependencies {
@@ -58,6 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
+    implementation 'com.google.firebase:firebase-database:19.7.0' //추가
     implementation 'com.google.firebase:firebase-core:10.2.1'
     implementation 'com.google.firebase:firebase-database:19.6.0'
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'

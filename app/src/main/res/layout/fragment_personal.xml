@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarPersonal"
+        android:id="@+id/toolbarHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F3C94E">
@@ -25,39 +25,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="30dp"
-        android:paddingTop="20dp"
-        android:background="#F2F2F2">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="20dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/bee" />
-
-            <TextView
-                android:id="@+id/tv_pnick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="닉네임: -"/>
-
-        </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/img_default" />
 
         <TextView
-            android:id="@+id/tv_pname"
+            android:id="@+id/tv_pnick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이름: -" />
-
+            android:text="닉네임: -"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:layout_margin="20dp"/>
     </LinearLayout>
 
     <Button
@@ -88,6 +73,12 @@
             android:layout_height="wrap_content"
             android:text="프로필 저장" />
 
+
+        <TextView
+            android:id="@+id/tv_pname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름: -" />
 
         <TextView
             android:id="@+id/tv_plevel"

@@ -1,5 +1,6 @@
 package com.example.studyproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,9 +57,22 @@ public class SearchHobbyFragment extends Fragment {
                         .build();
 
         FirebaseRecyclerAdapter<MakeRoomDB, SearchHobbyFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, SearchHobbyFragment.ContactsViewHolder>(options) {
+
             @Override
             protected void onBindViewHolder(@NonNull final SearchHobbyFragment.ContactsViewHolder holder, int position, @NonNull MakeRoomDB model) {
                 String roomId = getRef(position).getKey(); // 리사이클러뷰
+                final String name = model.getRoomname();
+                final String info = model.getRoominfo();
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), SearchDetail.class);
+                        intent.putExtra("Roomname", ""+name);
+                        intent.putExtra("Roominfo", info);
+                        startActivity(intent);
+                    }
+                });
 
                 RoomRef.child(roomId).addValueEventListener(new ValueEventListener() {
                     @Override
