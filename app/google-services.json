@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1073889157828",
+    "firebase_url": "https://sujin-db-default-rtdb.firebaseio.com",
+    "project_id": "sujin-db",
+    "storage_bucket": "sujin-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073889157828:android:09d7ba666fde18335cdf91",
+        "android_client_info": {
+          "package_name": "com.example.studyproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073889157828-v4fqjq4f45d8sn82mma6cc21dbcv79h7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMsFyG7Id6pvoUsYuo9RAdGf05TMQETdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073889157828-v4fqjq4f45d8sn82mma6cc21dbcv79h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

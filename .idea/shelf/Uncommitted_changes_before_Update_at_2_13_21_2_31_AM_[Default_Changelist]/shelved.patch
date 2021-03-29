@@ -1,0 +1,402 @@
+Index: app/src/main/java/com/example/studyproject/HomeActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.studyproject;\n\nimport androidx.annotation.NonNull;\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.fragment.app.FragmentManager;\n\nimport android.os.Bundle;\nimport android.view.LayoutInflater;\nimport android.view.MenuItem;\nimport android.view.View;\nimport android.view.ViewGroup;\n\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\n\npublic class HomeActivity extends AppCompatActivity {\n    HomeFragment fragment_home;\n    StudySearchFragment fragment_studysearch;\n    PersonalPageFragment fragment_personal;\n\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n\n        setContentView(R.layout.activity_home);\n        fragment_home = new HomeFragment();\n\n        fragment_studysearch = new StudySearchFragment();\n        fragment_personal = new PersonalPageFragment();\n\n        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();\n\n        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);\n        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {\n            @Override\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\n                switch (item.getItemId()) {\n                    case R.id.tab1:\n                        getSupportFragmentManager().beginTransaction()\n                                .replace(R.id.container, fragment_home).commit();\n\n                        return true;\n                    case R.id.tab2:\n                        getSupportFragmentManager().beginTransaction()\n                                .replace(R.id.container, fragment_studysearch).commit();\n\n                        return true;\n                    case R.id.tab3:\n                        getSupportFragmentManager().beginTransaction()\n                                .replace(R.id.container, fragment_personal).commit();\n\n\n                        return true;\n                }\n\n                return false;\n            }\n        });\n\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/HomeActivity.java	(revision 8553fd92778ea0a2d7d50ad70989ca63636eb0e8)
++++ app/src/main/java/com/example/studyproject/HomeActivity.java	(date 1613122097000)
+@@ -2,19 +2,15 @@
+ 
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+-import androidx.fragment.app.FragmentManager;
+ 
+ import android.os.Bundle;
+-import android.view.LayoutInflater;
+ import android.view.MenuItem;
+-import android.view.View;
+-import android.view.ViewGroup;
+ 
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ 
+ public class HomeActivity extends AppCompatActivity {
+     HomeFragment fragment_home;
+-    StudySearchFragment fragment_studysearch;
++    SearchFragment fragment_studysearch;
+     PersonalPageFragment fragment_personal;
+ 
+ 
+@@ -25,7 +21,7 @@
+         setContentView(R.layout.activity_home);
+         fragment_home = new HomeFragment();
+ 
+-        fragment_studysearch = new StudySearchFragment();
++        fragment_studysearch = new SearchFragment();
+         fragment_personal = new PersonalPageFragment();
+ 
+         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
+Index: app/src/main/res/layout/fragment_search_study.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_search_study.xml	(date 1613150138000)
++++ app/src/main/res/layout/fragment_search_study.xml	(date 1613150138000)
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    android:background="#EAEAEA">
++
++
++    <Button
++        android:id="@+id/button2"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:background="@drawable/btn_rounded_corner"
++        android:text="꿀 순"
++        android:minWidth="0dp"
++        android:minHeight="0dp"
++        android:paddingHorizontal="20dp"
++        android:layout_margin="10dp"
++        android:textColor="#959595"
++        />
++
++    <TextView
++    android:id="@+id/textView5"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:text="공부" />
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/studyproject/SearchStudyFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/SearchStudyFragment.java	(date 1613125625000)
++++ app/src/main/java/com/example/studyproject/SearchStudyFragment.java	(date 1613125625000)
+@@ -0,0 +1,20 @@
++package com.example.studyproject;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.fragment.app.Fragment;
++
++public class SearchStudyFragment extends Fragment {
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search_study, container, false);
++
++        return rootView;
++    }
++}
+Index: app/src/main/java/com/example/studyproject/SearchHobbyFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/SearchHobbyFragment.java	(date 1613149380000)
++++ app/src/main/java/com/example/studyproject/SearchHobbyFragment.java	(date 1613149380000)
+@@ -0,0 +1,20 @@
++package com.example.studyproject;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.fragment.app.Fragment;
++
++public class SearchHobbyFragment extends Fragment {
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search_hobby, container, false);
++
++        return rootView;
++    }
++}
+Index: app/src/main/res/layout/fragment_search_hobby.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_search_hobby.xml	(date 1613150138000)
++++ app/src/main/res/layout/fragment_search_hobby.xml	(date 1613150138000)
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    android:background="#EAEAEA">
++
++
++    <Button
++        android:id="@+id/button2"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:background="@drawable/btn_rounded_corner"
++        android:text="꿀 순"
++        android:minWidth="0dp"
++        android:minHeight="0dp"
++        android:paddingHorizontal="20dp"
++        android:layout_margin="10dp"
++        android:textColor="#959595"
++        />
++    <TextView
++        android:id="@+id/textView5"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="취미" />
++</LinearLayout>
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\napply plugin: 'com.google.gms.google-services'\n\nandroid {\n    compileSdkVersion 30\n    buildToolsVersion \"30.0.2\"\n\n    defaultConfig {\n        applicationId \"com.example.studyproject\"\n        minSdkVersion 26\n        targetSdkVersion 30\n        versionCode 1\n        versionName \"1.0\"\n\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\n    }\n\n    buildTypes {\n        release {\n            minifyEnabled false\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\n        }\n    }\n}\n\ndependencies {\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\n    implementation 'androidx.appcompat:appcompat:1.2.0'\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\n    implementation 'com.android.volley:volley:1.1.1'\n    implementation 'com.google.android.material:material:1.2.1'\n    implementation 'com.android.support:appcompat-v7:30.0.2'\n    testImplementation 'junit:junit:4.12'\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\n    implementation 'com.android.support:appcompat-v7:27.1.1'\n\n    //room\n    def room_version = \"2.2.6\"\n    implementation \"androidx.room:room-runtime:$room_version\"\n    annotationProcessor \"androidx.room:room-compiler:$room_version\"\n    // optional - RxJava support for Room\n    implementation \"androidx.room:room-rxjava2:$room_version\"\n    // optional - Guava support for Room, including Optional and ListenableFuture\n    implementation \"androidx.room:room-guava:$room_version\"\n    // optional - Test helpers\n    testImplementation \"androidx.room:room-testing:$room_version\"\n\n    //firebase\n    implementation platform('com.google.firebase:firebase-bom:26.4.0')\n    implementation 'com.google.firebase:firebase-analytics'\n    implementation 'com.google.firebase:firebase-auth:16.0.5'\n    implementation 'com.google.android.gms:play-services-auth:17.0.0'\n    implementation 'com.google.firebase:firebase-database:17.0.0'\n\n\n}\n\nbuildscript {\n    repositories {\n        google()\n        jcenter()\n    }\n\n    dependencies {\n        classpath 'com.google.gms:google-services:4.3.3'\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 8553fd92778ea0a2d7d50ad70989ca63636eb0e8)
++++ app/build.gradle	(date 1613120584000)
+@@ -33,7 +33,7 @@
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+-    implementation 'com.android.support:appcompat-v7:27.1.1'
++    implementation 'com.google.android.material:material:1.1.0'
+ 
+     //room
+     def room_version = "2.2.6"
+Index: app/src/main/res/layout/fragment_search_ranking.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_search_ranking.xml	(date 1613150947000)
++++ app/src/main/res/layout/fragment_search_ranking.xml	(date 1613150947000)
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    tools:context=".MainActivity">
++
++    <com.google.android.material.tabs.TabLayout
++        android:id="@+id/tabs"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:elevation="1dp"
++        android:background="#EAEAEA"
++        app:tabMode="fixed"
++        app:tabGravity="fill"
++        app:tabTextColor="#959595"
++        app:tabSelectedTextColor="#000000"
++        app:tabIndicatorColor="#E6C04E"/>
++
++    <FrameLayout
++        android:id="@+id/container"
++        android:layout_below="@id/tabs"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent" >
++
++
++    </FrameLayout>
++
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/studyproject/SearchRankingFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/SearchRankingFragment.java	(date 1613149254000)
++++ app/src/main/java/com/example/studyproject/SearchRankingFragment.java	(date 1613149254000)
+@@ -0,0 +1,84 @@
++package com.example.studyproject;
++
++
++import android.content.Context;
++import android.net.Uri;
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentTransaction;
++
++import com.google.android.material.tabs.TabLayout;
++
++public class SearchRankingFragment extends Fragment {
++    TabLayout tabs;
++    SearchAllFragment fragment_search_all;
++    SearchHabitFragment fragment_search_habit;
++    SearchStudyFragment fragment_search_study;
++    SearchHobbyFragment fragment_search_hobby;
++    SearchExerciseFragment fragment_search_exercise;
++    SearchEtcFragment fragment_search_etc;
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        View view = inflater.inflate(R.layout.fragment_search_ranking, container, false);
++        fragment_search_all = new SearchAllFragment();
++        fragment_search_habit = new SearchHabitFragment();
++        fragment_search_study = new SearchStudyFragment();
++        fragment_search_hobby = new SearchHobbyFragment();
++        fragment_search_exercise = new SearchExerciseFragment();
++        fragment_search_etc = new SearchEtcFragment();
++
++        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
++        transaction.add(R.id.container, fragment_search_all).commit();
++
++        tabs = view.findViewById(R.id.tabs);
++        tabs.addTab(tabs.newTab().setText("전체"));
++        tabs.addTab(tabs.newTab().setText("습관"));
++        tabs.addTab(tabs.newTab().setText("공부"));
++        tabs.addTab(tabs.newTab().setText("취미"));
++        tabs.addTab(tabs.newTab().setText("운동"));
++        tabs.addTab(tabs.newTab().setText("기타"));
++
++        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
++            @Override
++            public void onTabSelected(TabLayout.Tab tab) {
++                int position = tab.getPosition();
++                Fragment selected = null;
++                if(position == 0)
++                    selected = fragment_search_all;
++                else if(position == 1)
++                    selected = fragment_search_habit;
++                else if(position == 2)
++                    selected = fragment_search_study;
++                else if(position == 3)
++                    selected = fragment_search_hobby;
++                else if(position == 4)
++                    selected = fragment_search_exercise;
++                else if(position == 5)
++                    selected = fragment_search_etc;
++
++                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
++                transaction.replace(R.id.container, selected).commit();
++
++
++            }
++
++            @Override
++            public void onTabUnselected(TabLayout.Tab tab) {
++
++            }
++
++            @Override
++            public void onTabReselected(TabLayout.Tab tab) {
++
++            }
++        });
++        return view;
++    }
++
++}
+Index: app/src/main/res/layout/fragment_search_exercise.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_search_exercise.xml	(date 1613150138000)
++++ app/src/main/res/layout/fragment_search_exercise.xml	(date 1613150138000)
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    android:background="#EAEAEA">
++
++
++    <Button
++        android:id="@+id/button2"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:background="@drawable/btn_rounded_corner"
++        android:text="꿀 순"
++        android:minWidth="0dp"
++        android:minHeight="0dp"
++        android:paddingHorizontal="20dp"
++        android:layout_margin="10dp"
++        android:textColor="#959595"
++        />
++    <TextView
++        android:id="@+id/textView5"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="운동" />
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/studyproject/SearchExerciseFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/SearchExerciseFragment.java	(date 1613149380000)
++++ app/src/main/java/com/example/studyproject/SearchExerciseFragment.java	(date 1613149380000)
+@@ -0,0 +1,20 @@
++package com.example.studyproject;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.fragment.app.Fragment;
++
++public class SearchExerciseFragment extends Fragment {
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search_exercise, container, false);
++
++        return rootView;
++    }
++}
+Index: app/src/main/res/drawable/edittext_rounded_corner_rectangle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/edittext_rounded_corner_rectangle.xml	(date 1613062892000)
++++ app/src/main/res/drawable/edittext_rounded_corner_rectangle.xml	(date 1613062892000)
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:state_focused="false">
++
++        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
++            <stroke
++                android:width="1dp"
++                android:color="#EEEEEE" />
++            <corners android:radius="4dp"/>
++            <solid
++                android:color="#FFFFFF" />
++        </shape>
++    </item>
++
++</selector>
+\ No newline at end of file

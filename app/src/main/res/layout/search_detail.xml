@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/first"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--title-->
+
+    <FrameLayout
+        android:id="@+id/second"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/ex_vec_1">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="40dp"
+            android:text="스터디 소개" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/third"
+        android:layout_below="@id/second"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/applesdgothicneosb"
+        app:srcCompat="@drawable/ex_rec_1" />
+
+        <TextView
+            android:id="@+id/study_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fourth"
+        android:layout_width="314.61dp"
+        android:layout_height="461.59dp"
+        android:layout_below="@id/third"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="172dp"
+        android:background="@drawable/rectangle582"
+        android:elevation="1.97dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/study_picture"
+            android:layout_width="272.83dp"
+            android:layout_height="102dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <FrameLayout
+            android:id="@+id/rectangle_5"
+            android:layout_width="286.59dp"
+            android:layout_height="257.59dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="140dp"
+            android:background="@drawable/rectangle_575">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/study_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="소개" />
+
+                <TextView
+                    android:id="@+id/study_make"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="개설" />
+
+                <TextView
+                    android:id="@+id/study_honey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="모은 꿀" />
+
+                <TextView
+                    android:id="@+id/study_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="멤버" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_report"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_report"
+                android:text="신고하기" />
+
+            <Button
+                android:id="@+id/bt_apply"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_apply"
+                android:text="신청하기" />
+
+            <Button
+                android:id="@+id/bt_ask"
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_ask"
+                android:text="문의하기" />
+            />
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</RelativeLayout>
