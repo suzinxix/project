@@ -19,19 +19,27 @@ import android.text.format.DateFormat;
 
 import java.util.Calendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@ link TimePickerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import static com.example.studyproject.MakeRoom.roomTimeFn;
+import static com.example.studyproject.MakeRoom.roomTimeSt;
+
+
 public class TimePickerFragment2 extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+    boolean chk=false;
+    int saveH, saveM;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int min = c.get(Calendar.MINUTE);
+        int hour, min;
+
+        if(chk){
+            hour = saveH; min = saveM;
+        } else{
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            min = c.get(Calendar.MINUTE);
+        }
+
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getContext(), this, hour, min, DateFormat.is24HourFormat(getContext())
         ); // getActivity??
@@ -45,10 +53,13 @@ public class TimePickerFragment2 extends DialogFragment implements TimePickerDia
         if(hourOfDay>11) amPm="오후";
         int curHour;
         if(hourOfDay>11){
-            curHour=hourOfDay-11;
+            curHour=hourOfDay-12;
         } else curHour=hourOfDay;
         Button ed = (Button)getActivity().findViewById(R.id.bt_edTime);
         ed.setTag(String.valueOf(hourOfDay)+String.valueOf(minute));
-        ed.setText(amPm+String.valueOf(hourOfDay)+"시 "+String.valueOf(minute)+"분");
+        ed.setText(amPm+" "+String.valueOf(curHour)+":"+String.valueOf(minute));
+        // MakeRoom 정보 전달
+        roomTimeSt = String.valueOf(hourOfDay)+String.valueOf(minute);
+        saveH = hourOfDay; saveM = minute; chk=true;
     }
 }

@@ -42,10 +42,10 @@ public class PersonalPageFragment extends Fragment {
         setHasOptionsMenu(true); // 메뉴가 있음을 알림
         //personalName = (EditText)view.findViewById(R.id.et_pname);
         //personalNick = (EditText) view.findViewById(R.id.et_pnick);
-        bt_personal = (Button) view.findViewById(R.id.bt_save);
+        //bt_personal = (Button) view.findViewById(R.id.bt_save);
         tv_pname = (TextView) view.findViewById(R.id.tv_pname);
         tv_pnick = (TextView) view.findViewById(R.id.tv_pnick);
-        bt_profileEdit = view.findViewById(R.id.profileEdit);
+        //bt_profileEdit = view.findViewById(R.id.profileEdit);
 
         // 툴바 추가
         toolbar_personal = (Toolbar) view.findViewById(R.id.toolbarPersonal);
@@ -115,6 +115,7 @@ public class PersonalPageFragment extends Fragment {
         });
 
          */
+        /*
         bt_profileEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +124,8 @@ public class PersonalPageFragment extends Fragment {
         });
 
 
+
+         */
         return view;
     }
 

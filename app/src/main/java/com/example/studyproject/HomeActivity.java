@@ -29,8 +29,6 @@ public class HomeActivity extends AppCompatActivity {
         fragment_studysearch = new SearchFragment();
         fragment_personal = new PersonalPageFragment();
 
-        //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_home).commit();
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.container, HomeFragment.newInstance()).commit();
 
