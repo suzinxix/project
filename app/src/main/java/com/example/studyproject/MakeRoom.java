@@ -113,7 +113,15 @@ public class MakeRoom extends AppCompatActivity{
         rbs[2] = (RadioButton)findViewById(R.id.rb_3); rbs[3] = (RadioButton)findViewById(R.id.rb_4);
         rbs[4] = (RadioButton)findViewById(R.id.rb_5);
 
+        // radio 기본값 설정
+        rbs[0].setSelected(true); // roomCate
+        rb_auth1.setSelected(true); // auth
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
 
         // 요일 설정
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -203,8 +211,8 @@ public class MakeRoom extends AppCompatActivity{
             rbs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(rb_auth1.isChecked())
-                        roomCate = cates[k]; // 횟수 (0)
+                    if(isChecked)
+                        roomCate = cates[k];
                 }
             });
         }
@@ -266,10 +274,13 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
+
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
                         getLock, getRoomauthHow1, getRoomTime1, getRoomTime2);
                 readRoomDB();
+
+
             }
         });
     }
