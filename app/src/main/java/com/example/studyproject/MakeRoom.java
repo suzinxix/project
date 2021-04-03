@@ -35,6 +35,8 @@ import java.util.Map;
 
 //@IgnoreExtraProperties
 public class MakeRoom extends AppCompatActivity{
+    // roomtime1 time2 손보기
+
     Button bt_makeroom;
     EditText et_roomname;
     ListView lv_roomcategory;
@@ -62,11 +64,11 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
-    boolean roomtime;
-    boolean roomday;
-    boolean roomlock;
-    String roomCate;
-    int roomHow;
+    boolean roomtime=false;
+    boolean roomday=false;
+    boolean roomlock=false;
+    String roomCate="습관";
+    int roomHow=0;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
     public static String roomTimeSt="0800";
@@ -111,7 +113,15 @@ public class MakeRoom extends AppCompatActivity{
         rbs[2] = (RadioButton)findViewById(R.id.rb_3); rbs[3] = (RadioButton)findViewById(R.id.rb_4);
         rbs[4] = (RadioButton)findViewById(R.id.rb_5);
 
+        // radio 기본값 설정
+        rbs[0].setSelected(true); // roomCate
+        rb_auth1.setSelected(true); // auth
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+
 
         // 요일 설정
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -201,8 +211,8 @@ public class MakeRoom extends AppCompatActivity{
             rbs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(rb_auth1.isChecked())
-                        roomCate = cates[k]; // 횟수 (0)
+                    if(isChecked)
+                        roomCate = cates[k];
                 }
             });
         }
@@ -233,12 +243,19 @@ public class MakeRoom extends AppCompatActivity{
                 String getRoomauth = et_roomauth.getText().toString();
                 String getRoomperson = et_roomperson.getText().toString();
 
-                int getRoomauthHow = roomHow; // 인증방식
+                String getRoomauthHow = Integer.toString(roomHow); // 인증방식
                 String getRoomcategory = roomCate; // 카테고리
-                boolean getDay = bl_day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
+                boolean getDay = bl_day; // final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
                 boolean getTime = bl_time; // 시간 사용 여부
                 boolean getLock = bl_lock; // 비공개 여부
                 final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn; // 인증시간
+
+                // array를 arrayList로
+                List<Integer> getRoomDay = new ArrayList<>(roomDay.length);
+                for(int num:roomDay) getRoomDay.add(num);
+
+                // Integer
+                Integer getRoomauthHow1 = roomHow;
 
                 // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
@@ -249,7 +266,7 @@ public class MakeRoom extends AppCompatActivity{
                     String[] days = {"월", "화","수","목","금","토","일"};
                     res += "\n인증 요일: ";
                     for(int i=0;i<7;i++){
-                        if(getRoomDay[i]==1){
+                        if(getRoomDay.get(i)==1){
                             res += days[i]+" ";
                         }
                     }
@@ -257,17 +274,20 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
                 tv_res.setText(res);
 
+
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow, getRoomTime1, getRoomTime2);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2);
                 readRoomDB();
+
+
             }
         });
     }
 
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
-                              String roomperson, boolean roomday, int[] roomWhen, boolean roomtime,
-                              boolean roomlock, int roomHow, String time1, String time2) {
+                              String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
+                              boolean roomlock, Integer roomHow, String time1, String time2) {
         //String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
                 roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2);
