@@ -18,7 +18,7 @@ public class MakeRoomDB {
     public List<Integer> roomwhen;
     public boolean roomtime;
     public boolean roomlock;
-    public int roomhow;
+    public Integer roomhow;
     public String roomtime1;
     public String roomtime2;
 
@@ -30,7 +30,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, int roomHow, String time1, String time2){
+                      boolean roomlock, Integer roomhow, String time1, String time2){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -42,7 +42,7 @@ public class MakeRoomDB {
         this.roomtime = roomtime; // 인증 시간 사용 여부
 
         this.roomlock = roomlock; // 비공개 여부
-        this.roomhow = roomHow; // 인증 방식 선택 (횟수 / 시간)
+        this.roomhow = roomhow; // 인증 방식 선택 (횟수 / 시간)
         this.roomtime1 = time1; // 인증 시작 시간
         this.roomtime2 = time2; // 인증 종료 시간
     }
@@ -83,9 +83,9 @@ public class MakeRoomDB {
 
     public void setRoomday() {this.roomday = roomday;}
 
-    public List<Integer> getRoomWhen() {return roomwhen;}
+    public List<Integer> getRoomwhen() {return roomwhen;}
 
-    public void setRoomWhen() {this.roomwhen = roomwhen;}
+    public void setRoomwhen() {this.roomwhen = roomwhen;}
 
     public boolean getRoomtime() {return roomtime;}
 
@@ -95,17 +95,17 @@ public class MakeRoomDB {
 
     public void setRoomlock() {this.roomlock = roomlock;}
 
-    public int getRoomHow() {return roomhow;}
+    public Integer getRoomhow() {return roomhow;}
 
-    public void setRoomHow() {this.roomhow = roomhow;}
+    public void setRoomhow() {this.roomhow = roomhow;}
 
-    public String getRoomTime1() {return roomtime1;}
+    public String getRoomtime1() {return roomtime1;}
 
-    public void setRoomTime1() {this.roomtime1 =  roomtime1;}
+    public void setRoomtime1() {this.roomtime1 =  roomtime1;}
 
-    public String getRoomTime2() {return roomtime2;}
+    public String getRoomtime2() {return roomtime2;}
 
-    public void setRoomTime2() {this.roomtime2 =  roomtime2;}
+    public void setRoomtime2() {this.roomtime2 =  roomtime2;}
 
 /*
     @Override

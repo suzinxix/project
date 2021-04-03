@@ -35,6 +35,8 @@ import java.util.Map;
 
 //@IgnoreExtraProperties
 public class MakeRoom extends AppCompatActivity{
+    // roomtime1 time2 손보기
+
     Button bt_makeroom;
     EditText et_roomname;
     ListView lv_roomcategory;
@@ -62,11 +64,11 @@ public class MakeRoom extends AppCompatActivity{
     String roomcategory;
     String roominfo;
     String roomauth;
-    boolean roomtime;
-    boolean roomday;
-    boolean roomlock;
-    String roomCate;
-    int roomHow;
+    boolean roomtime=false;
+    boolean roomday=false;
+    boolean roomlock=false;
+    String roomCate="습관";
+    int roomHow=0;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
     public static String roomTimeSt="0800";
@@ -233,7 +235,7 @@ public class MakeRoom extends AppCompatActivity{
                 String getRoomauth = et_roomauth.getText().toString();
                 String getRoomperson = et_roomperson.getText().toString();
 
-                int getRoomauthHow = roomHow; // 인증방식
+                String getRoomauthHow = Integer.toString(roomHow); // 인증방식
                 String getRoomcategory = roomCate; // 카테고리
                 boolean getDay = bl_day; // final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
                 boolean getTime = bl_time; // 시간 사용 여부
@@ -243,6 +245,9 @@ public class MakeRoom extends AppCompatActivity{
                 // array를 arrayList로
                 List<Integer> getRoomDay = new ArrayList<>(roomDay.length);
                 for(int num:roomDay) getRoomDay.add(num);
+
+                // Integer
+                Integer getRoomauthHow1 = roomHow;
 
                 // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
@@ -263,7 +268,7 @@ public class MakeRoom extends AppCompatActivity{
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow, getRoomTime1, getRoomTime2);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2);
                 readRoomDB();
             }
         });
@@ -271,7 +276,7 @@ public class MakeRoom extends AppCompatActivity{
 
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                              boolean roomlock, int roomHow, String time1, String time2) {
+                              boolean roomlock, Integer roomHow, String time1, String time2) {
         //String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
                 roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2);
