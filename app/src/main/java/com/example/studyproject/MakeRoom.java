@@ -235,10 +235,14 @@ public class MakeRoom extends AppCompatActivity{
 
                 int getRoomauthHow = roomHow; // 인증방식
                 String getRoomcategory = roomCate; // 카테고리
-                boolean getDay = bl_day; final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
+                boolean getDay = bl_day; // final int[] getRoomDay = roomDay; // 인증 요일 사용 여부 / 인증요일
                 boolean getTime = bl_time; // 시간 사용 여부
                 boolean getLock = bl_lock; // 비공개 여부
                 final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn; // 인증시간
+
+                // array를 arrayList로
+                List<Integer> getRoomDay = new ArrayList<>(roomDay.length);
+                for(int num:roomDay) getRoomDay.add(num);
 
                 // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
@@ -249,7 +253,7 @@ public class MakeRoom extends AppCompatActivity{
                     String[] days = {"월", "화","수","목","금","토","일"};
                     res += "\n인증 요일: ";
                     for(int i=0;i<7;i++){
-                        if(getRoomDay[i]==1){
+                        if(getRoomDay.get(i)==1){
                             res += days[i]+" ";
                         }
                     }
@@ -266,7 +270,7 @@ public class MakeRoom extends AppCompatActivity{
     }
 
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
-                              String roomperson, boolean roomday, int[] roomWhen, boolean roomtime,
+                              String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
                               boolean roomlock, int roomHow, String time1, String time2) {
         //String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
