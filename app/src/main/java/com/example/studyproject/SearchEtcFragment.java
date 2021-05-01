@@ -28,7 +28,7 @@ public class SearchEtcFragment extends Fragment {
     private DatabaseReference ContactsRef, RoomRef;
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
             .orderByChild("roomcategory")
-            .equalTo("etc");
+            .equalTo("기타");
 
     public SearchEtcFragment() {
 
