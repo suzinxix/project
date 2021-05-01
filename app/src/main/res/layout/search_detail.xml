@@ -60,12 +60,12 @@
 
     <FrameLayout
         android:id="@+id/fourth"
-        android:layout_width="314.61dp"
-        android:layout_height="461.59dp"
+        android:layout_width="440dp"
+        android:layout_height="750dp"
         android:layout_below="@id/third"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="172dp"
         android:background="@drawable/rectangle582"
         android:elevation="1.97dp"
@@ -73,18 +73,17 @@
 
         <ImageView
             android:id="@+id/study_picture"
-            android:layout_width="272.83dp"
+            android:layout_width="400dp"
             android:layout_height="102dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_marginTop="20dp"/>
 
         <FrameLayout
             android:id="@+id/rectangle_5"
-            android:layout_width="286.59dp"
-            android:layout_height="257.59dp"
+            android:layout_width="400dp"
+            android:layout_height="500dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="15dp"
@@ -138,7 +137,7 @@
             <Button
                 android:id="@+id/bt_report"
                 android:layout_width="280dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
@@ -148,7 +147,7 @@
             <Button
                 android:id="@+id/bt_apply"
                 android:layout_width="280dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
@@ -158,7 +157,7 @@
             <Button
                 android:id="@+id/bt_ask"
                 android:layout_width="280dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
