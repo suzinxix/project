@@ -71,8 +71,13 @@ public class MakeRoom extends AppCompatActivity{
     int roomHow=0;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
+
+
     public static String roomTimeSt="0800";
     public static String roomTimeFn="2200";
+    public static int saveSH, saveSM, saveFH, saveFM;
+    public static boolean chkS=false;
+    public static boolean chkF=false;
 
 
 
@@ -174,13 +179,14 @@ public class MakeRoom extends AppCompatActivity{
         });
 
         // 시간 설정: timepicker 설정하기
+        TimePickerFragment timePickerFragment1 = new TimePickerFragment();
         bt_stTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerFragment timePickerFragment = new TimePickerFragment();
-                timePickerFragment.show(getSupportFragmentManager(), "timePicker");
+                timePickerFragment1.show(getSupportFragmentManager(), "timePicker");
             }
         });
+
 
         bt_edTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,20 +195,7 @@ public class MakeRoom extends AppCompatActivity{
                 timePickerFragment2.show(getSupportFragmentManager(), "timePicker2");
             }
         });
-        // 시간이 stTime보다 빠르면 최솟값인 stTime으로 설정되도록...
-        // 다시 선택했을 때 현재 시간이 아니라 이전에 선택했던 시간으로 세팅되도록
 
-        // 카테고리 설정
-        /* listview 사용
-        String[] cates = {"습관","공부","취미","운동","기타"};
-        lv_roomcategory.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,cates));
-        lv_roomcategory.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        lv_roomcategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                roomCate = (String)parent.getItemAtPosition(position);
-            }
-        }); */
 
         // 카테고리 설정
         String[] cates = {"습관","공부","취미","운동","기타"};
@@ -271,7 +264,9 @@ public class MakeRoom extends AppCompatActivity{
                         }
                     }
                 }
-                if(getTime) res += "\n인증 시간: "+getRoomTime1+" ~ "+getRoomTime2;
+                if(getTime) res += "\n인증 시간: "+getRoomTime1.substring(0,2)+"시 "
+                        +getRoomTime1.substring(2)+"분 ~ "+getRoomTime2.substring(0,2)+"시 "
+                        +getRoomTime2.substring(2)+"분";
                 tv_res.setText(res);
 
 
