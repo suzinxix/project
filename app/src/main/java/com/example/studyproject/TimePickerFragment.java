@@ -20,11 +20,15 @@ import android.text.format.DateFormat;
 import java.util.Calendar;
 
 import static com.example.studyproject.MakeRoom.roomTimeSt;
+import static com.example.studyproject.MakeRoom.saveSH;
+import static com.example.studyproject.MakeRoom.saveSM;
+import static com.example.studyproject.MakeRoom.saveFH;
+import static com.example.studyproject.MakeRoom.saveFM;
+import static com.example.studyproject.MakeRoom.chkS;
 
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    boolean chk=false;
-    int saveH, saveM;
+
 
     @NonNull
     @Override
@@ -32,8 +36,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         final Calendar c = Calendar.getInstance();
         int hour, min;
 
-        if(chk){
-            hour = saveH; min = saveM;
+        if(chkS){
+            hour = saveSH; min = saveSM;
         } else{
             hour = c.get(Calendar.HOUR_OF_DAY);
             min = c.get(Calendar.MINUTE);
@@ -41,24 +45,27 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getContext(), this, hour, min, DateFormat.is24HourFormat(getContext())
-        ); // getActivity??
+        );
 
         return timePickerDialog;
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        String amPm="오전";
+        String amPm="오전"; String addi="";
         if(hourOfDay>11) amPm="오후";
         int curHour;
         if(hourOfDay>11){
             curHour=hourOfDay-12;
         } else curHour=hourOfDay;
+        if(minute<10) addi="0";
+
+
         Button st = (Button)getActivity().findViewById(R.id.bt_stTime);
         st.setTag(String.valueOf(hourOfDay)+String.valueOf(minute));
-        st.setText(amPm+" "+String.valueOf(curHour)+":"+String.valueOf(minute));
+        st.setText(amPm+" "+String.valueOf(curHour)+":"+addi+String.valueOf(minute));
         // MakeRoom 정보 전달
         roomTimeSt = String.valueOf(hourOfDay)+String.valueOf(minute);
-        saveH = hourOfDay; saveM = minute; chk=true;
+        saveSH = hourOfDay; saveSM = minute; chkS=true;
     }
 }
