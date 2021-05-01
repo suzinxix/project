@@ -124,10 +124,6 @@ public class MakeRoom extends AppCompatActivity{
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
-
-
         // 요일 설정
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

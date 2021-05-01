@@ -29,7 +29,7 @@ public class SearchStudyFragment extends Fragment {
     private DatabaseReference ContactsRef, RoomRef;
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
             .orderByChild("roomcategory")
-            .equalTo("study");
+            .equalTo("공부");
 
     public SearchStudyFragment() {
 
