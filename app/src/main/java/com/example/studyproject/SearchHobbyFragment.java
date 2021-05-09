@@ -28,7 +28,7 @@ public class SearchHobbyFragment extends Fragment {
     private DatabaseReference ContactsRef, RoomRef;
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
             .orderByChild("roomcategory")
-            .equalTo("hobby");
+            .equalTo("취미");
 
     public SearchHobbyFragment() {
 

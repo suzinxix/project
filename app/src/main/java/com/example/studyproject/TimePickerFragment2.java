@@ -16,16 +16,20 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.text.format.DateFormat;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 import static com.example.studyproject.MakeRoom.roomTimeFn;
-import static com.example.studyproject.MakeRoom.roomTimeSt;
+import static com.example.studyproject.MakeRoom.saveSH;
+import static com.example.studyproject.MakeRoom.saveSM;
+import static com.example.studyproject.MakeRoom.saveFH;
+import static com.example.studyproject.MakeRoom.saveFM;
+import static com.example.studyproject.MakeRoom.chkF;
 
 
 public class TimePickerFragment2 extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    boolean chk=false;
-    int saveH, saveM;
+
 
     @NonNull
     @Override
@@ -33,33 +37,45 @@ public class TimePickerFragment2 extends DialogFragment implements TimePickerDia
         final Calendar c = Calendar.getInstance();
         int hour, min;
 
-        if(chk){
-            hour = saveH; min = saveM;
+        if(chkF){
+            hour = saveFH; min = saveFM;
         } else{
             hour = c.get(Calendar.HOUR_OF_DAY);
             min = c.get(Calendar.MINUTE);
         }
 
+
+
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getContext(), this, hour, min, DateFormat.is24HourFormat(getContext())
-        ); // getActivity??
+        );
 
         return timePickerDialog;
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        String amPm="오전";
+        String amPm="오전"; String addi="";
+
+        if((hourOfDay*60+minute)<(saveSH*60+saveSM)){
+            // 끝나는 시간이 시작 시간보다 빠르지 않도록
+            hourOfDay=saveSH; minute=saveSM;
+            Toast.makeText(getContext(),"시작 시각보다 종료 시각을 빠르게 설정할 수 없습니다.", Toast.LENGTH_LONG).show();
+        }
+
         if(hourOfDay>11) amPm="오후";
         int curHour;
         if(hourOfDay>11){
             curHour=hourOfDay-12;
         } else curHour=hourOfDay;
+        if(minute<10) addi="0";
+
+
         Button ed = (Button)getActivity().findViewById(R.id.bt_edTime);
         ed.setTag(String.valueOf(hourOfDay)+String.valueOf(minute));
-        ed.setText(amPm+" "+String.valueOf(curHour)+":"+String.valueOf(minute));
-        // MakeRoom 정보 전달
+        ed.setText(amPm+" "+String.valueOf(curHour)+":"+addi+String.valueOf(minute));
+        // MakeRoom 정보 전달 (전역변수)
         roomTimeFn = String.valueOf(hourOfDay)+String.valueOf(minute);
-        saveH = hourOfDay; saveM = minute; chk=true;
+        saveFH = hourOfDay; saveFM = minute; chkF=true;
     }
 }
