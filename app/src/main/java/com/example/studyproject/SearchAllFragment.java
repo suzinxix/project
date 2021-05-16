@@ -73,7 +73,6 @@ public class SearchAllFragment extends Fragment {
                 final String info = model.getRoominfo();
                 final String person = model.getRoomperson();
 
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -104,6 +103,7 @@ public class SearchAllFragment extends Fragment {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
+                            String room_cate = snapshot.child("roomcategory").getValue().toString();
 
                             holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);

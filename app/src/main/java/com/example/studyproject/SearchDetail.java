@@ -1,6 +1,7 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -8,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class SearchDetail extends AppCompatActivity {
+    MakeRoomDB model;
     TextView Roomname, Roominfo, Roomperson;
+    ImageView Roompic;
     public SearchDetail(){
     }
 
@@ -20,6 +23,21 @@ public class SearchDetail extends AppCompatActivity {
         Roomname=findViewById(R.id.study_title);
         Roominfo=findViewById(R.id.study_info);
         Roomperson=findViewById(R.id.study_member);
+        Roompic=findViewById(R.id.study_picture);
+        //roomcate=findViewById(R.id.)
+
+        /* 카테고리 별 이미지 입히고 싶은데 실패함
+        if(model.roomcategory=="공부")
+            Roompic.setImageResource(R.drawable.book);
+        else if(model.roomcategory=="습관")
+            Roompic.setImageResource(R.drawable.habbit);
+        else if(model.roomcategory=="운동")
+            Roompic.setImageResource(R.drawable.exercise);
+        else if(model.roomcategory=="취미")
+            Roompic.setImageResource(R.drawable.hobby);
+        else if(model.roomcategory=="기타")
+            Roompic.setImageResource(R.drawable.study);
+         */
 
         String name = getIntent().getStringExtra("Roomname");
         String info = getIntent().getStringExtra("Roominfo");
@@ -28,6 +46,7 @@ public class SearchDetail extends AppCompatActivity {
         Roomname.setText(name);
         Roominfo.setText(info);
         Roomperson.setText(person);
+        Roompic.setImageResource(R.drawable.book);
     }
 
     /*
