@@ -73,13 +73,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //찾기
-        bt_find.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intentLogin = new Intent(Login.this, MyStudy.class); //수정
-//                startActivity(intentLogin);
-            }
-        });
+       // bt_find.setOnClickListener(new View.OnClickListener() {
+
+       // });
 //
 //        bt_join = (Button)findViewById(R.id.buttonJoin);
 //        bt_join.setOnClickListener(new View.OnClickListener() {
