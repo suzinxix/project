@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.studyproject">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <!--    카메라, 내부 저장소 접근 권한 설정-->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+   <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 카메라, 내부 저장소 접근 권한 설정 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"
-        tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+        />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -21,7 +24,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
+        <!--
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="true" />-->
+
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -31,17 +47,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity">
-        </activity>
-        <activity android:name=".LoginActivity">
-        </activity>
-        <activity android:name=".SettingActivity">
-        </activity>
-        <activity android:name=".SearchDetail">
-        </activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".SearchDetail" />
+        <activity android:name=".FindPwActivity"/>
 
         <!-- 사진 저장하기 -->
-        <provider android:name="androidx.core.content.FileProvider"
+        <provider
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.studyproject.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
@@ -76,8 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         bt_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intentLogin = new Intent(Login.this, MyStudy.class); //수정
-//                startActivity(intentLogin);
+                startActivity(new Intent(LoginActivity.this, FindPwActivity.class));
             }
         });
 //
