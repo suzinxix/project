@@ -7,4 +7,9 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+
+    <style name="makeFontStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">12dp</item>
+    </style>
 </resources>
