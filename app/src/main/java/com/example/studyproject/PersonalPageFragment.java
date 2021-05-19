@@ -55,7 +55,7 @@ public class PersonalPageFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
-        mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI

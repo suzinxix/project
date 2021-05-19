@@ -78,14 +78,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     String getUserNick = et_nickname.getText().toString();
 
 
-                                    String[] userId = {"1", "2", "3", "4", "5","6"};
                                     //hashmap 만들기
                                     HashMap result = new HashMap<>();
                                     result.put("name", getUserName);
                                     result.put("email", getUserEmail);
                                     result.put("nickname", getUserNick);
 
-                                    writeNewUser(userId[i++],getUserName,getUserEmail, getUserNick);
+                                    writeNewUser(user.getUid(),getUserName,getUserEmail, getUserNick);
 
                                     UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                                     user.updateProfile(profileChangeRequest)
