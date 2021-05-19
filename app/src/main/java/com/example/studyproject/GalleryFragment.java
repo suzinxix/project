@@ -45,7 +45,7 @@ public class GalleryFragment extends Fragment {
         StorageReference rootRef = firebaseStorage.getReference();
 
         //읽어오길 원하는 파일의 참조객체 얻어오기
-        StorageReference imgRef = rootRef.child("gallery/000010.png");
+        StorageReference imgRef = rootRef.child("gallery/000010.jpg");
         //하위 폴더가 있다면 폴더명까지 포함하여
         //imgRef= rootRef.child("photo/000010.jng");
 
