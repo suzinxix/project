@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
@@ -73,9 +72,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //찾기
-       // bt_find.setOnClickListener(new View.OnClickListener() {
-
-       // });
+        bt_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, FindPwActivity.class));
+            }
+        });
 //
 //        bt_join = (Button)findViewById(R.id.buttonJoin);
 //        bt_join.setOnClickListener(new View.OnClickListener() {
