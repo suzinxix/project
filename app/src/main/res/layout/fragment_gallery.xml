@@ -16,14 +16,14 @@
             android:layout_height="match_parent" >
 
             <ImageView
-                android:id="@+id/imageViewGallery"
+                android:id="@+id/imageViewGallery1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageViewGallery2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </TableRow>

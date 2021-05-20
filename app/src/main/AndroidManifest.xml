@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.studyproject">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
    <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라, 내부 저장소 접근 권한 설정 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 카메라, 내부 저장소 접근 권한 설정 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -50,6 +54,7 @@
         <activity android:name=".SearchDetail" />
         <activity android:name=".FindPwActivity"/>
 
+        <!-- 사진 저장하기 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.studyproject.fileprovider"
@@ -57,10 +62,12 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths">
+            </meta-data>
         </provider>
+        <activity android:name=".MakeRoom">
+        </activity>
 
-        <activity android:name=".MakeRoom" />
     </application>
 
 </manifest>
