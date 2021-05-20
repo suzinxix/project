@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment{
     private Toolbar toolbar_home;
-    Button bt_logout, bt_temp;
+    Button bt_temp;
 
     //Fragment 변경위한 함수
     public static HomeFragment newInstance() {
@@ -42,17 +42,7 @@ public class HomeFragment extends Fragment{
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);
 
-        // 로그아웃 구현
-        bt_logout = (Button) view.findViewById(R.id.bt_logout);
-        bt_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                ActivityCompat.finishAffinity(getActivity()); // 모든 액티비티 종료
-                startActivity(i);
-            }
-        });
+
 
         // 임시 버튼 HomeFragment->MyStudyFragment
         bt_temp = (Button) view.findViewById(R.id.bt_temp);

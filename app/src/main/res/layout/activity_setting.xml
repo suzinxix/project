@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="개인페이지"
+            android:fontFamily="@font/maplestorylight"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />
 
@@ -49,6 +50,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
+        <Button
+            android:id="@+id/bt_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그아웃" />
     </LinearLayout>
 </LinearLayout>
 

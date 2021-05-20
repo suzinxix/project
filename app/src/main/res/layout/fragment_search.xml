@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="스터디 탐색"
+            android:fontFamily="@font/maplestorylight"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />
 
