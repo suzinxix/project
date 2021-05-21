@@ -3,5 +3,12 @@
     <font android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/applesdgothicneosb"/>
-
+    <font
+        android:fontStyle = "normal"
+        android:fontWeight = "400"
+        android:font = "@font/maplestorybold"/>
+    <font
+        android:fontStyle = "normal"
+        android:fontWeight = "400"
+        android:font = "@font/maplestorylight"/>
 </font-family>

@@ -21,6 +21,7 @@
             android:layout_gravity="center"
             android:textColor="#FFFFFF"
             android:text="꿀터디"
+            android:fontFamily="@font/maplestorylight"
             android:textSize="30sp" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -86,11 +87,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/bt_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로그아웃" />
+
 
             <Button
                 android:id="@+id/bt_temp"

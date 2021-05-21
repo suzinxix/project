@@ -6,347 +6,346 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="#ECEBEB"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:background="@drawable/background_gray"
+        android:padding="10dp">
+
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ECEBEB"
-
-            android:orientation="vertical">
-
+            android:orientation="vertical" >
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="스터디 개설"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginVertical="10dp"
+                />
+            <TextView
+                style="@style/makeFontStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                style="@style/makeFontStyle"
                 android:text="스터디룸 이름을 적어주세요" />
 
             <EditText
                 android:id="@+id/et_roomname"
-                android:layout_width="378dp"
+                android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 android:padding="5dp" />
 
             <TextView
+                style="@style/makeFontStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                style="@style/makeFontStyle"
                 android:text="스터디룸에 대한 소개글을 작성해 주세요" />
 
             <EditText
                 android:id="@+id/et_roominfo"
-                android:layout_width="378dp"
+                android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 android:padding="5dp" />
 
             <TextView
+                style="@style/makeFontStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp" style="@style/makeFontStyle"
+                android:padding="5dp"
                 android:text="주 몇 회 스터디 활동을 인증하겠습니까?" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_roomauth"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_rounded_corner_rectangle"
-                    android:inputType="numberSigned"
-                    android:padding="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    style="@style/makeFontStyle"
-                    android:text="회" />
-            </LinearLayout>
+                android:orientation="horizontal" >
+            <EditText
+                android:id="@+id/et_roomauth"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                android:inputType="numberSigned"
+                android:padding="5dp" />
 
             <TextView
+                style="@style/makeFontStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:text="회" />
+            </LinearLayout>
+            <TextView
                 style="@style/makeFontStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text="최대 가입 인원을 설정해주세요." />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <EditText
+                android:id="@+id/et_roomperson"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_roomperson"
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_rounded_corner_rectangle"
-                    android:inputType="numberSigned"
-                    android:padding="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    style="@style/makeFontStyle"
-                    android:text="명" />
-            </LinearLayout>
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                android:inputType="numberSigned"
+                android:padding="5dp" />
 
             <TextView
+                style="@style/makeFontStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:text="명" />
+        </LinearLayout>
+            <TextView
                 style="@style/makeFontStyle"
-                android:hint="스터디룸의 카테고리를 설정해 주세요" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="스터디룸의 카테고리를 설정해 주세요"
+                android:padding="5dp" />
 
             <RadioGroup
                 android:id="@+id/rb_group2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rb_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="10dp"
-                    android:background="@null"
-
-                    android:button="@drawable/radio_rectangle"
                     style="@style/makeFontStyle"
-                    android:text="습관" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="습관"
+                    android:layout_marginRight="10dp"/>
 
                 <RadioButton
                     android:id="@+id/rb_2"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/makeFontStyle"
-                    android:text="공부" />
+                    android:text="공부"
+                    android:layout_marginRight="10dp"/>
 
                 <RadioButton
                     android:id="@+id/rb_3"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/makeFontStyle"
-                    android:text="취미" />
+                    android:text="취미"
+                    android:layout_marginRight="10dp"/>
 
                 <RadioButton
                     android:id="@+id/rb_4"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/makeFontStyle"
-                    android:text="운동" />
+                    android:text="운동"
+                    android:layout_marginRight="10dp"/>
 
                 <RadioButton
                     android:id="@+id/rb_5"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/makeFontStyle"
                     android:text="기타" />
             </RadioGroup>
 
             <Switch
                 android:id="@+id/switch3"
+                style="@style/makeFontStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/makeFontStyle"
+                android:layout_marginVertical="20dp"
                 android:text="그룹 비공개" />
 
+            <Switch
+                android:id="@+id/switch1"
+                style="@style/makeFontStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증 요일 설정" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-                <Switch
-                    android:id="@+id/switch1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <CheckBox
+                    android:id="@+id/bt_mon"
                     style="@style/makeFontStyle"
-                    android:text="인증 요일 설정" />
-
-                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="월요일"
+                    android:layout_marginRight="10dp"/>
 
-                    <CheckBox
-                        android:id="@+id/bt_mon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="월요일" />
-
-                    <CheckBox
-                        android:id="@+id/bt_tus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="화요일" />
-
-                    <CheckBox
-                        android:id="@+id/bt_wed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="수요일" />
-
-                    <CheckBox
-                        android:id="@+id/bt_thu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="목요일" />
-                </LinearLayout>
-
-                <LinearLayout
+                <CheckBox
+                    android:id="@+id/bt_tus"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="화요일"
+                    android:layout_marginRight="10dp"/>
 
-                    <CheckBox
-                        android:id="@+id/bt_fri"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="금요일" />
+                <CheckBox
+                    android:id="@+id/bt_wed"
+                    style="@style/makeFontStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수요일"
+                    android:layout_marginRight="10dp"/>
 
-                    <CheckBox
-                        android:id="@+id/bt_sat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="토요일" />
-
-                    <CheckBox
-                        android:id="@+id/bt_sun"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="일요일" />
-                </LinearLayout>
+                <CheckBox
+                    android:id="@+id/bt_thu"
+                    style="@style/makeFontStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="목요일"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-                <Switch
-                    android:id="@+id/switch2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <CheckBox
+                    android:id="@+id/bt_fri"
                     style="@style/makeFontStyle"
-                    android:text="인증 시간 설정" />
-
-                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="금요일"
+                    android:layout_marginRight="10dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="시작 시각" />
-
-                    <Button
-                        android:id="@+id/bt_stTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="오전 8:00" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <CheckBox
+                    android:id="@+id/bt_sat"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="토요일"
+                    android:layout_marginRight="10dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/makeFontStyle"
-                        android:text="종료 시각" />
-
-                    <Button
-                        android:id="@+id/bt_edTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="오후 11:00" />
-                </LinearLayout>
-
-                <TextView
+                <CheckBox
+                    android:id="@+id/bt_sun"
+                    style="@style/makeFontStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="인증 방식 선택" />
-
-                <RadioGroup
-                    android:id="@+id/rb_group1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_cnt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="횟수" />
-
-                    <RadioButton
-                        android:id="@+id/rb_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="시간" />
-                </RadioGroup>
-
-                <TextView
-                    android:id="@+id/tv_result"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="결과" />
+                    android:text="일요일" />
             </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch2"
+                style="@style/makeFontStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증 시간 설정"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/makeFontStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시작 시각" />
+
+                <Button
+                    android:id="@+id/bt_stTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="오전 8:00" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/makeFontStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="종료 시각" />
+
+                <Button
+                    android:id="@+id/bt_edTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오후 11:00" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증 방식 선택"
+                android:layout_marginTop="10dp"/>
+
+            <RadioGroup
+                android:id="@+id/rb_group1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <RadioButton
+                    android:id="@+id/rb_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="횟수"
+                    android:layout_marginHorizontal="20dp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시간"
+                    android:layout_marginHorizontal="20dp"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="결과" />
+
+            <Button
+                android:id="@+id/bt_makeroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_red_round"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:minHeight="0dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="5dp"
+                android:text="개설하기"
+                android:textColor="#ffffff" />
+
+            <ListView
+                android:id="@+id/db_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
+
         </LinearLayout>
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/bt_makeroom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_red_round"
-        android:gravity="center_vertical"
-        android:minHeight="0dp"
-        android:paddingHorizontal="14dp"
-        android:paddingVertical="5dp"
-        android:text="개설하기"
-        android:textColor="#ffffff" />
-
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="368dp"
-        android:layout_height="495dp">
-
-        <ListView
-            android:id="@+id/db_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
     </ScrollView>
+
+
 </LinearLayout>

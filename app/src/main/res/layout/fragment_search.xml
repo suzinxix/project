@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="스터디 탐색"
+            android:fontFamily="@font/maplestorylight"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />
 
@@ -31,7 +32,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="0dp"
-        android:background="#ECEBEB"
+        android:background="@drawable/background_gray"
         android:orientation="vertical">
 
         <EditText

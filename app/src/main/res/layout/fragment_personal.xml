@@ -19,7 +19,8 @@
             android:layout_gravity="center"
             android:textColor="#FFFFFF"
             android:text="개인페이지"
-            android:textSize="20sp" />
+            android:fontFamily="@font/maplestorylight"
+            android:textSize="30sp"/>
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -24,6 +24,7 @@
                 android:summary="카톡"
                 android:title="키워드 전용 알림음"
                 android:dependency="keyword"/>
+
         </PreferenceScreen>
 
         <SwitchPreference

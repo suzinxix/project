@@ -6,7 +6,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Environment;
@@ -38,7 +40,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 
 import java.io.File;
@@ -51,12 +54,11 @@ public class WeeklyFragmentTmp extends Fragment {
     private View weeklyView;
     private RecyclerView myWeeklyList;
     private DatabaseReference WeeklyRef, WeekRef;
-    private Uri imgUri, photoUri;
+    private Uri photoUri;
     private String mCurrentPhotoPath, downloadUrl;
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
     private int flag = 0;
-    private ImageView iv_photo;
     private FirebaseStorage storage;
 
 
@@ -76,8 +78,6 @@ public class WeeklyFragmentTmp extends Fragment {
         WeeklyRef = FirebaseDatabase.getInstance().getReference().child("weekly");
         WeekRef = FirebaseDatabase.getInstance().getReference().child("weekly");
 
-        iv_photo = weeklyView.findViewById(R.id.imageViewTempGallery); //수정
-/*
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
@@ -97,7 +97,7 @@ public class WeeklyFragmentTmp extends Fragment {
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission] ")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
-*/
+
         return weeklyView;
     }
 
@@ -153,157 +153,6 @@ public class WeeklyFragmentTmp extends Fragment {
         adapter.startListening();
     }
 
-//    public void takePhoto() {
-//
-//        // 촬영 후 이미지 가져옴
-//
-//        String state = Environment.getExternalStorageState();
-//        if(Environment.MEDIA_MOUNTED.equals(state)){
-//
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            if(intent.resolveActivity(getActivity().getPackageManager())!=null){
-//                File photoFile = null;
-//                try{
-//                    photoFile = createImageFile();
-//                }catch (IOException e){
-//                    e.printStackTrace();
-//                }
-//                if(photoFile!=null){
-//                    Uri providerURI = FileProvider.getUriForFile(getContext(), getActivity().getPackageName(),photoFile);
-//                    imgUri = providerURI;
-//                    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, providerURI);
-//                    startActivityForResult(intent, FROM_CAMERA);
-//                }
-//            }
-//        } else {
-//            Log.v("알림", "저장공간에 접근 불가능");
-//            return;
-//        }
-//    }
-//
-//    public File createImageFile() throws IOException{
-//        String imgFileName = System.currentTimeMillis() + ".jpg";
-//        File imageFile= null;
-//        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "");
-//
-//        if(!storageDir.exists()){
-//            //없으면 만들기
-//            Log.v("알림","storageDir 존재 x " + storageDir.toString());
-//            storageDir.mkdirs();
-//        }
-//        Log.v("알림","storageDir 존재함 " + storageDir.toString());
-//        imageFile = new File(storageDir,imgFileName);
-//        mCurrentPhotoPath = imageFile.getAbsolutePath();
-//        return imageFile;
-//    }
-//
-//    public void galleryAddPic(){
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        File f = new File(mCurrentPhotoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        getActivity().sendBroadcast(mediaScanIntent);
-//        Toast.makeText(getActivity(),"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
-//    }
-//
-//    public void selectAlbum(){
-//        //앨범에서 이미지 가져옴
-//        //앨범 열기
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-//        intent.setType("image/*");
-//        startActivityForResult(intent, FROM_ALBUM);
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode != RESULT_OK) {
-//            return;
-//        }
-//        switch (requestCode) {
-//            case FROM_ALBUM: {
-//                //앨범에서 가져오기
-//                if (data.getData() != null) {
-//                    try {
-//                        photoUri = data.getData();
-//                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
-//                        iv_photo.setImageBitmap(bitmap);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                break;
-//            }
-//
-//            case FROM_CAMERA: {
-//                //카메라 촬영
-//                try {
-//                    Log.v("알림", "FROM_CAMERA 처리");
-//                    galleryAddPic();
-//                    iv_photo.setImageURI(imgUri);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//            }
-//        }
-//    }
-//
-//    public void makeConfirmDialog() {
-//        AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext()); //R.style.추가
-//        alt_bld.setTitle("작성 완료").setMessage("글을 게시하시겠습니까?").setCancelable(
-//                false).setPositiveButton("네",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        //DB에 등록하기
-////                        final String cu = mAuth.getUid();
-//                        //1. 사진을 storage에 저장하고 그 url을 알아내야 함
-//                        String filename = "" + System.currentTimeMillis(); //cu + "_" +
-//                        StorageReference storageRef = storage.getReferenceFromUrl("https://memberdb-27335-default-rtdb.firebaseio.com/").child("Gallery/" + filename);
-//                        UploadTask uploadTask;
-//                        Uri file = null;
-//                        if(flag ==0){
-//                            //사진촬영
-//                            file = Uri.fromFile(new File(mCurrentPhotoPath));
-//                        } else if(flag==1){
-//                            //앨범선택
-//                            file = photoUri;
-//                        }
-//                        uploadTask = storageRef.putFile(file);
-//                        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-//                        progressDialog.setMessage("업로드중...");
-//                        progressDialog.show();
-//
-//                        // Register observers to listen for when the download is done or if it fails
-//                        uploadTask.addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception exception) {
-//                                // Handle unsuccessful uploads
-//                                Log.v("알림", "사진 업로드 실패");
-//                                exception.printStackTrace();
-//                            }
-//                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-//                                downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-//                                Log.v("알림", "사진 업로드 성공 " + downloadUrl);
-//                            }
-//                        });
-//                    }
-//                }).setNegativeButton("아니오",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // 아니오 클릭. dialog 닫기.
-//                        dialog.cancel();
-//                    }
-//                });
-//        AlertDialog alert = alt_bld.create();
-//        alert.show();
-//    }
-
     public class WeeklyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_week, tv_todo;
         ImageButton ibt_camera, ibt_timer;
@@ -324,7 +173,8 @@ public class WeeklyFragmentTmp extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             flag = 0;
-                            //takePhoto();
+                            takePhoto();
+                            uploadPhoto();
                         }
                     };
 
@@ -332,7 +182,8 @@ public class WeeklyFragmentTmp extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             flag = 1;
-                            //selectAlbum();
+                            selectAlbum();
+                            uploadPhoto();
                         }
                     };
 
@@ -361,4 +212,156 @@ public class WeeklyFragmentTmp extends Fragment {
             });
         }
     }
+
+    public void takePhoto() {
+        // 카메라 인텐트 실행
+        String state = Environment.getExternalStorageState();
+        if(Environment.MEDIA_MOUNTED.equals(state)) {
+            Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if(takePhotoIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager())!=null){
+                File photoFile = null;
+                try{
+                    photoFile = createImageFile();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+                if(photoFile!=null){
+                    Uri photoURI = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.example.studyproject.fileprovider", photoFile);
+                    takePhotoIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePhotoIntent, FROM_CAMERA);
+                }
+            }
+        } else {
+            Log.v("알림", "저장공간에 접근 불가능");
+            return;
+        }
+    }
+
+    //사용자 휴대폰 갤러리에 저장
+    public File createImageFile() throws IOException{ 
+        String imgFileName = System.currentTimeMillis() + ".jpg";
+        File imageFile= null;
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/DCIM", "honeystudy"); //chilㅇ
+
+        if(!storageDir.exists()){
+            //없으면 만들기
+            Log.v("알림","storageDir 존재 x " + storageDir.toString());
+            storageDir.mkdirs();
+        }
+        Log.v("알림","storageDir 존재함 " + storageDir.toString());
+        imageFile = new File(storageDir,imgFileName);
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+        return imageFile;
+    }
+
+    public void addPhotoToGallery(){
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
+        Toast.makeText(getActivity(),"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
+    }
+
+    public void selectAlbum(){
+        //앨범에서 이미지 가져옴
+        //앨범 열기
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setType("image/*");
+        startActivityForResult(intent, FROM_ALBUM);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            case FROM_ALBUM: {
+                //앨범에서 가져오기
+                if (data.getData() != null) {
+                    try {
+                        photoUri = data.getData();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            }
+
+            case FROM_CAMERA: {
+                //카메라 촬영
+                try {
+                    addPhotoToGallery();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
+
+    public void uploadPhoto() {
+        AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext()); //R.style.추가
+        alt_bld.setTitle("사진 선택 완료").setMessage("사진을 등록하시겠습니까?").setCancelable(
+                false).setPositiveButton("네",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //DB에 등록하기
+                        storage = FirebaseStorage.getInstance("gs://fir-test-1-35648.appspot.com");
+//                        final String cu = mAuth.getUid();
+                        //1. 사진을 storage에 저장하고 그 url을 알아내야 함
+                        String filename = "" + System.currentTimeMillis(); //cu + "_" +
+                        StorageReference storageRef = storage.getReference();
+                        StorageReference galleryRdf = storageRef.child("gallery/" +filename);
+                        UploadTask uploadTask;
+                        Uri file = null;
+                        if(flag ==0){
+                            //사진촬영
+                            file = Uri.fromFile(new File(mCurrentPhotoPath));
+                        } else if(flag==1){
+                            //앨범선택
+                            file = photoUri;
+                        }
+                        uploadTask = galleryRdf.putFile(file);
+                        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                        progressDialog.setMessage("업로드중");
+                        progressDialog.show();
+
+                        // Register observers to listen for when the download is done or if it fails
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                Log.v("알림", "사진 업로드 실패");
+                                progressDialog.dismiss();
+                                exception.printStackTrace();
+
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                                downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                                Log.v("알림", "사진 업로드 성공 " + downloadUrl);
+                                progressDialog.dismiss();
+                                Toast.makeText(getActivity(), "사진이 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                }).setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // 아니오 클릭. dialog 닫기.
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = alt_bld.create();
+        alert.show();
+    }
+
+
 }
