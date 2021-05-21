@@ -61,6 +61,13 @@
         </provider>
 
         <activity android:name=".MakeRoom" />
+
+        <service android:name=".FirebasePushNotificationClass">
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE">
+                </action>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
@@ -28,6 +32,19 @@ public class HomeActivity extends AppCompatActivity {
         fragment_home = new HomeFragment();
         fragment_studysearch = new SearchFragment();
         fragment_personal = new PersonalPageFragment();
+
+        // https://www.youtube.com/watch?v=M5RuFo-85cY
+        // Firebase cloud message 받아오는 부분분
+       FirebaseMessaging.getInstance().subscribeToTopic("alert")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Done";
+                        if(!task.isSuccessful()){
+                            msg = "Failed";
+                        }
+                    }
+                });
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.container, HomeFragment.newInstance()).commit();
@@ -58,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
 
     }
     public void replaceFragment(Fragment fragment) {
