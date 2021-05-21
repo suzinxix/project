@@ -47,10 +47,4 @@ public class TodoFragment extends Fragment {
         adapter.addItem(new Todo(2,"아침에 일어나서 물마시기"));
         adapter.addItem(new Todo(3,"식물에 물주기"));
     }
-
-
-
-
-
-
 }

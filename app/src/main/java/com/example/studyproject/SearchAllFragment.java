@@ -40,7 +40,6 @@ public class SearchAllFragment extends Fragment {
     private View ContactsView;
     private DatabaseReference ContactsRef, RoomRef;
 
-
     public SearchAllFragment(){
 
     }

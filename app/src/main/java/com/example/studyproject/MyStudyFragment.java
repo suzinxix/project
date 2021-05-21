@@ -1,5 +1,6 @@
 package com.example.studyproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 
 public class MyStudyFragment extends Fragment {
@@ -24,6 +26,11 @@ public class MyStudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true); // 메뉴가 있음을 알림
         View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
+
+        //Intent intent = new Intent(getActivity(), StudyRoom.class);
+        //startActivity(intent);
+        //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        //transaction.add(R.id.studyView, study).commit();
 
         // 툴바 추가
         toolbar_mystudy = (Toolbar) view.findViewById(R.id.toolbarMystudy);
@@ -55,6 +62,5 @@ public class MyStudyFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }
