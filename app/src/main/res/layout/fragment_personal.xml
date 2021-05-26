@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarPersonal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F3C94E">
+        android:background="@color/mainColor">
 
         <TextView
             android:id="@+id/toolbar_title"
