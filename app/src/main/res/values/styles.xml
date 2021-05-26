@@ -41,6 +41,13 @@
         <item name="android:textColor">@color/subText</item>
         <item name="android:textSize">12dp</item>
     </style>
+
+    <style name="make_Timer">
+        <item name="android:textColor">@color/honeyYellow</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Switch1" parent="Theme.AppCompat.Light">
         <!-- active thumb & track color (30% transparency) -->
         <item name="colorControlActivated">@color/honeyYellow</item>
