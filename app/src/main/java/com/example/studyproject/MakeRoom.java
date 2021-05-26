@@ -29,7 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +46,7 @@ public class MakeRoom extends AppCompatActivity{
     EditText et_roomauth;
     EditText et_roomperson;
     CheckBox[] cb=new CheckBox[7];
+    TextView[] tv_days = new TextView[7];
     Switch sw_day, sw_lock, sw_time;
     boolean bl_lock=false; boolean bl_day = false; boolean bl_time=false;
     int how=0;
@@ -101,7 +101,7 @@ public class MakeRoom extends AppCompatActivity{
         rb_auth1 = (RadioButton)findViewById(R.id.rb_cnt);
         rb_auth2=(RadioButton)findViewById(R.id.rb_time);
 
-        tv_res = (TextView)findViewById(R.id.tv_result); // 결과 확인
+
 
         // 인증 요일
         sw_day = (Switch)findViewById(R.id.switch1);
@@ -109,7 +109,16 @@ public class MakeRoom extends AppCompatActivity{
         cb[2] = (CheckBox)findViewById(R.id.bt_wed); cb[3] = (CheckBox)findViewById(R.id.bt_thu);
         cb[4] = (CheckBox)findViewById(R.id.bt_fri); cb[5] = (CheckBox)findViewById(R.id.bt_sat);
         cb[6] = (CheckBox)findViewById(R.id.bt_sun);
-        for(int i =0;i<cb.length;i++) cb[i].setEnabled(false); // 체크박스 비활성화
+        tv_days[0] = (TextView)findViewById(R.id.tv_mon);  tv_days[1] = (TextView)findViewById(R.id.tv_tus);
+        tv_days[2] = (TextView)findViewById(R.id.tv_wed);  tv_days[3] = (TextView)findViewById(R.id.tv_thu);
+        tv_days[4] = (TextView)findViewById(R.id.tv_fri);  tv_days[5] = (TextView)findViewById(R.id.tv_sat);
+        tv_days[6] = (TextView)findViewById(R.id.tv_sun);
+        for(int i =0;i<cb.length;i++) {
+            cb[i].setEnabled(false);
+            cb[i].setButtonDrawable(R.drawable.checkbox_custom);
+            tv_days[i].setTextAppearance(R.style.make_Sub_Unselected);
+        }// 체크박스 비활성화
+
 
         // switch 및 비활성화 설정
         sw_lock = (Switch)findViewById(R.id.switch3);
@@ -126,16 +135,24 @@ public class MakeRoom extends AppCompatActivity{
         rb_auth1.setSelected(true); // auth
 
 
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // 요일 설정
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    for (int i = 0; i < cb.length; i++) cb[i].setEnabled(true); // 체크박스 활성화
+                    for (int i = 0; i < cb.length; i++) {
+                        cb[i].setEnabled(true); // 체크박스 활성화
+                        tv_days[i].setTextAppearance(R.style.make_Sub_Selected);
+                    }
                     bl_day = true;
                 }else {
-                    for (int i = 0; i < cb.length; i++) cb[i].setEnabled(false); // 체크박스 비활성화
+                    for (int i = 0; i < cb.length; i++) {
+                        cb[i].setChecked(false);
+                        cb[i].setEnabled(false); // 체크박스 비활성화
+                        tv_days[i].setTextAppearance(R.style.make_Sub_Unselected);
+                    }
                     bl_day = false;
                 }
             }
@@ -147,6 +164,7 @@ public class MakeRoom extends AppCompatActivity{
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) roomDay[k]=1;
                     else roomDay[k]=0;
+
                 }
             });
         }
@@ -157,9 +175,13 @@ public class MakeRoom extends AppCompatActivity{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     bt_stTime.setEnabled(true); bt_edTime.setEnabled(true); // 체크박스 활성화
+                    bt_stTime.setTextAppearance(R.style.make_Time);
+                    bt_edTime.setTextAppearance(R.style.make_Time);
                     bl_time = true;
                 }else {
                     bt_stTime.setEnabled(false); bt_edTime.setEnabled(false); // 체크박스 비활성화
+                    bt_stTime.setTextAppearance(R.style.make_Time_off);
+                    bt_edTime.setTextAppearance(R.style.make_Time_off);
                     bl_time = false;
                 }
             }
