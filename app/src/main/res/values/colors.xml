@@ -10,4 +10,6 @@
     <color name="impoRed">#BB3333</color>
     <color name="transparentGray">#42221f1f</color>
     <color name="lightlightGray">#f5f5f5</color>
+    <color name="mainColor">#F2C94C</color>
+    <color name="backgroundColor">#FEFEF1</color>
 </resources>

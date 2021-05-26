@@ -13,15 +13,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class HomeActivity extends AppCompatActivity {
     HomeFragment fragment_home;
     SearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
+    private ChipNavigationBar bottomNavigation;
 
 
     @Override
@@ -33,23 +36,38 @@ public class HomeActivity extends AppCompatActivity {
         fragment_studysearch = new SearchFragment();
         fragment_personal = new PersonalPageFragment();
 
-        // https://www.youtube.com/watch?v=M5RuFo-85cY
-        // Firebase cloud message 받아오는 부분분
-       FirebaseMessaging.getInstance().subscribeToTopic("alert")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "Done";
-                        if(!task.isSuccessful()){
-                            msg = "Failed";
-                        }
-                    }
-                });
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.container, HomeFragment.newInstance()).commit();
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+
+
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setItemSelected(R.id.tab1,true);
+
+        bottomNavigation.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                switch (i){
+                    case R.id.tab1:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, fragment_home).commit();
+
+                        break;
+                    case R.id.tab2:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, fragment_studysearch).commit();
+
+                        break;
+                    case R.id.tab3:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, fragment_personal).commit();
+
+
+                        break;
+                }
+            }
+        });
+/*
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -76,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
+*/
     }
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
