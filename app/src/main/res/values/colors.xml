@@ -3,6 +3,13 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="honeyYellow">#f2c94c</color>
+    <color name="inactiveText">#AAAAAA</color>
+    <color name="activeText">#000000</color>
+    <color name="subText">#555555</color>
+    <color name="impoRed">#BB3333</color>
+    <color name="transparentGray">#42221f1f</color>
+    <color name="lightlightGray">#f5f5f5</color>
     <color name="mainColor">#F2C94C</color>
     <color name="backgroundColor">#FEFEF1</color>
 </resources>

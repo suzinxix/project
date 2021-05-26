@@ -25,6 +25,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 
@@ -34,7 +36,6 @@ public class SearchDetail extends AppCompatActivity {
     //private MyRoomFragmentAdapter myadapter;
     //RecyclerView recyclerView;
     //private RecyclerView.LayoutManager layoutManager;
-    ArrayList<UserStudyRoomDB> dataholder;
 
     MakeRoomDB model;
     TextView Roomname, Roominfo, Roomperson;
@@ -48,10 +49,10 @@ public class SearchDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_detail);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Roomname=findViewById(R.id.study_title);
-        Roominfo=findViewById(R.id.study_info);
-        Roomperson=findViewById(R.id.study_member);
-        Roompic=findViewById(R.id.study_picture);
+        Roomname=(TextView)findViewById(R.id.study_title);
+        Roominfo=(TextView)findViewById(R.id.study_info);
+        Roomperson=(TextView)findViewById(R.id.study_member);
+        Roompic=(ImageView)findViewById(R.id.study_picture);
 
         String name = getIntent().getStringExtra("Roomname");
         String info = getIntent().getStringExtra("Roominfo");
@@ -91,15 +92,15 @@ public class SearchDetail extends AppCompatActivity {
                                 //최종이길..
                                 //자바 코드에서 프래그먼트 추가하는 방법
                                 MyRoomFragment mf = (MyRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frag_myroom);
+                                setContentView(R.layout.fragment_myroom);
                                 mf.recyclerView = findViewById(R.id.myroom);
-                                dataholder = new ArrayList<>();
-                                //mf.recyclerView.setLayoutManager(new LinearLayoutManager(mf.getContext()));
 
-                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
-                                dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
-                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
+                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(mf.dataholder));
+                                mf.dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
+                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(mf.dataholder));
 
-                                new MyRoomFragmentAdapter(dataholder).notifyDataSetChanged();
+                                new MyRoomFragmentAdapter(mf.dataholder).notifyDataSetChanged();
+                                Toast.makeText(SearchDetail.this,"스터디룸 가입이 완료되었습니다.",Toast.LENGTH_LONG).show();
                                 //((MyRoomFragment) getSupportFragmentManager().findFragmentByTag("fragmentTag")).testFunction();
                                 //dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
                                 //recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
@@ -121,7 +122,7 @@ public class SearchDetail extends AppCompatActivity {
                         });
                 AlertDialog alertDialog = dlg.create();
                 dlg.show();
-                Toast.makeText(SearchDetail.this,"스터디룸 가입이 완료되었습니다.",Toast.LENGTH_LONG).show();
+
                 //ApplyDialog applyDialog = new ApplyDialog();
                 //applyDialog.show(getSupportFragmentManager(), "example dialog");
             }
@@ -148,4 +149,3 @@ public class SearchDetail extends AppCompatActivity {
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new SearchAllFragment());
     }*/
 }
-
