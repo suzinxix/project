@@ -30,7 +30,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +66,10 @@ public class MakeRoom extends AppCompatActivity{
     List roomList = new ArrayList<>();
     private ArrayAdapter<String> dataAdapter;
 
-    String roomname;
-    String roomcategory;
-    String roominfo;
-    String roomauth;
+    String roomname="Undefined";
+    String roomcategory="Undefined";
+    String roominfo="Undefined";
+    String roomauth="Undefined";
     boolean roomtime=false;
     boolean roomday=false;
     boolean roomlock=false;
@@ -130,9 +133,8 @@ public class MakeRoom extends AppCompatActivity{
         rbs[2] = (RadioButton)findViewById(R.id.rb_3); rbs[3] = (RadioButton)findViewById(R.id.rb_4);
         rbs[4] = (RadioButton)findViewById(R.id.rb_5);
 
-        // radio 기본값 설정
-        rbs[0].setSelected(true); // roomCate
-        rb_auth1.setSelected(true); // auth
+
+
 
 
 
@@ -244,8 +246,15 @@ public class MakeRoom extends AppCompatActivity{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(rb_auth2.isChecked())
                     roomHow = 1; // 시간 (1)
+                sw_time.setChecked(true);
             }
         });
+
+
+        // radio 기본값 설정
+        rbs[0].setSelected(true); // roomCate
+        rb_auth1.setSelected(true); // auth
+
 
         // 개설
         bt_makeroom.setOnClickListener(new View.OnClickListener() {
@@ -288,8 +297,28 @@ public class MakeRoom extends AppCompatActivity{
                 if(getTime) res += "\n인증 시간: "+getRoomTime1.substring(0,2)+"시 "
                         +getRoomTime1.substring(2)+"분 ~ "+getRoomTime2.substring(0,2)+"시 "
                         +getRoomTime2.substring(2)+"분";
-                tv_res.setText(res);
 
+                // 정보 필터링
+                int chkI = checkInfo(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
+                        getRoomperson, getDay, getRoomDay, getTime,
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2);
+                switch (chkI){
+                    case -1:
+                        Toast.makeText(MakeRoom.this, "필수 정보를 모두 채워주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    case -2:
+                        Toast.makeText(MakeRoom.this, "시간 설정이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    case -3:
+                        Toast.makeText(MakeRoom.this, "요일 설정이 잘못되었습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    case -4:
+                        Toast.makeText(MakeRoom.this, "인증 횟수를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    case -5:
+                        Toast.makeText(MakeRoom.this, "인증 시간을 설정해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                }
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
@@ -299,6 +328,46 @@ public class MakeRoom extends AppCompatActivity{
 
             }
         });
+    }
+
+    private int checkInfo(String roomname, String roomcategory, String roominfo, String roomauth,
+                           String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
+                           boolean roomlock, Integer roomHow, String time1, String time2){
+
+        if((roomname.equals(""))||(roominfo.equals(""))
+        ||(roomperson.equals(""))) return -1; // 필수조건 누락
+
+        // 시간 조건 확인
+        if(Integer.parseInt(time1.substring(0,2))>Integer.parseInt(time2.substring(0,2))){
+            return -2; // 시간이 맞지 않음
+        } else if(Integer.parseInt(time1.substring(0,2))==Integer.parseInt(time2.substring(0,2))){
+            if(Integer.parseInt(time1.substring(2,4))>=Integer.parseInt(time2.substring(2,4))){
+                return -2; // 시간이 맞지 않음
+            }
+        }
+
+        if (roomday){
+            for(int i=0;i<7;i++){
+                if(roomWhen.get(i)==1){
+                    break;
+                }
+                if(i==6){
+                    return -3; // 요일이 선택되지 않음
+                }
+            }
+        }
+
+        if(roomHow==0){
+            if(roomauth.equals("")){
+                return -4; // 인증 횟수 기입 누락
+            }
+        } else if(roomHow==1){
+            if(roomtime==false){
+                return -5; // 인증 시간 기입 누락
+            }
+        }
+
+        return 0;
     }
 
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,

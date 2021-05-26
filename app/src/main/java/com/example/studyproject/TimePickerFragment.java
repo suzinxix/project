@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.text.format.DateFormat;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -53,6 +54,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         String amPm="오전"; String addi="";
+
+        if((hourOfDay*60+minute)<(saveSH*60+saveSM)){
+            // 끝나는 시간이 시작 시간보다 빠르지 않도록
+            hourOfDay=saveSH; minute=saveSM;
+            Toast.makeText(getContext(),"시작 시각보다 종료 시각을 빠르게 설정할 수 없습니다.", Toast.LENGTH_LONG).show();
+        }
+
         if(hourOfDay>11) amPm="오후";
         int curHour;
         if(hourOfDay>11){

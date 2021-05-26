@@ -93,37 +93,10 @@
                 android:layout_marginRight="3dp"
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
-                android:padding="5dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:padding="5dp"
-                style="@style/make_Big"
-                android:text="주 몇 회 스터디 활동을 인증하겠습니까?" />
+                />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/et_roomauth"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-
-                    android:background="@drawable/edittext_rounded_corner_rectangle"
-                    android:inputType="numberSigned"
-                    android:padding="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    style="@style/make_Big"
-                    android:text="회" />
-            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -136,16 +109,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-
+                android:paddingHorizontal="5dp"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/et_roomperson"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
                     android:background="@drawable/edittext_rounded_corner_rectangle"
                     android:inputType="numberSigned"
-                    android:padding="5dp" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,6 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
+                    android:checked="true"
                     style="@style/make_Sub"
                     android:text="습관" />
 
@@ -211,19 +186,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/make_Big"
+                android:paddingHorizontal="5dp"
                 android:theme="@style/Switch1"
                 android:text="그룹 비공개" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingHorizontal="5dp">
 
                 <Switch
                     android:id="@+id/switch1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/make_Big"
+
                     android:theme="@style/Switch1"
                     android:text="인증 요일 설정" />
 
@@ -370,18 +348,58 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/make_Big"
+                android:paddingHorizontal="5dp"
+                android:text="인증 방식 선택" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/make_Sub2"
+                android:paddingHorizontal="5dp"
+                android:text="인증 방식 선택과 별개로 타이머와 사진 기능을 모두 이용 가능합니다." />
+            <RadioGroup
+                android:id="@+id/rb_group1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/RadioStyle"
+                android:paddingHorizontal="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/make_Sub"
+                    android:checked="true"
+                    android:text="횟수" />
+
+                <RadioButton
+                    android:id="@+id/rb_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/make_Sub"
+                    android:text="시간" />
+            </RadioGroup>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
-
-                <Switch
-                    android:id="@+id/switch2"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/make_Big"
-                    android:theme="@style/Switch1"
                     android:text="인증 시간 설정" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/make_Sub2"
+                    android:text="인증 방식이 시간일 경우 인증할 시간을 선택해야 합니다." />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -401,6 +419,13 @@
                         android:background="@drawable/btn_trans"
                         style="@style/make_Time_off"
                         android:text="오전 8:00" />
+                    <Switch
+                        android:id="@+id/switch2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/make_Big"
+                        android:theme="@style/Switch1"
+                        android:visibility="invisible"/>
 
                 </LinearLayout>
 
@@ -424,38 +449,43 @@
                         android:text="오후 11:00" />
                 </LinearLayout>
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
                     style="@style/make_Big"
-                    android:text="인증 방식 선택" />
+                    android:text="인증 횟수 설정 (일주일에 n회)" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     style="@style/make_Sub2"
-                    android:text="인증 방식 선택과 별개로 타이머와 사진 기능을 모두 이용 가능합니다." />
-                <RadioGroup
-                    android:id="@+id/rb_group1"
+                    android:text="인증 방식이 횟수일 경우 인증 횟수를 설정해야 합니다." />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/RadioStyle"
+                    android:layout_marginBottom="7dp"
+                    android:paddingHorizontal="5dp"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/rb_cnt"
+                    <EditText
+                        android:id="@+id/et_roomauth"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:background="@drawable/edittext_rounded_corner_rectangle"
+                        android:inputType="numberSigned"
+                        />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/make_Sub"
-                        android:text="횟수" />
-
-                    <RadioButton
-                        android:id="@+id/rb_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/make_Sub"
-                        android:text="시간" />
-                </RadioGroup>
-
+                        android:padding="5dp"
+                        style="@style/make_Big"
+                        android:text="회" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
