@@ -5,14 +5,14 @@
     android:id="@+id/gotomake"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F7EF"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F3C94E">
+        android:background="@color/mainColor">
 
         <TextView
             android:id="@+id/toolbar_title"
