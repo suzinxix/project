@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -34,9 +35,12 @@ public class SearchDetail extends AppCompatActivity {
     //private MyRoomFragmentAdapter myadapter;
     //RecyclerView recyclerView;
     //private RecyclerView.LayoutManager layoutManager;
-    ArrayList<UserStudyRoomDB> dataholder;
+    //MakeRoomDB model;
+    //private UserStudyRoomViewModel userStudyRoomViewModel;
+    //public static final String EXTRA_STUDYROOMTITLE = "com.example.studyproject.EXTRA_STUDYROOMTITLE";
+    //public static final String EXTRA_STUDYROOMGGUL = "com.example.studyproject.EXTRA_STUDYROOMGGUL";
+    //public static final String EXTRA_STUDYROOMSTARTDAY = "com.example.studyproject.EXTRA_STUDYROOMSTARTDAY";
 
-    MakeRoomDB model;
     TextView Roomname, Roominfo, Roomperson;
     ImageView Roompic;
     Button bt;
@@ -88,18 +92,28 @@ public class SearchDetail extends AppCompatActivity {
                         .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //saveNewStudyRoom(name, 0, 0);
+                                //startActivityForResult(new Intent(SearchDetail.this, HomeActivity.class), 100);
+                                //Intent data = new Intent();
+                                //data.putExtra(EXTRA_STUDYROOMTITLE, name);
+                                //data.putExtra(EXTRA_STUDYROOMGGUL, 0);
+                                //data.putExtra(EXTRA_STUDYROOMSTARTDAY, 1);
+
+                                //setResult(RESULT_OK, data);
+                                Toast.makeText(SearchDetail.this,"스터디룸 가입이 완료되었습니다.",Toast.LENGTH_LONG).show();
+                                finish();
+
                                 //최종이길..
                                 //자바 코드에서 프래그먼트 추가하는 방법
-                                MyRoomFragment mf = (MyRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frag_myroom);
-                                mf.recyclerView = findViewById(R.id.myroom);
-                                dataholder = new ArrayList<>();
-                                //mf.recyclerView.setLayoutManager(new LinearLayoutManager(mf.getContext()));
+                                //MyRoomFragment mf = (MyRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frag_myroom);
+                                //mf.recyclerView = findViewById(R.id.myroom);
 
-                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
-                                dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
-                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
+                                //mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(mf.dataholder));
+                                //mf.dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
+                                //mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(mf.dataholder));
 
-                                new MyRoomFragmentAdapter(dataholder).notifyDataSetChanged();
+                                //new MyRoomFragmentAdapter(mf.dataholder).notifyDataSetChanged();
+
                                 //((MyRoomFragment) getSupportFragmentManager().findFragmentByTag("fragmentTag")).testFunction();
                                 //dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
                                 //recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
@@ -121,7 +135,7 @@ public class SearchDetail extends AppCompatActivity {
                         });
                 AlertDialog alertDialog = dlg.create();
                 dlg.show();
-                Toast.makeText(SearchDetail.this,"스터디룸 가입이 완료되었습니다.",Toast.LENGTH_LONG).show();
+
                 //ApplyDialog applyDialog = new ApplyDialog();
                 //applyDialog.show(getSupportFragmentManager(), "example dialog");
             }

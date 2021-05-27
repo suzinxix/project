@@ -249,6 +249,10 @@ public class MakeRoom extends AppCompatActivity{
                 // Integer
                 Integer getRoomauthHow1 = roomHow;
 
+                // 스터디원
+                List<String> getRoommember = new ArrayList<>();
+
+
                 // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
                         +"\n가입 인원: "+getRoomperson +"명\n인증 횟수: "+getRoomauth
@@ -271,7 +275,7 @@ public class MakeRoom extends AppCompatActivity{
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember);
                 readRoomDB();
 
 
@@ -281,10 +285,10 @@ public class MakeRoom extends AppCompatActivity{
 
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                              boolean roomlock, Integer roomHow, String time1, String time2) {
+                              boolean roomlock, Integer roomHow, String time1, String time2, List<String> roommember) {
         //String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
-                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2);
+                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 

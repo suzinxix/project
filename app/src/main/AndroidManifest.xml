@@ -62,7 +62,9 @@
 
         <activity android:name=".MakeRoom" />
 
-        <service android:name=".FirebasePushNotificationClass">
+        <service android:name=".FirebasePushNotificationClass"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.RESPOND_VIA_MESSAGE">
                 </action>
