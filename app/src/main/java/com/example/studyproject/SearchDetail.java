@@ -148,4 +148,3 @@ public class SearchDetail extends AppCompatActivity {
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new SearchAllFragment());
     }*/
 }
-

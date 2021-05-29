@@ -166,5 +166,4 @@ public class SearchAllFragment extends Fragment {
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }*/
-
 }
