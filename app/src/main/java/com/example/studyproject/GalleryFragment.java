@@ -1,24 +1,43 @@
 package com.example.studyproject;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GalleryFragment extends Fragment {
-    ImageView iv_gallery1;
+    private RecyclerView GalleryPhotoList;
+    private StorageReference storageRef;
+    private GalleryAdapter galleryAdapter;
 
+    private ProgressBar mProgressCircle;
+    private FirebaseStorage mStorage;
+    private DatabaseReference mDatabaseRef;
+    private ValueEventListener mDBListener;
+
+    private List<GalleryDB> mUploads;
 
     public GalleryFragment() {
         // Required empty public constructor
@@ -26,40 +45,93 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_gallery, container, false);
+        View galleryView = (View) inflater.inflate(R.layout.fragment_gallery, container, false);
 
-        iv_gallery1 = view.findViewById(R.id.imageViewGallery1);
+        GalleryPhotoList = (RecyclerView) galleryView.findViewById(R.id.recyclerviewGallery);
+        GalleryPhotoList.setHasFixedSize(true);
+        GalleryPhotoList.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        clickLoad(view);
-        return view;
-    }
+        mUploads = new ArrayList<>();
+        galleryAdapter = new GalleryAdapter(getContext(), mUploads);
+        GalleryPhotoList.setAdapter(galleryAdapter);
+        //galleryAdapter.setOnItemClickListener(get);
 
-    public void clickLoad(View view) {
+        FirebaseStorage fs = FirebaseStorage.getInstance();
+        StorageReference imagesRef = fs.getReference("gallery");
+//        Glide.with(this)
+//                .load(imagesRef)
+//                .into(profileImgView);
 
-        //Firebase Storage에 저장되어 있는 이미지 파일 읽어오기
-
-        //1. Firebase Storeage관리 객체 얻어오기
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-
-        //2. 최상위노드 참조 객체 얻어오기
-        StorageReference rootRef = firebaseStorage.getReference();
-
-        //읽어오길 원하는 파일의 참조객체 얻어오기
-        StorageReference imgRef = rootRef.child("gallery/000010.jpg");
-        //하위 폴더가 있다면 폴더명까지 포함하여
-        //imgRef= rootRef.child("photo/000010.jng");
-
-        if (imgRef != null) {
-            //참조객체로 부터 이미지의 다운로드 URL을 얻어오기
-            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    //다운로드 URL이 파라미터로 전달되어 옴.
-                    Glide.with(Objects.requireNonNull(getActivity())).load(uri).into(iv_gallery1);
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUploads.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    GalleryDB galleryDB = postSnapshot.getValue(GalleryDB.class);
+                    galleryDB.setKey(postSnapshot.getKey());
+                    mUploads.add(galleryDB);
                 }
-            });
+                galleryAdapter.notifyDataSetChanged();
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
 
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
+        });
 
+        return galleryView;
     }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//        FirebaseRecyclerOptions<GalleryDB> options = new FirebaseRecyclerOptions.Builder<GalleryDB>().build();
+//
+//        FirebaseRecyclerAdapter<GalleryDB, GalleryViewHolder> adapter
+//                = new FirebaseRecyclerAdapter<GalleryDB, GalleryViewHolder>(options) {
+//
+//            @Override
+//            protected void onBindViewHolder(@NonNull GalleryViewHolder holder, int position, @NonNull GalleryDB model) {
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                storageRef = storage.getReference("gallery/child.jpg");
+////                GlideApp.with(holder.itemView)
+////                        .load(storageRef)
+////                        .into(holder.iv_photo);
+////                        //.thumbnail(0.5f)
+//            }
+//
+//            @NonNull
+//            @Override
+//            public GalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_layout, parent, false);
+//                return new GalleryViewHolder(view);
+//            }
+//
+//
+//        };
+//
+//        GalleryPhotoList.setAdapter(adapter);
+//        adapter.startListening();
+//    }
+
+//    public class GalleryViewHolder extends RecyclerView.ViewHolder {
+//        ImageView iv_photo;
+//        TextView tv_phototext;
+//
+//        public GalleryViewHolder(@NonNull View itemView) {
+//            super(itemView);
+//
+//            iv_photo = (ImageView) itemView.findViewById(R.id.imageViewPhoto);
+//            tv_phototext = (TextView) itemView.findViewById(R.id.textViewPhotoText);
+//            //tv_phototext.setText();
+//        }
+//    }
+
+
+
+
 }

@@ -16,8 +16,8 @@ import androidx.fragment.app.Fragment;
 public class TimerFragment extends Fragment implements View.OnClickListener {
     TextView tv_time;
     ImageButton ibt_start;
-    Button bt_quit, bt_reset;
-    WeeklyFragmentTmp fragment_weekly;
+    Button bt_quit;
+    WeeklyFragment fragment_weekly;
 
     final static int Init = 0;
     final static int Run = 1;
@@ -39,7 +39,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         ibt_start = (ImageButton) view.findViewById(R.id.imageButtonStart);
         ibt_start.setOnClickListener(this);
 
-        fragment_weekly = new WeeklyFragmentTmp();
+        fragment_weekly = new WeeklyFragment();
         bt_quit =  (Button)view.findViewById(R.id.buttonQuit);
         bt_quit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +47,6 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerTabs, fragment_weekly).commit();
             }
         });
-        bt_reset = (Button)view.findViewById(R.id.buttonReset);
-
 
         return view;
     }
