@@ -25,6 +25,7 @@
         android:id="@+id/textViewTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/maplestorylight"
         style="@style/make_Timer"
         android:padding="40dp"
         android:layout_gravity="center"
