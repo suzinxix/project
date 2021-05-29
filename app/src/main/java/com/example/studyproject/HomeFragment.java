@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment{
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        /*
         // 리사이클러뷰 프래그먼트
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.roomrecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment{
                 adapter.setUserStudyRooms(userStudyRooms);
             }
         });
+        */
 
 
         // 툴바 추가

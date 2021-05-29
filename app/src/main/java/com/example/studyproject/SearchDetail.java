@@ -34,7 +34,7 @@ public class SearchDetail extends AppCompatActivity {
     //private MyRoomFragmentAdapter myadapter;
     //RecyclerView recyclerView;
     //private RecyclerView.LayoutManager layoutManager;
-    ArrayList<UserStudyRoomDB> dataholder;
+    //ArrayList<UserStudyRoomDB> dataholder;
 
     MakeRoomDB model;
     TextView Roomname, Roominfo, Roomperson;
@@ -90,16 +90,16 @@ public class SearchDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //최종이길..
                                 //자바 코드에서 프래그먼트 추가하는 방법
-                                MyRoomFragment mf = (MyRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frag_myroom);
-                                mf.recyclerView = findViewById(R.id.myroom);
-                                dataholder = new ArrayList<>();
+                                //MyRoomFragment mf = (MyRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frag_myroom);
+                                //mf.recyclerView = findViewById(R.id.myroom);
+                                //dataholder = new ArrayList<>();
                                 //mf.recyclerView.setLayoutManager(new LinearLayoutManager(mf.getContext()));
 
-                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
-                                dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
-                                mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
+                                //mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
+                                //dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
+                                //mf.recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
 
-                                new MyRoomFragmentAdapter(dataholder).notifyDataSetChanged();
+                                //new MyRoomFragmentAdapter(dataholder).notifyDataSetChanged();
                                 //((MyRoomFragment) getSupportFragmentManager().findFragmentByTag("fragmentTag")).testFunction();
                                 //dataholder.add(new UserStudyRoomDB("쫌 돼라!!", 0, 0));
                                 //recyclerView.setAdapter(new MyRoomFragmentAdapter(dataholder));
