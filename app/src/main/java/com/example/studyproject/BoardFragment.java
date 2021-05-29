@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 public class BoardFragment extends Fragment {
     TabLayout tabs;
     Toolbar toolbar_board;
-    WeeklyFragmentTmp fragment_weekly;
+    WeeklyFragment fragment_weekly;
     GalleryFragment fragment_gallery;
 
     //Fragment 변경위해
@@ -32,7 +32,7 @@ public class BoardFragment extends Fragment {
         toolbar_board = (Toolbar) view.findViewById(R.id.toolbarBoard);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_board);
 
-        fragment_weekly = new WeeklyFragmentTmp();
+        fragment_weekly = new WeeklyFragment();
         fragment_gallery = new GalleryFragment();
 
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.containerTabs, fragment_weekly).commit();
