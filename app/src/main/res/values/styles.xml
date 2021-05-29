@@ -44,7 +44,7 @@
 
     <style name="make_Timer">
         <item name="android:textColor">@color/honeyYellow</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">50dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

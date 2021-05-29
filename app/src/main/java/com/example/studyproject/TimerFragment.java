@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 public class TimerFragment extends Fragment implements View.OnClickListener {
     TextView tv_time;
-    ImageButton ibt_start;
+    Button ibt_start;
     Button bt_quit;
     WeeklyFragment fragment_weekly;
 
@@ -36,7 +36,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
         tv_time = (TextView)view.findViewById(R.id.textViewTime);
 
-        ibt_start = (ImageButton) view.findViewById(R.id.imageButtonStart);
+        ibt_start = (Button) view.findViewById(R.id.imageButtonStart);
         ibt_start.setOnClickListener(this);
 
         fragment_weekly = new WeeklyFragment();
@@ -65,12 +65,14 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 //myTimer이라는 핸들러를 빈 메세지를 보내서 호출
                 myTimer.sendEmptyMessage(0);
 //                      ibt_start 이미지 변경 '멈춤'
+                ibt_start.setText("멈춤");
                 cur_Status = Run; //현재상태를 런상태로 변경
                 break;
             case Run:
                 myTimer.removeMessages(0); //핸들러 메세지 제거
                 myPauseTime = SystemClock.elapsedRealtime();
 //                      이미지 변경
+                ibt_start.setText("계속");
                 cur_Status = Pause;
                 break;
             case Pause:

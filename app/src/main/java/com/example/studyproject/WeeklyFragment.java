@@ -74,7 +74,7 @@ public class WeeklyFragment extends Fragment {
 
         WeeklyRef = FirebaseDatabase.getInstance().getReference().child("weekly");
         WeekRef = FirebaseDatabase.getInstance().getReference().child("weekly");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("weekly");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("weekly");
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -235,7 +235,7 @@ public class WeeklyFragment extends Fragment {
     }
 
     //사용자 휴대폰 갤러리에 저장
-    public File createImageFile() throws IOException{ 
+    public File createImageFile() throws IOException{
         String imgFileName = System.currentTimeMillis() + ".jpg";
         File imageFile= null;
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/DCIM", "honeystudy"); //chilㅇ
