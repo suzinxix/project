@@ -26,25 +26,11 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/frameLayout1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/roomrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="나의 스터디" />
-
-        <fragment
-            android:id="@+id/roomfragment"
-            android:name="com.example.studyproject.MyRoomFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="35dp"/>
-    </FrameLayout>
-
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/single_room_design" />
 
     <FrameLayout
         android:id="@+id/frameLayout"

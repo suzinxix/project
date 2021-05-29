@@ -21,6 +21,7 @@ public class MakeRoomDB {
     public Integer roomhow;
     public String roomtime1;
     public String roomtime2;
+    public List<String> roommember;
 
     public Map<String, Boolean> stars = new HashMap<>();
 
@@ -30,7 +31,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -45,6 +46,8 @@ public class MakeRoomDB {
         this.roomhow = roomhow; // 인증 방식 선택 (횟수 / 시간)
         this.roomtime1 = time1; // 인증 시작 시간
         this.roomtime2 = time2; // 인증 종료 시간
+
+        this.roommember = roommember; // 스터디원
     }
 
     public String getRoomname() {
@@ -107,7 +110,14 @@ public class MakeRoomDB {
 
     public void setRoomtime2() {this.roomtime2 =  roomtime2;}
 
-/*
+    public List<String> getRoommember() {
+        return roommember;
+    }
+
+    public void setRoommember(List<String> roommember) {
+        this.roommember = roommember;
+    }
+    /*
     @Override
     public String toString() {
         return "MakeRoomDB{" +
@@ -156,6 +166,8 @@ public class MakeRoomDB {
         result.put("roomhow", roomhow);
         result.put("roomtime1", roomtime1);
         result.put("roomtime2", roomtime1);
+
+        result.put("roommember", roommember);
         return result;
     }
 }
