@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -23,10 +24,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SearchDetail extends AppCompatActivity {
@@ -35,6 +44,11 @@ public class SearchDetail extends AppCompatActivity {
     //RecyclerView recyclerView;
     //private RecyclerView.LayoutManager layoutManager;
     //ArrayList<UserStudyRoomDB> dataholder;
+
+    FirebaseAuth firebaseAuth;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference();
+    private DatabaseReference mDBReference = ref.child("users");
 
     MakeRoomDB model;
     TextView Roomname, Roominfo, Roomperson;
@@ -147,4 +161,5 @@ public class SearchDetail extends AppCompatActivity {
         AppCompatActivity activity = (AppCompatActivity)getContext();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new SearchAllFragment());
     }*/
+
 }
