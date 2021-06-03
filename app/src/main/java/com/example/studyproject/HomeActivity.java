@@ -26,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
     PersonalPageFragment fragment_personal;
     private ChipNavigationBar bottomNavigation;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
