@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     SearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
     private ChipNavigationBar bottomNavigation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +74,21 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.tab1:
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, fragment_home).commit();
+
                         return true;
                     case R.id.tab2:
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, fragment_studysearch).commit();
+
                         return true;
                     case R.id.tab3:
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, fragment_personal).commit();
+
+
                         return true;
                 }
+
                 return false;
             }
         });

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,21 +54,12 @@ public class SearchDetail extends AppCompatActivity {
     TextView Roomname, Roominfo, Roomperson;
     ImageView Roompic;
     Button bt;
-    String nickname;
-
-    private DatabaseReference RoomRef;
-
-    private DatabaseReference mDatabase;
-
     public SearchDetail(){
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
-
         setContentView(R.layout.search_detail);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Roomname=findViewById(R.id.study_title);
