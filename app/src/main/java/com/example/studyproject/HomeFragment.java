@@ -20,7 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +44,7 @@ public class HomeFragment extends Fragment{
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        /*
         // 리사이클러뷰 프래그먼트
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.roomrecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment{
                 adapter.setUserStudyRooms(userStudyRooms);
             }
         });
+        */
 
 
         // 툴바 추가

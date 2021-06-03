@@ -3,6 +3,7 @@ package com.example.studyproject;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,14 +52,13 @@ import static android.app.Activity.RESULT_OK;
 
 public class WeeklyFragment extends Fragment {
     private RecyclerView myWeeklyList;
+    private StorageReference mStorageRef;
     private DatabaseReference WeeklyRef, WeekRef, mDatabaseRef;
     private Uri photoUri;
-    private String mCurrentPhotoPath, downloadUrl;
+    private String mCurrentPhotoPath;
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
     private int flag = 0;
-    private FirebaseStorage storage;
-
 
     public WeeklyFragment() {
         // Required empty public constructor
@@ -74,7 +75,8 @@ public class WeeklyFragment extends Fragment {
 
         WeeklyRef = FirebaseDatabase.getInstance().getReference().child("weekly");
         WeekRef = FirebaseDatabase.getInstance().getReference().child("weekly");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("weekly");
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -180,7 +182,7 @@ public class WeeklyFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             flag = 1;
                             selectAlbum();
-                            uploadPhoto();
+                            //uploadPhoto();
                         }
                     };
 
@@ -235,7 +237,7 @@ public class WeeklyFragment extends Fragment {
     }
 
     //사용자 휴대폰 갤러리에 저장
-    public File createImageFile() throws IOException{ 
+    public File createImageFile() throws IOException{
         String imgFileName = System.currentTimeMillis() + ".jpg";
         File imageFile= null;
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/DCIM", "honeystudy"); //chilㅇ
@@ -284,6 +286,7 @@ public class WeeklyFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    uploadPhoto();
                 }
                 break;
             }
@@ -300,19 +303,30 @@ public class WeeklyFragment extends Fragment {
         }
     }
 
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
     public void uploadPhoto() {
         AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext()); //R.style.추가
         alt_bld.setTitle("사진 선택 완료").setMessage("사진을 등록하시겠습니까?").setCancelable(
                 false).setPositiveButton("네",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //DB에 등록하기
-                        storage = FirebaseStorage.getInstance("gs://fir-test-1-35648.appspot.com");
+//                        //DB에 등록하기
+//                        storage = FirebaseStorage.getInstance("gs://fir-test-1-35648.appspot.com");
+//                        StorageReference storageRef = storage.getReference();
 //                        final String cu = mAuth.getUid();
                         //1. 사진을 storage에 저장하고 그 url을 알아내야 함
-                        String filename = "" + System.currentTimeMillis(); //cu + "_" +
-                        StorageReference storageRef = storage.getReference();
-                        StorageReference galleryRdf = storageRef.child("gallery/" +filename);
+                        //if (photoUri != null) {
+                        StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                                + "." + getFileExtension(photoUri));
+
+
+                        // String filename = "" + System.currentTimeMillis(); //cu + "_" +
+
                         UploadTask uploadTask;
                         Uri file = null;
                         if(flag ==0){
@@ -322,8 +336,11 @@ public class WeeklyFragment extends Fragment {
                             //앨범선택
                             file = photoUri;
                         }
+                        uploadTask = fileReference.putFile(file);
+                        Log.v("photoUri", photoUri.toString());
 
-                        uploadTask = galleryRdf.putFile(file);
+
+                        //uploadTask = galleryRdf.putFile(file);
                         final ProgressDialog progressDialog = new ProgressDialog(getContext());
                         progressDialog.setMessage("업로드중");
                         progressDialog.show();
@@ -341,18 +358,24 @@ public class WeeklyFragment extends Fragment {
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                                Log.v("알림", "사진 업로드 성공 " + downloadUrl);
-                                SimpleDateFormat format1 = new SimpleDateFormat( "yyyyMMdd HH:mm:ss");
-                                Calendar time = Calendar.getInstance();
-                                String format_time1 = format1.format(time.getTime());
+                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String downloadUrl = uri.toString();
 
-                                GalleryDB url = new GalleryDB(format_time1, downloadUrl);
-                                String uploadId = mDatabaseRef.push().getKey();
-                                mDatabaseRef.child(uploadId).setValue(url);
+                                        SimpleDateFormat format1 = new SimpleDateFormat( "yyyyMMdd HH:mm:ss");
+                                        Calendar time = Calendar.getInstance();
+                                        time.add(Calendar.HOUR, 9);
+                                        String format_time1 = format1.format(time.getTime());
 
-                                progressDialog.dismiss();
-                                Toast.makeText(getActivity(), "사진이 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
+                                        GalleryDB url = new GalleryDB(format_time1, downloadUrl);
+                                        String uploadId = mDatabaseRef.push().getKey();
+                                        mDatabaseRef.child(uploadId).setValue(url);
+                                        Log.v("알림", "사진 업로드 성공 " + downloadUrl);
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getActivity(), "사진이 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         });
                     }
