@@ -1,31 +1,22 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,6 +46,8 @@ public class GalleryFragment extends Fragment {
         galleryAdapter = new GalleryAdapter(getContext(), mUploads);
         GalleryPhotoList.setAdapter(galleryAdapter);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
+        String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("gallery_url");
 
@@ -64,8 +57,10 @@ public class GalleryFragment extends Fragment {
                 mUploads.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     GalleryDB galleryDB = postSnapshot.getValue(GalleryDB.class);
-                    galleryDB.setKey(postSnapshot.getKey());
-                    mUploads.add(galleryDB);
+                    if (galleryDB.getUserId().equals(uid)) {
+                        galleryDB.setKey(postSnapshot.getKey());
+                        mUploads.add(galleryDB);
+                    }
                 }
 
                 galleryAdapter.notifyDataSetChanged();
@@ -73,7 +68,6 @@ public class GalleryFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

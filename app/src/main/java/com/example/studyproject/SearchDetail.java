@@ -91,7 +91,7 @@ public class SearchDetail extends AppCompatActivity {
             Roompic.setImageResource(R.drawable.study);
          */
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         bt = findViewById(R.id.bt_apply);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override

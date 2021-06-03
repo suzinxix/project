@@ -30,6 +30,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,6 +61,7 @@ public class WeeklyFragment extends Fragment {
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
     private int flag = 0;
+    private String uid;
 
     public WeeklyFragment() {
         // Required empty public constructor
@@ -78,6 +81,9 @@ public class WeeklyFragment extends Fragment {
         mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
+        uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
+
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
@@ -88,8 +94,6 @@ public class WeeklyFragment extends Fragment {
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
                 Toast.makeText(getActivity(), "권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
-
-
         };
 
         TedPermission.with(getContext())
@@ -219,6 +223,7 @@ public class WeeklyFragment extends Fragment {
             Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if(takePhotoIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager())!=null){
                 File photoFile = null;
+                Log.v("알림", "3");
                 try{
                     photoFile = createImageFile();
                 } catch (IOException e){
@@ -232,7 +237,6 @@ public class WeeklyFragment extends Fragment {
             }
         } else {
             Log.v("알림", "저장공간에 접근 불가능");
-            return;
         }
     }
 
@@ -240,7 +244,7 @@ public class WeeklyFragment extends Fragment {
     public File createImageFile() throws IOException{
         String imgFileName = System.currentTimeMillis() + ".jpg";
         File imageFile= null;
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/DCIM", "honeystudy"); //chilㅇ
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/DCIM", "honeystudy");
 
         if(!storageDir.exists()){
             //없으면 만들기
@@ -315,18 +319,9 @@ public class WeeklyFragment extends Fragment {
                 false).setPositiveButton("네",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-//                        //DB에 등록하기
-//                        storage = FirebaseStorage.getInstance("gs://fir-test-1-35648.appspot.com");
-//                        StorageReference storageRef = storage.getReference();
-//                        final String cu = mAuth.getUid();
-                        //1. 사진을 storage에 저장하고 그 url을 알아내야 함
-                        //if (photoUri != null) {
-                        StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                        StorageReference fileReference = mStorageRef.child(uid+ "_"+ System.currentTimeMillis()
                                 + "." + getFileExtension(photoUri));
-
-
                         // String filename = "" + System.currentTimeMillis(); //cu + "_" +
-
                         UploadTask uploadTask;
                         Uri file = null;
                         if(flag ==0){
@@ -336,16 +331,13 @@ public class WeeklyFragment extends Fragment {
                             //앨범선택
                             file = photoUri;
                         }
+
                         uploadTask = fileReference.putFile(file);
-                        Log.v("photoUri", photoUri.toString());
 
-
-                        //uploadTask = galleryRdf.putFile(file);
                         final ProgressDialog progressDialog = new ProgressDialog(getContext());
                         progressDialog.setMessage("업로드중");
                         progressDialog.show();
 
-                        // Register observers to listen for when the download is done or if it fails
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
@@ -362,13 +354,10 @@ public class WeeklyFragment extends Fragment {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         String downloadUrl = uri.toString();
-
                                         SimpleDateFormat format1 = new SimpleDateFormat( "yyyyMMdd HH:mm:ss");
                                         Calendar time = Calendar.getInstance();
-                                        time.add(Calendar.HOUR, 9);
                                         String format_time1 = format1.format(time.getTime());
-
-                                        GalleryDB url = new GalleryDB(format_time1, downloadUrl);
+                                        GalleryDB url = new GalleryDB(format_time1, downloadUrl, uid);
                                         String uploadId = mDatabaseRef.push().getKey();
                                         mDatabaseRef.child(uploadId).setValue(url);
                                         Log.v("알림", "사진 업로드 성공 " + downloadUrl);
