@@ -53,6 +53,11 @@ public class SearchDetail extends AppCompatActivity {
     TextView Roomname, Roominfo, Roomperson;
     ImageView Roompic;
     Button bt;
+    String nickname;
+
+    private DatabaseReference RoomRef;
+
+    private DatabaseReference mDatabase;
     public SearchDetail(){
     }
 
