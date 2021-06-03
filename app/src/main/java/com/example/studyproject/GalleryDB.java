@@ -3,7 +3,7 @@ package com.example.studyproject;
 import com.google.firebase.database.Exclude;
 
 public class GalleryDB {
-    public String photoText;
+    public String mphotoText;
     private String mImageUrl;
     private String mKey;
 
@@ -12,12 +12,16 @@ public class GalleryDB {
     }
 
     public GalleryDB (String photoText, String imageUrl) {
-        this.photoText = photoText;
+        if (photoText.trim().equals("")) {
+            photoText = "No Name";
+        } //
+
+        mphotoText = photoText;
         mImageUrl = imageUrl;
     }
 
-    public String getPhotoText() { return photoText; }
-    public void setPhotoText(String todo) { this.photoText = photoText; }
+    public String getPhotoText() { return mphotoText; }
+    public void setPhotoText(String photoText) { mphotoText = photoText; }
 
     public String getImageUrl() {
         return mImageUrl;
@@ -27,9 +31,7 @@ public class GalleryDB {
     }
 
     @Exclude
-    public String getKey() {
-        return mKey;
-    }
+    public String getKey() { return mKey; }
     @Exclude
     public void setKey(String key) {
         mKey = key;
