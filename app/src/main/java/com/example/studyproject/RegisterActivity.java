@@ -74,7 +74,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     String getUserName = et_name.getText().toString();
                                     String getUserEmail = et_email.getText().toString();
                                     String getUserNick = et_nickname.getText().toString();
-                                    String getJoinedRoom = null;
 
 
                                     //hashmap 만들기

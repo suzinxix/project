@@ -29,8 +29,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/roomrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/single_room_design" />
+        android:layout_height="wrap_content"/>
 <!--
     <FrameLayout
         android:id="@+id/frameLayout"
