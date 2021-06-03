@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -23,10 +24,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class SearchDetail extends AppCompatActivity {
@@ -77,6 +91,7 @@ public class SearchDetail extends AppCompatActivity {
             Roompic.setImageResource(R.drawable.study);
          */
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         bt = findViewById(R.id.bt_apply);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +103,18 @@ public class SearchDetail extends AppCompatActivity {
                         .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                // 파이어베이스에 가입한 사용자 이름을 추가
+                                FirebaseDatabase  database = FirebaseDatabase.getInstance();
+                                DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/");
+                                DatabaseReference userRef = database.getReference();
+
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
+                                String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
+
+                                DatabaseReference username = userRef.child(uid).child("userName");
+
+                                mDatabaseRef.child("member").push().setValue("예시"); // 사용자 이름 데이터 추가
+                                //databaseReference.child("message").push().setValue(chatData);
                                 //최종이길..
                                 //자바 코드에서 프래그먼트 추가하는 방법
                                 //MyRoomFragment mf = (MyRoomFragment) getSupportFragmentManager().findFragmentById(R.id.frag_myroom);
@@ -121,7 +148,7 @@ public class SearchDetail extends AppCompatActivity {
                         });
                 AlertDialog alertDialog = dlg.create();
                 dlg.show();
-                Toast.makeText(SearchDetail.this,"스터디룸 가입이 완료되었습니다.",Toast.LENGTH_LONG).show();
+
                 //ApplyDialog applyDialog = new ApplyDialog();
                 //applyDialog.show(getSupportFragmentManager(), "example dialog");
             }

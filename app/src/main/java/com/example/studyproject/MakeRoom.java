@@ -133,11 +133,6 @@ public class MakeRoom extends AppCompatActivity{
         rbs[2] = (RadioButton)findViewById(R.id.rb_3); rbs[3] = (RadioButton)findViewById(R.id.rb_4);
         rbs[4] = (RadioButton)findViewById(R.id.rb_5);
 
-
-
-
-
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // 요일 설정
         sw_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -377,7 +372,7 @@ public class MakeRoom extends AppCompatActivity{
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
                               boolean roomlock, Integer roomHow, String time1, String time2, List<String> roommember) {
-        //String key = mDatabase.child("rooms").push().getKey();
+        // String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
                 roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember);
         Map<String, Object> roomValues = roomDB.toMap();

@@ -3,8 +3,7 @@
     package="com.example.studyproject">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-   <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
+    <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라, 내부 저장소 접근 권한 설정 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -44,12 +43,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".SearchDetail" />
-        <activity android:name=".FindPwActivity"/>
+        <activity android:name=".FindPwActivity" />
+        <activity android:name=".image"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -67,8 +68,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE">
-                </action>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE"></action>
             </intent-filter>
         </service>
     </application>
