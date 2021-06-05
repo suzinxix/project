@@ -22,6 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SearchEtcFragment extends Fragment {
     private RecyclerView recview_6;
     private View ContactsView;
@@ -50,18 +53,23 @@ public class SearchEtcFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
-                        .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기
+                        .setQuery(ContactsRef, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
-        FirebaseRecyclerAdapter<MakeRoomDB, SearchEtcFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, SearchEtcFragment.ContactsViewHolder>(options) {
+        FirebaseRecyclerAdapter<MakeRoomDB, SearchEtcFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, SearchEtcFragment.ContactsViewHolder> (options) {
             @Override
-            protected void onBindViewHolder(@NonNull final SearchEtcFragment.ContactsViewHolder holder, int position, @NonNull MakeRoomDB model) {
-                String roomId = getRef(position).getKey(); // 리사이클러뷰
+            protected void onBindViewHolder(@NonNull final SearchEtcFragment.ContactsViewHolder holder, int position, @NonNull final MakeRoomDB model) {
+                final String roomID = getRef(position).getKey();
                 final String name = model.getRoomname();
                 final String info = model.getRoominfo();
+                final Date date = model.getRoomdate();
+                final String person = model.getRoomperson();
+
+                // 현재 날짜 형식 변환
+                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String nowdate = simpleDate.format(date);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -69,25 +77,37 @@ public class SearchEtcFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), SearchDetail.class);
                         intent.putExtra("Roomname", ""+name);
                         intent.putExtra("Roominfo", info);
+                        intent.putExtra("Roomdate", nowdate);
+                        intent.putExtra("Roomperson", person);
                         startActivity(intent);
                     }
                 });
 
-                RoomRef.child(roomId).addValueEventListener(new ValueEventListener() {
+                RoomRef.child(roomID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChild("study_rooms")) {
+                        int room_index=1;
+                        if(snapshot.hasChild("study_rooms")){
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
+                            String room_person = snapshot.child("roomperson").getValue().toString();
 
+                            room_index++;
+                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
-                        } else {
+                            holder.roomperson.setText(room_person + "명");
+                        }
+                        else{
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
+                            String room_person = snapshot.child("roomperson").getValue().toString();
+                            String room_cate = snapshot.child("roomcategory").getValue().toString();
 
+                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
+                            holder.roomperson.setText(room_person + "명");
                         }
                     }
 
@@ -110,13 +130,20 @@ public class SearchEtcFragment extends Fragment {
         recview_6.setAdapter(adapter);
         adapter.startListening();
     }
-    public static class ContactsViewHolder extends RecyclerView.ViewHolder {
-        TextView roomname, roominfo;
 
+
+    // 홀더
+    public static class ContactsViewHolder extends RecyclerView.ViewHolder {
+        TextView roomindex, roomname, roominfo, roomperson;
+
+        //View v;
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
+            roomindex = itemView.findViewById(R.id.text_index);
             roomname = itemView.findViewById(R.id.text_1);
             roominfo = itemView.findViewById(R.id.text_2);
+            roomperson = itemView.findViewById(R.id.text_3);
         }
     }
 }
+

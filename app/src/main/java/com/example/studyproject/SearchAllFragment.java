@@ -32,7 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SearchAllFragment extends Fragment {
@@ -70,7 +72,12 @@ public class SearchAllFragment extends Fragment {
                 final String roomID = getRef(position).getKey();
                 final String name = model.getRoomname();
                 final String info = model.getRoominfo();
+                final Date date = model.getRoomdate();
                 final String person = model.getRoomperson();
+
+                // 현재 날짜 형식 변환
+                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String nowdate = simpleDate.format(date);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -78,6 +85,7 @@ public class SearchAllFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), SearchDetail.class);
                         intent.putExtra("Roomname", ""+name);
                         intent.putExtra("Roominfo", info);
+                        intent.putExtra("Roomdate", nowdate);
                         intent.putExtra("Roomperson", person);
                         startActivity(intent);
                     }
@@ -91,23 +99,25 @@ public class SearchAllFragment extends Fragment {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
+                            String room_date = snapshot.child("roomdate").getValue().toString();
 
                             room_index++;
                             holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
-                            holder.roomperson.setText("/" + room_person);
+                            holder.roomperson.setText(room_person + "명");
                         }
                         else{
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
                             String room_cate = snapshot.child("roomcategory").getValue().toString();
+                            String room_date = snapshot.child("roomdate").getValue().toString();
 
                             holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
-                            holder.roomperson.setText(room_person);
+                            holder.roomperson.setText(room_person + "명");
                         }
                     }
 
