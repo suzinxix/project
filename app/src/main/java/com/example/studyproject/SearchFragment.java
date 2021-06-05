@@ -49,7 +49,8 @@ public class SearchFragment extends Fragment {
 
         Fragment searchRankingFragment = new SearchRankingFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, searchRankingFragment).commit();
+        transaction.replace(R.id.container, searchRankingFragment).addToBackStack(null).commit();
+
         etSearch = (EditText)view.findViewById(R.id.editSearch);
 
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -95,6 +96,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // fragment 에서 Activity 이동해야함
+
                 getActivity().startActivity(new Intent(getActivity(), MakeRoom.class));
             }
         });
