@@ -91,7 +91,7 @@ public class SearchDetail extends AppCompatActivity {
             Roompic.setImageResource(R.drawable.study);
          */
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        //mDatabase = FirebaseDatabase.getInstance().getReference();
         bt = findViewById(R.id.bt_apply);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,9 +110,7 @@ public class SearchDetail extends AppCompatActivity {
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
                                 String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
-                                //mDatabaseRef.child("member").push().setValue(uid); // 사용자 uid 삽입
                                 mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
-
                             }
                         })
                         .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
@@ -123,30 +121,7 @@ public class SearchDetail extends AppCompatActivity {
                         });
                 AlertDialog alertDialog = dlg.create();
                 dlg.show();
-
-                //ApplyDialog applyDialog = new ApplyDialog();
-                //applyDialog.show(getSupportFragmentManager(), "example dialog");
             }
         });
     }
-    /*
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_detail, container, false);
-
-        TextView study_title = view.findViewById(R.id.study_title);
-        TextView study_info = view.findViewById(R.id.study_info);
-
-        study_title.setText(Roomname);
-        study_info.setText(Roominfo);
-
-        return view;
-    }
-*/
-/*
-    public void onBackPressed(){
-        AppCompatActivity activity = (AppCompatActivity)getContext();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.wrapper, new SearchAllFragment());
-    }*/
 }
