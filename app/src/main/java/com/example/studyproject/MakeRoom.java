@@ -340,8 +340,7 @@ public class MakeRoom extends AppCompatActivity{
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember,getRoomtodo, roomdate);
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember,getRoomtodo, getRoomweek);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember,getRoomtodo, roomdate, getRoomweek);
                 readRoomDB();
 
 
@@ -398,12 +397,10 @@ public class MakeRoom extends AppCompatActivity{
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
                               boolean roomlock, Integer roomHow, String time1, String time2,
-                              List<String> roommember, String roomtodo, String roomweek) {
-                              boolean roomlock, Integer roomHow, String time1, String time2, List<String> roommember, String roomtodo, Date roomdate) {
+                              List<String> roommember, String roomtodo, Date roomdate,String roomweek) {
         // String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
-                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomtodo, roomweek);
-                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomtodo, roomdate);
+                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomtodo, roomdate, roomweek);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 
