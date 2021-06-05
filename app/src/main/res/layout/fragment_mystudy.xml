@@ -11,11 +11,50 @@
         android:id="@+id/toolbarMystudy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC107"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/container_mystudy">
+        android:background="@color/mainColor">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="나의 스터디"
+            android:fontFamily="@font/maplestorylight"
+            android:textSize="30sp"/>
 
     </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/study_name_yellow_box"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            >
+
+            <TextView
+                android:id="@+id/study_title"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="TextView"
+                style="@style/font_study_name" />
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+    </LinearLayout>
+
 
 </LinearLayout>

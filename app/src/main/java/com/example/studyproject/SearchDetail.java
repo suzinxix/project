@@ -114,8 +114,8 @@ public class SearchDetail extends AppCompatActivity {
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
                                 String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
-                                //mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
-                                mDatabaseRef.child("member").push(); // 사용자 uid 삽입
+                                mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
+                                //mDatabaseRef.child("member").push(); // 사용자 uid 삽입
                             }
                         })
                         .setNegativeButton("아니요", new DialogInterface.OnClickListener() {

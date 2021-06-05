@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     SearchFragment fragment_studysearch;
     PersonalPageFragment fragment_personal;
     private ChipNavigationBar bottomNavigation;
+    Bundle mBundle; //main bundle
 
 
     @Override
@@ -98,5 +99,9 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment).commit();      // Fragment로 사용할 MainActivity내의 layout공간을 선택합니다.
+    }
+
+    public void fragBtnClick(Bundle bundle) {
+        this.mBundle = bundle;
     }
 }
