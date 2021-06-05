@@ -341,8 +341,10 @@ public class MakeRoom extends AppCompatActivity{
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
                         getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember,getRoomtodo, roomdate, getRoomweek);
-                readRoomDB();
+                // readRoomDB();
 
+                // 이전 search로 돌아가기
+                finish();
 
             }
         });

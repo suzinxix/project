@@ -43,7 +43,10 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/edittext_rounded_corner_rectangle"
             android:hint="검색어를 입력하세요."
-            android:padding="15dp" />
+            android:padding="15dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionSearch"	/>
 
         <FrameLayout
             android:id="@+id/container"
