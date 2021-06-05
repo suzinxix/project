@@ -279,6 +279,8 @@ public class MakeRoom extends AppCompatActivity{
                 boolean getLock = bl_lock; // 비공개 여부
                 final String getRoomTime1 = roomTimeSt; final String getRoomTime2 = roomTimeFn; // 인증시간
 
+
+
                 // array를 arrayList로
                 List<Integer> getRoomDay = new ArrayList<>(roomDay.length);
                 for(int num:roomDay) getRoomDay.add(num);
