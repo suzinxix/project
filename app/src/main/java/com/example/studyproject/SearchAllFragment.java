@@ -64,6 +64,8 @@ public class SearchAllFragment extends Fragment {
                         .setQuery(ContactsRef, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
+
+
         FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> (options) {
             @Override
             protected void onBindViewHolder(@NonNull final ContactsViewHolder holder, int position, @NonNull final MakeRoomDB model) {
