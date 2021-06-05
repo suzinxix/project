@@ -79,7 +79,7 @@ public class SearchDetail extends AppCompatActivity {
         Roomname.setText(name);
         Roominfo.setText(info);
         Roomdate.setText("개설 날짜         " + date);
-        Roomperson.setText("멤버               " + person + "명");
+        Roomperson.setText("멤버                " + person + "명");
         Roompic.setImageResource(R.drawable.book);
 
         //roomcate=findViewById(R.id.)

@@ -59,15 +59,6 @@ public class MakeRoomDB {
     }
 
 
-    public String getRoomweek(){
-        return roomWeek;
-    }
-
-    public void setRoomweek(String roomweek) {
-        this.roomWeek = roomweek; // 주차
-    }
-
-
     public Date getRoomdate() {
         return roomdate;
     }
