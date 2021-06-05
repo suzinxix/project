@@ -23,6 +23,7 @@ public class MakeRoomDB {
     public String roomtime2;
     public List<String> roommember;
     public String roomToDo;
+    public String roomWeek;
 
     public Map<String, Boolean> stars = new HashMap<>();
 
@@ -32,7 +33,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, String roomtodo){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, String roomtodo, String roomweek){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -51,6 +52,7 @@ public class MakeRoomDB {
         this.roommember = roommember; // 스터디원
 
         this.roomToDo = roomtodo; // 할 일
+        this.roomWeek = roomweek; // 주차
     }
 
     public String getRoomname() {
@@ -128,6 +130,14 @@ public class MakeRoomDB {
     public void setRoomToDo(String todo) {
         this.roomToDo=todo;
     }
+
+    public String getRoomWeek() {
+        return roomWeek;
+    }
+
+    public void setRoomWeek(String week) {
+        this.roomWeek=week;
+    }
     /*
     @Override
     public String toString() {
@@ -180,6 +190,7 @@ public class MakeRoomDB {
 
         result.put("roommember", roommember);
         result.put("roomtodo", roomToDo);
+        result.put("roomweek", roomWeek);
         return result;
     }
 }
