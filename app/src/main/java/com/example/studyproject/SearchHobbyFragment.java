@@ -55,7 +55,7 @@ public class SearchHobbyFragment extends Fragment {
         super.onStart();
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
-                        .setQuery(ContactsRef, MakeRoomDB.class) // 노드 데이터 읽어오기
+                        .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
         FirebaseRecyclerAdapter<MakeRoomDB, SearchHobbyFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, SearchHobbyFragment.ContactsViewHolder> (options) {

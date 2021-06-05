@@ -56,7 +56,7 @@ public class SearchStudyFragment extends Fragment {
         super.onStart();
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
-                        .setQuery(ContactsRef, MakeRoomDB.class) // 노드 데이터 읽어오기
+                        .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
         FirebaseRecyclerAdapter<MakeRoomDB, SearchStudyFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, SearchStudyFragment.ContactsViewHolder> (options) {
