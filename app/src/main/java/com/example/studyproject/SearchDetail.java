@@ -52,7 +52,7 @@ public class SearchDetail extends AppCompatActivity {
 
     MakeRoomDB model;
     TextView Roomname, Roominfo, Roomperson, Roomdate;
-    ImageView Roompic;
+    ImageView Roompic; long curperson;
     Button bt;
     public SearchDetail(){
     }
@@ -75,6 +75,8 @@ public class SearchDetail extends AppCompatActivity {
         String info = getIntent().getStringExtra("Roominfo");
         String date = getIntent().getStringExtra("Roomdate");
         String person = getIntent().getStringExtra("Roomperson");
+        curperson = getIntent().getLongExtra("Roomcurperson", 0);
+        curperson += 1;
 
         Roomname.setText(name);
         Roominfo.setText(info);
@@ -117,6 +119,12 @@ public class SearchDetail extends AppCompatActivity {
                                 //DatabaseReference mDatabaseRef = database.getReference("users/" + uid);
 
                                 //mDatabaseRef.child("member").push().setValue(name); // 사용자 uid 삽입
+
+                                mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
+                                //mDatabaseRef.child("member").push(); // 사용자 uid 삽입
+                                mDatabaseRef.child("roomcurperson").setValue(curperson);
+                                mDatabaseRef.child("roomnegcurperson").setValue(-1*curperson);
+
 
                                 Map<String, Object> updates = new HashMap<String,Object>();
                                 updates.put(uid, "true");

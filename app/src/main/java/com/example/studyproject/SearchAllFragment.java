@@ -2,6 +2,7 @@ package com.example.studyproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -50,6 +51,10 @@ public class SearchAllFragment extends Fragment {
     private View ContactsView;
     private DatabaseReference ContactsRef, RoomRef;
     SearchAllFragment allFragment;
+    Button bt_sort;
+    int cnt = 0; // 0: 이름순, 1: 회원수 순, 2: 꿀 순
+    String sort1 = "roomname"; String bt_text = "이름 순";
+    FragmentTransaction ft;
 
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
             .orderByChild("roomname");
@@ -67,13 +72,33 @@ public class SearchAllFragment extends Fragment {
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
         RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
 
+        bt_sort = (Button)ContactsView.findViewById(R.id.button_sort);
 
+        bt_sort.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                cnt++; if(cnt>2) cnt=0;
+                switch (cnt){
+                    case 0:
+                        sort1 = "roomname"; bt_text="이름 순"; break;
+                    case 1:
+                        sort1 = "roomnegcurperson"; bt_text="회원수 순"; break;
+                    case 2:
+                        sort1 = "roomneghoney"; bt_text="꿀 순"; break;
+                }
+                query = FirebaseDatabase.getInstance().getReference("study_rooms")
+                        .orderByChild(sort1);
+                bt_sort.setText(bt_text);
+                onStart();
+            }
+        });
 
         if(sch&&!(searchKey.equals(""))) { // 검색 결과가 존재할 때
            query = FirebaseDatabase.getInstance().getReference("study_rooms")
                     .orderByChild("roomname")
                    .startAt(searchKey).endAt(searchKey+"\uf8ff");
         }
+
 
 
         return ContactsView;

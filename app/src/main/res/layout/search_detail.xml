@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,74 +20,53 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:textColor="#FFFFFF"
-            android:textSize="40dp"
+            android:fontFamily="@font/maplestorylight"
+            android:textSize="30sp"
             android:text="스터디 소개" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/third"
-        android:layout_below="@id/second"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        >
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/applesdgothicneosb"
-        app:srcCompat="@drawable/ex_rec_1" />
+        android:background="@drawable/study_name_yellow_box"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        >
 
         <TextView
             android:id="@+id/study_title"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="#FFFFFF"
-            android:textSize="30dp" />
+            style="@style/font_study_name" />
 
 
     </FrameLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/fourth"
-        android:layout_width="440dp"
+        android:layout_width="wrap_content"
         android:layout_height="750dp"
-        android:layout_below="@id/third"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="172dp"
-        android:background="@drawable/rectangle582"
-        android:elevation="1.97dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/background_gray"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/study_picture"
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="102dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_margin="15dp"/>
 
         <FrameLayout
             android:id="@+id/rectangle_5"
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="140dp"
+            android:layout_margin="10dp"
             android:background="@drawable/rectangle_575">
 
             <LinearLayout
@@ -167,7 +146,7 @@
         </LinearLayout>
 
 
-    </FrameLayout>
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

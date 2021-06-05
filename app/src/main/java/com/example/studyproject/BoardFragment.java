@@ -32,6 +32,7 @@ public class BoardFragment extends Fragment {
         toolbar_board = (Toolbar) view.findViewById(R.id.toolbarBoard);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_board);
 
+
         fragment_weekly = new WeeklyFragment();
         fragment_gallery = new GalleryFragment();
 

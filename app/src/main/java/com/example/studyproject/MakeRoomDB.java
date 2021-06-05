@@ -23,9 +23,12 @@ public class MakeRoomDB {
     public String roomtime1;
     public String roomtime2;
     public List<String> roommember;
-    public String roomToDo;
+    public List<String> roomToDo;
     public Date roomdate;
-    public String roomWeek;
+    public long roomhoney = 0; // 꿀
+    public long roomcurperson = 1; // 현재 인원 수
+    public long roomneghoney = 0; // 정렬 꿀
+    public long roomnegcurperson = -1; // 정렬 현재 인원수
 
     public Map<String, Boolean> stars = new HashMap<>();
 
@@ -35,7 +38,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, String roomtodo, Date roomdate, String roomweek){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, List<String> roomtodo, Date roomdate){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -55,7 +58,6 @@ public class MakeRoomDB {
 
         this.roomToDo = roomtodo; // 할 일
         this.roomdate = roomdate; // 개설 날짜
-        this.roomWeek = roomweek;
     }
 
 
@@ -135,21 +137,48 @@ public class MakeRoomDB {
         this.roommember = roommember;
     }
 
-    public String getRoomToDo() {
+    public List<String> getRoomToDo() {
         return roomToDo;
     }
 
-    public void setRoomToDo(String todo) {
+    public void setRoomToDo(List<String> todo) {
         this.roomToDo=todo;
     }
 
-    public String getRoomWeek() {
-        return roomWeek;
+    public long getRoomhoney() {
+        return roomhoney;
     }
 
-    public void setRoomWeek(String week) {
-        this.roomWeek=week;
+    public void setRoomhoney(long honey) {
+        this.roomhoney=honey;
+        setRoomneghoney(-honey);
     }
+    public long getRoomcurperson() {
+        return roomcurperson;
+
+    }
+
+    public void setRoomcurperson(long cp) {
+        this.roomcurperson=cp;
+        setRoomnegcurperson(-cp);
+    }
+    public long getRoomnegmhoney() {
+        return roomneghoney;
+    }
+
+    public void setRoomneghoney(long honey) {
+        this.roomneghoney=honey;
+    }
+    public long getRoomnegcurperson() {
+        return roomnegcurperson;
+    }
+
+    public void setRoomnegcurperson(long cp) {
+        this.roomnegcurperson=cp;
+    }
+
+
+
     /*
     @Override
     public String toString() {
@@ -203,7 +232,11 @@ public class MakeRoomDB {
         result.put("roommember", roommember);
         result.put("roomtodo", roomToDo);
         result.put("roomdate", roomdate);
-        result.put("roomweek", roomWeek);
+
+        result.put("roomhoney", roomhoney); // 꿀
+        result.put("roomcurperson", roomcurperson); // 현재 인원
+        result.put("roomneghoney", -1*roomhoney); // 꿀(정렬용 음수)
+        result.put("roomnegcurperson", -1*roomcurperson); // 현재 인원(정렬용 음수)
         return result;
     }
 }
