@@ -3,6 +3,7 @@ package com.example.studyproject;
 import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,8 +45,9 @@ public class HomeFragment extends Fragment{
     private Toolbar toolbar_home;
     private RecyclerView recview;
     private View view;
-    private DatabaseReference ContactsRef, RoomRef;
-
+    private DatabaseReference mDatabase, RoomRef;
+    TextView text_nick;
+    String nickname;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
     String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
@@ -64,12 +66,14 @@ public class HomeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        text_nick = (TextView) view.findViewById(R.id.textviewNickanme);
 
         recview=(RecyclerView)view.findViewById(R.id.roomrecyclerview);
         recview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ContactsRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
+        //ContactsRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
         RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // 툴바 추가
         toolbar_home = (Toolbar) view.findViewById(R.id.toolbarHome);
@@ -78,6 +82,27 @@ public class HomeFragment extends Fragment{
         ((AppCompatActivity)getActivity()).setTitle("");
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);
+
+        mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                if (dataSnapshot.getValue(User.class) != null) {
+                    User post = dataSnapshot.getValue(User.class);
+                    nickname = post.getNickname();
+                    text_nick.setText(nickname);
+                    Log.w("FireBaseData", "getData" + post.toString());
+                } else {
+                    //Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
 
         // 임시 버튼 HomeFragment->MyStudyFragment
         bt_temp = (Button) view.findViewById(R.id.bt_temp);
@@ -133,13 +158,22 @@ public class HomeFragment extends Fragment{
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                         }
+                        if (snapshot.getValue(User.class) != null) {
+                            User post = snapshot.getValue(User.class);
+                            nickname = post.getNickname();
+                            text_nick.setText(nickname);
+                            Log.w("FireBaseData", "getData" + post.toString());
+                        } else {
+                            //Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Log.w("FireBaseData", "loadPost:onCancelled", error.toException());
                     }
                 });
+
 
             }
 
