@@ -7,6 +7,7 @@
     android:background="@drawable/background_home"
     android:orientation="vertical">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarHome"
         android:layout_width="match_parent"
@@ -26,13 +27,28 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/roomrecyclerview"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
-<!--
+        <ImageView
+            android:id="@+id/rectangle_569"
+            android:layout_width="390dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/rectangle_569" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/roomrecyclerview"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="150dp"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <!--
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -55,7 +71,6 @@
 
     </FrameLayout>
 -->
-
     <FrameLayout
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
@@ -76,14 +91,14 @@
             android:orientation="horizontal">
 
 
+
+            <Button
+                android:id="@+id/bt_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MyStudy임시" />
         </LinearLayout>
 
     </FrameLayout>
-
-    <Button
-        android:id="@+id/bt_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MyStudy임시" />
 
 </LinearLayout>
