@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,15 +55,13 @@ public class HomeFragment extends Fragment{
 
 
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
-            .orderByChild("member/name")
-            .equalTo(uid);
+            .orderByChild("member/" + uid)
+            .equalTo("true");
 
     Button bt_temp;
 
     public HomeFragment() {
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,9 +69,11 @@ public class HomeFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_home, container, false);
         text_nick = (TextView) view.findViewById(R.id.textviewNickanme);
 
+
         recview=(RecyclerView)view.findViewById(R.id.roomrecyclerview);
         recview.setLayoutManager(new LinearLayoutManager(getContext()));
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         // 툴바 추가
         toolbar_home = (Toolbar) view.findViewById(R.id.toolbarHome);
@@ -84,6 +85,7 @@ public class HomeFragment extends Fragment{
 
 
 
+
         // 임시 버튼 HomeFragment->MyStudyFragment
         bt_temp = (Button) view.findViewById(R.id.bt_temp);
         bt_temp.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +94,18 @@ public class HomeFragment extends Fragment{
                 ((HomeActivity)getActivity()).replaceFragment(MyStudyFragment.newInstance()); //Fragment 변경
             }
         });
+
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        MyStudyFragment mystudyfragment = new MyStudyFragment();
+        FragmentTransaction transaction = ((AppCompatActivity) getActivity()).getSupportFragmentManager().beginTransaction();
+
+
 
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
@@ -111,14 +119,15 @@ public class HomeFragment extends Fragment{
                 final String name = model.getRoomname();
                 final String info = model.getRoominfo();
 
-                // 클릭 시 희서가 만든 데이터로 이동
+                // MyStudyFragment 로 데이터 보냄
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), SearchDetail.class);
-                        intent.putExtra("Roomname", ""+name);
-                        intent.putExtra("Roominfo", info);
-                        startActivity(intent);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Roomname", ""+name);
+                        mystudyfragment.setArguments(bundle);
+                        transaction.replace(R.id.container, mystudyfragment); // 프레그먼트 변경
+                        transaction.commit(); //저장해라 commit
                     }
                 });
 

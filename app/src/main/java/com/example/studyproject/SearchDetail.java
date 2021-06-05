@@ -109,13 +109,27 @@ public class SearchDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 // 파이어베이스에 가입한 사용자 멤버 정보 추가
                                 FirebaseDatabase  database = FirebaseDatabase.getInstance();
-                                DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/"); // 해당 스터디룸 찾아 들어가기
+                                DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/member"); // 해당 스터디룸 찾아 들어가기
+
 
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
                                 String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
+                                //DatabaseReference mDatabaseRef = database.getReference("users/" + uid);
 
-                                //mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
-                                mDatabaseRef.child("member").push(); // 사용자 uid 삽입
+                                //mDatabaseRef.child("member").push().setValue(name); // 사용자 uid 삽입
+
+                                Map<String, Object> updates = new HashMap<String,Object>();
+                                updates.put(uid, "true");
+                                mDatabaseRef.updateChildren(updates);
+
+                                //HashMap<String, Object> params = new HashMap<>();
+                                //params.put("name", uid);
+                                //mDatabaseRef.child("member").updateChildren(params); // 사용자 uid 삽입
+                                //mDatabaseRef.child("member").push().setValue(uid);
+
+                                //Map<String, Object> memberUpdates = new HashMap<>();
+                                //memberUpdates.put("/member/name", uid);
+                                //mDatabaseRef.updateChildren(memberUpdates);
                             }
                         })
                         .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
