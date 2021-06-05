@@ -51,7 +51,7 @@ public class SearchDetail extends AppCompatActivity {
     //ArrayList<UserStudyRoomDB> dataholder;
 
     MakeRoomDB model;
-    TextView Roomname, Roominfo, Roomperson;
+    TextView Roomname, Roominfo, Roomperson, Roomdate;
     ImageView Roompic;
     Button bt;
     public SearchDetail(){
@@ -64,16 +64,22 @@ public class SearchDetail extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Roomname=findViewById(R.id.study_title);
         Roominfo=findViewById(R.id.study_info);
+        Roomdate=findViewById(R.id.study_make);
         Roomperson=findViewById(R.id.study_member);
         Roompic=findViewById(R.id.study_picture);
 
+        // SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //String getTime = simpleDate.format(mDate);
+
         String name = getIntent().getStringExtra("Roomname");
         String info = getIntent().getStringExtra("Roominfo");
+        String date = getIntent().getStringExtra("Roomdate");
         String person = getIntent().getStringExtra("Roomperson");
 
         Roomname.setText(name);
         Roominfo.setText(info);
-        Roomperson.setText(person);
+        Roomdate.setText("개설 날짜         " + date);
+        Roomperson.setText("멤버                " + person + "명");
         Roompic.setImageResource(R.drawable.book);
 
         //roomcate=findViewById(R.id.)
