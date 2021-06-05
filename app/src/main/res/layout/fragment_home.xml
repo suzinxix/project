@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@drawable/background_home"
     android:orientation="vertical">
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarHome"
@@ -26,10 +25,13 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/roomrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 <!--
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -53,6 +55,7 @@
 
     </FrameLayout>
 -->
+
     <FrameLayout
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"

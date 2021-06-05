@@ -56,7 +56,7 @@ public class SearchDetail extends AppCompatActivity {
     ImageView Roompic;
     Button bt;
     String nickname;
-    BoardFragment fragment_board;
+    MyStudyFragment fragment_mystydy;
 
     private DatabaseReference RoomRef;
 
@@ -67,7 +67,7 @@ public class SearchDetail extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragment_board = new BoardFragment();
+        fragment_mystydy = new MyStudyFragment();
 
         RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
 
@@ -125,7 +125,7 @@ public class SearchDetail extends AppCompatActivity {
                                 mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
 
                                 getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.container, fragment_board).commit();
+                                        .replace(R.id.container, fragment_mystydy).commit();
 
                             }
                         })
