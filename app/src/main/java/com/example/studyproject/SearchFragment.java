@@ -1,14 +1,19 @@
 package com.example.studyproject;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
+    Button button2;
+    EditText etSearch;
+    static String searchKey=""; static Boolean sch=false;
+    FragmentTransaction ft2;
 
     public SearchFragment(){
 
@@ -41,8 +50,45 @@ public class SearchFragment extends Fragment {
         Fragment searchRankingFragment = new SearchRankingFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.container, searchRankingFragment).commit();
+        etSearch = (EditText)view.findViewById(R.id.editSearch);
 
-        Button button2 = (Button)view.findViewById(R.id.button2);
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(etSearch.getText().toString().length() != 0) {
+
+                        searchKey = etSearch.getText().toString();
+                        etSearch.setText(searchKey);
+                        sch=true;
+
+                        // fragment reload
+                       ft2 = getChildFragmentManager().beginTransaction();
+                        if (Build.VERSION.SDK_INT >= 26) {
+                            ft2.setReorderingAllowed(false);
+                        }
+                        ft2.detach(searchRankingFragment).attach(searchRankingFragment).commit();
+
+
+                    }else {
+                        searchKey = "";
+                        sch=false;
+
+                        // fragment reload
+                        ft2 = getChildFragmentManager().beginTransaction();
+                        if (Build.VERSION.SDK_INT >= 26) {
+                            ft2.setReorderingAllowed(false);
+                        }
+                        ft2.detach(searchRankingFragment).attach(searchRankingFragment).commit();
+
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+       button2 = (Button)view.findViewById(R.id.button2);
 
 
         button2.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +98,8 @@ public class SearchFragment extends Fragment {
                 getActivity().startActivity(new Intent(getActivity(), MakeRoom.class));
             }
         });
+
+
 
         /*listView = (ListView)findViewById(R.id.room_list);
         * //DB 변수 초기화

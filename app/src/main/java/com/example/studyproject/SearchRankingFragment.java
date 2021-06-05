@@ -1,9 +1,14 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class SearchRankingFragment extends Fragment {
 
-    TabLayout tabs;
+    TabLayout tabs; EditText etSearch; String searchKey; Boolean sch;
 
     SearchAllFragment allFragment;
     SearchHabitFragment habitFragment;
@@ -27,6 +32,7 @@ public class SearchRankingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search_ranking, container, false);
+        FragmentTransaction ft=getFragmentManager().beginTransaction();
 
         allFragment = new SearchAllFragment();
         habitFragment = new SearchHabitFragment();

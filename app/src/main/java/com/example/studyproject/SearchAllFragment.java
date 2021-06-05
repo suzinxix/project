@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -37,11 +41,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// 검색 단어
+import static com.example.studyproject.SearchFragment.searchKey;
+import static com.example.studyproject.SearchFragment.sch;
+
 public class SearchAllFragment extends Fragment {
-    private RecyclerView recview;
+    private RecyclerView recview; EditText etSearch;
     private View ContactsView;
     private DatabaseReference ContactsRef, RoomRef;
+    SearchAllFragment allFragment;
 
+    Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
+            .orderByChild("roomname");
     public SearchAllFragment(){
 
     }
@@ -56,14 +67,24 @@ public class SearchAllFragment extends Fragment {
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
         RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
 
+
+
+        if(sch&&!(searchKey.equals(""))) { // 검색 결과가 존재할 때
+           query = FirebaseDatabase.getInstance().getReference("study_rooms")
+                    .orderByChild("roomname")
+                   .startAt(searchKey).endAt(searchKey+"\uf8ff");
+        }
+
+
         return ContactsView;
     }
     @Override
     public void onStart() {
         super.onStart();
+
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
-                        .setQuery(ContactsRef, MakeRoomDB.class) // 노드 데이터 읽어오기
+                        .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
 
@@ -98,6 +119,7 @@ public class SearchAllFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int room_index=1;
                         if(snapshot.hasChild("study_rooms")){
+
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
@@ -110,6 +132,7 @@ public class SearchAllFragment extends Fragment {
                             holder.roomperson.setText(room_person + "명");
                         }
                         else{
+
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
@@ -120,6 +143,8 @@ public class SearchAllFragment extends Fragment {
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                             holder.roomperson.setText(room_person + "명");
+
+
                         }
                     }
 
@@ -128,6 +153,7 @@ public class SearchAllFragment extends Fragment {
 
                     }
                 });
+
 
             }
 
@@ -139,6 +165,7 @@ public class SearchAllFragment extends Fragment {
                 return viewHolder;
             }
         };
+
         recview.setAdapter(adapter);
         adapter.startListening();
     }

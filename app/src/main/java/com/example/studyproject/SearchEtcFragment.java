@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class SearchEtcFragment extends Fragment {
             .orderByChild("roomcategory")
             .equalTo("기타");
 
+
     public SearchEtcFragment() {
 
     }
@@ -43,6 +45,8 @@ public class SearchEtcFragment extends Fragment {
         ContactsView = inflater.inflate(R.layout.fragment_search_etc, container, false);
         recview_6 = (RecyclerView) ContactsView.findViewById(R.id.recview_6);
         recview_6.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
         RoomRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
