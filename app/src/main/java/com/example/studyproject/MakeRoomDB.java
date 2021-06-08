@@ -38,7 +38,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, List<String> roomtodo, Date roomdate){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, Date roomdate){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -56,7 +56,6 @@ public class MakeRoomDB {
 
         this.roommember = roommember; // 스터디원
 
-        this.roomToDo = roomtodo; // 할 일
         this.roomdate = roomdate; // 개설 날짜
     }
 
@@ -135,14 +134,6 @@ public class MakeRoomDB {
 
     public void setRoommember(List<String> roommember) {
         this.roommember = roommember;
-    }
-
-    public List<String> getRoomToDo() {
-        return roomToDo;
-    }
-
-    public void setRoomToDo(List<String> todo) {
-        this.roomToDo=todo;
     }
 
     public long getRoomhoney() {
@@ -227,7 +218,7 @@ public class MakeRoomDB {
         result.put("roomlock", roomlock);
         result.put("roomhow", roomhow);
         result.put("roomtime1", roomtime1);
-        result.put("roomtime2", roomtime1);
+        result.put("roomtime2", roomtime2);
 
         result.put("roommember", roommember);
         result.put("roomtodo", roomToDo);

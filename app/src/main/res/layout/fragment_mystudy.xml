@@ -24,37 +24,16 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageViewGraphic"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        <FrameLayout
-            android:id="@+id/third"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/study_name_yellow_box"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            >
-
-            <TextView
-                android:id="@+id/study_title"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="TextView"
-                style="@style/font_study_name" />
-
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/buttonWeekly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주차별 목표" />
 
 </LinearLayout>

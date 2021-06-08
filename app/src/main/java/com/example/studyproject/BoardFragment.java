@@ -1,6 +1,7 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -17,6 +19,7 @@ public class BoardFragment extends Fragment {
     Toolbar toolbar_board;
     WeeklyFragment fragment_weekly;
     GalleryFragment fragment_gallery;
+    String room_name;
 
     //Fragment 변경위해
     public static BoardFragment newInstance() {
@@ -32,23 +35,46 @@ public class BoardFragment extends Fragment {
         toolbar_board = (Toolbar) view.findViewById(R.id.toolbarBoard);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_board);
 
-
         fragment_weekly = new WeeklyFragment();
         fragment_gallery = new GalleryFragment();
 
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.containerTabs, fragment_weekly).commit();
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            room_name= bundle.getString("key__roomname");
+        }
+
+        Bundle bundle2 = new Bundle(); // 번들을 통해 값 전달
+        bundle2.putString("key_roomname", room_name);//번들에 넘길 값 저장
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        WeeklyFragment weeklyFragment = new WeeklyFragment();//프래그먼트2 선언
+        weeklyFragment.setArguments(bundle2);//번들을 프래그먼트2로 보낼 준비
+        transaction.replace(R.id.containerTabs, weeklyFragment);
+        transaction.commit();
 
         tabs = view.findViewById(R.id.tabs);
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Fragment selected = null;
-                if(position == 0)
-                    selected = fragment_weekly;
-                else if(position == 1)
-                    selected = fragment_gallery;
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerTabs, selected).commit(); //오류-클릭,replace ok. 탭바가 사라짐
+                if(position == 0) {
+                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                    bundle.putString("key_roomname", room_name);//번들에 넘길 값 저장
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    WeeklyFragment weeklyFragment = new WeeklyFragment();//프래그먼트2 선언
+                    weeklyFragment.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
+                    transaction.replace(R.id.containerTabs, weeklyFragment);
+                    transaction.commit();
+                }
+                else if(position == 1) {
+                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                    bundle.putString("roomname_btog", room_name);//번들에 넘길 값 저장
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    GalleryFragment galleryFragment = new GalleryFragment();//프래그먼트2 선언
+                    galleryFragment.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
+                    transaction.replace(R.id.containerTabs, galleryFragment);
+                    transaction.commit();
+                }
             }
 
             @Override

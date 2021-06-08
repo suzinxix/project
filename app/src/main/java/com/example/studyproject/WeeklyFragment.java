@@ -49,19 +49,21 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
 public class WeeklyFragment extends Fragment {
     private RecyclerView myWeeklyList;
     private StorageReference mStorageRef;
-    private DatabaseReference WeeklyRef, WeekRef, mDatabaseRef;
+    private DatabaseReference WeeklyRef, todoRef, mDatabaseRef;
     private Uri photoUri;
     private String mCurrentPhotoPath;
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
     private int flag = 0;
-    private String uid;
+    private String uid, room_name;
+    private List<WeeklyDB> weeklyList;
 
     public WeeklyFragment() {
         // Required empty public constructor
@@ -75,9 +77,15 @@ public class WeeklyFragment extends Fragment {
 
         myWeeklyList = (RecyclerView) weeklyView.findViewById(R.id.recyclerviewWeekly);
         myWeeklyList.setLayoutManager(new LinearLayoutManager(getContext()));
+        weeklyList = new ArrayList<>();
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            room_name= bundle.getString("key_roomname");
+        }
 
         WeeklyRef = FirebaseDatabase.getInstance().getReference().child("weekly");
-        WeekRef = FirebaseDatabase.getInstance().getReference().child("weekly");
+        todoRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("roomtodo");
         mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
 
@@ -110,30 +118,24 @@ public class WeeklyFragment extends Fragment {
         super.onStart();
 
         FirebaseRecyclerOptions<WeeklyDB> options = new FirebaseRecyclerOptions.Builder<WeeklyDB>()
-                .setQuery(WeeklyRef, WeeklyDB.class).build();
+                .setQuery(todoRef, WeeklyDB.class).build();
 
         FirebaseRecyclerAdapter<WeeklyDB, WeeklyViewHolder> adapter
                 = new FirebaseRecyclerAdapter<WeeklyDB, WeeklyViewHolder>(options) {
+
             @Override
             protected void onBindViewHolder(@NonNull WeeklyViewHolder holder, int position, @NonNull WeeklyDB model) {
-                String week = getRef(position).getKey();
+                String id = getRef(position).getKey();
 
-                WeekRef.child(week).addValueEventListener(new ValueEventListener() {
+                todoRef.child(id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChild("weekly")) {
-                            String week_num = snapshot.child("week").getValue().toString();
-                            String week_todo = snapshot.child("todo").getValue().toString();
+                        String text_week = Integer.toString(position+1);
+                        String text_todo = snapshot.child("todo").getValue().toString();
 
-                            holder.tv_week.setText(week_num);
-                            holder.tv_todo.setText(week_todo);
-                        } else {
-                            String week_num = snapshot.child("week").getValue().toString();
-                            String week_todo = snapshot.child("todo").getValue().toString();
+                        holder.tv_week.setText(text_week);
+                        holder.tv_todo.setText(text_todo);
 
-                            holder.tv_week.setText(week_num);
-                            holder.tv_todo.setText(week_todo);
-                        }
                     }
 
                     @Override
@@ -186,7 +188,6 @@ public class WeeklyFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             flag = 1;
                             selectAlbum();
-                            //uploadPhoto();
                         }
                     };
 
@@ -321,7 +322,6 @@ public class WeeklyFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         StorageReference fileReference = mStorageRef.child(uid+ "_"+ System.currentTimeMillis()
                                 + "." + getFileExtension(photoUri));
-                        // String filename = "" + System.currentTimeMillis(); //cu + "_" +
                         UploadTask uploadTask;
                         Uri file = null;
                         if(flag ==0){
@@ -357,7 +357,7 @@ public class WeeklyFragment extends Fragment {
                                         SimpleDateFormat format1 = new SimpleDateFormat( "yyyyMMdd HH:mm:ss");
                                         Calendar time = Calendar.getInstance();
                                         String format_time1 = format1.format(time.getTime());
-                                        GalleryDB url = new GalleryDB(format_time1, downloadUrl, uid);
+                                        GalleryDB url = new GalleryDB(format_time1, downloadUrl, uid, room_name);
                                         String uploadId = mDatabaseRef.push().getKey();
                                         mDatabaseRef.child(uploadId).setValue(url);
                                         Log.v("알림", "사진 업로드 성공 " + downloadUrl);

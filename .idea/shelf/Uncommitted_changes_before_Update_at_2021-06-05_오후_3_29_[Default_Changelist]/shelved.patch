@@ -1,0 +1,267 @@
+Index: app/src/main/java/com/example/studyproject/WeeklyFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.studyproject;\r\n\r\nimport android.Manifest;\r\nimport android.app.AlertDialog;\r\nimport android.app.ProgressDialog;\r\nimport android.content.ContentResolver;\r\nimport android.content.DialogInterface;\r\nimport android.content.Intent;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\n\r\nimport android.os.Environment;\r\nimport android.provider.MediaStore;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.webkit.MimeTypeMap;\r\nimport android.widget.ImageButton;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.core.content.FileProvider;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.firebase.ui.database.FirebaseRecyclerAdapter;\r\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.ValueEventListener;\r\nimport com.google.firebase.storage.FirebaseStorage;\r\nimport com.google.firebase.storage.StorageReference;\r\nimport com.google.firebase.storage.UploadTask;\r\nimport com.gun0912.tedpermission.PermissionListener;\r\nimport com.gun0912.tedpermission.TedPermission;\r\n\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.ArrayList;\r\nimport java.util.Calendar;\r\n\r\nimport static android.app.Activity.RESULT_OK;\r\n\r\npublic class WeeklyFragment extends Fragment {\r\n    private RecyclerView myWeeklyList;\r\n    private StorageReference mStorageRef;\r\n    private DatabaseReference WeeklyRef, WeekRef, mDatabaseRef;\r\n    private Uri photoUri;\r\n    private String mCurrentPhotoPath;\r\n    private static final int FROM_CAMERA = 0;\r\n    private static final int FROM_ALBUM = 1;\r\n    private int flag = 0;\r\n    private String uid;\r\n\r\n    public WeeklyFragment() {\r\n        // Required empty public constructor\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n\r\n        View weeklyView = (View) inflater.inflate(R.layout.fragment_weekly, container, false);\r\n\r\n        myWeeklyList = (RecyclerView) weeklyView.findViewById(R.id.recyclerviewWeekly);\r\n        myWeeklyList.setLayoutManager(new LinearLayoutManager(getContext()));\r\n\r\n        WeeklyRef = FirebaseDatabase.getInstance().getReference().child(\"weekly\");\r\n        WeekRef = FirebaseDatabase.getInstance().getReference().child(\"weekly\");\r\n        mStorageRef = FirebaseStorage.getInstance().getReference().child(\"gallery\");\r\n        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child(\"gallery_url\");\r\n\r\n        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기\r\n        uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기\r\n\r\n        PermissionListener permissionlistener = new PermissionListener() {\r\n            @Override\r\n            public void onPermissionGranted() {\r\n                Toast.makeText(getActivity(), \"권한 허가\", Toast.LENGTH_SHORT).show();\r\n            }\r\n\r\n            @Override\r\n            public void onPermissionDenied(ArrayList<String> deniedPermissions) {\r\n                Toast.makeText(getActivity(), \"권한 거부\\n\" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();\r\n            }\r\n        };\r\n\r\n        TedPermission.with(getContext())\r\n                .setPermissionListener(permissionlistener)\r\n                .setDeniedMessage(\"If you reject permission,you can not use this service\\n\\nPlease turn on permissions at [Setting] > [Permission] \")\r\n                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)\r\n                .check();\r\n\r\n        return weeklyView;\r\n    }\r\n\r\n    @Override\r\n    public void onStart() {\r\n        super.onStart();\r\n\r\n        FirebaseRecyclerOptions<WeeklyDB> options = new FirebaseRecyclerOptions.Builder<WeeklyDB>()\r\n                .setQuery(WeeklyRef, WeeklyDB.class).build();\r\n\r\n        FirebaseRecyclerAdapter<WeeklyDB, WeeklyViewHolder> adapter\r\n                = new FirebaseRecyclerAdapter<WeeklyDB, WeeklyViewHolder>(options) {\r\n            @Override\r\n            protected void onBindViewHolder(@NonNull WeeklyViewHolder holder, int position, @NonNull WeeklyDB model) {\r\n                String week = getRef(position).getKey();\r\n\r\n                WeekRef.child(week).addValueEventListener(new ValueEventListener() {\r\n                    @Override\r\n                    public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                        if (snapshot.hasChild(\"weekly\")) {\r\n                            String week_num = snapshot.child(\"week\").getValue().toString();\r\n                            String week_todo = snapshot.child(\"todo\").getValue().toString();\r\n\r\n                            holder.tv_week.setText(week_num);\r\n                            holder.tv_todo.setText(week_todo);\r\n                        } else {\r\n                            String week_num = snapshot.child(\"week\").getValue().toString();\r\n                            String week_todo = snapshot.child(\"todo\").getValue().toString();\r\n\r\n                            holder.tv_week.setText(week_num);\r\n                            holder.tv_todo.setText(week_todo);\r\n                        }\r\n                    }\r\n\r\n                    @Override\r\n                    public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n                    }\r\n                });\r\n\r\n            }\r\n\r\n            @NonNull\r\n            @Override\r\n            public WeeklyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weekly_layout, parent, false);\r\n                return new WeeklyViewHolder(view);\r\n            }\r\n        };\r\n\r\n        myWeeklyList.setAdapter(adapter);\r\n        adapter.startListening();\r\n    }\r\n\r\n    public class WeeklyViewHolder extends RecyclerView.ViewHolder {\r\n        TextView tv_week, tv_todo;\r\n        ImageButton ibt_camera, ibt_timer;\r\n        TimerFragment fragment_timer;\r\n\r\n        public WeeklyViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n\r\n            tv_week = (TextView) itemView.findViewById(R.id.textViewWeek);\r\n            tv_todo = (TextView) itemView.findViewById(R.id.textViewTodo);\r\n            fragment_timer = new TimerFragment();\r\n\r\n            ibt_camera = (ImageButton)itemView.findViewById(R.id.imageButtonCamera);\r\n            ibt_camera.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n                    DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {\r\n                        @Override\r\n                        public void onClick(DialogInterface dialog, int which) {\r\n                            flag = 0;\r\n                            takePhoto();\r\n                            uploadPhoto();\r\n                        }\r\n                    };\r\n\r\n                    DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {\r\n                        @Override\r\n                        public void onClick(DialogInterface dialog, int which) {\r\n                            flag = 1;\r\n                            selectAlbum();\r\n                            //uploadPhoto();\r\n                        }\r\n                    };\r\n\r\n                    DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {\r\n                        @Override\r\n                        public void onClick(DialogInterface dialog, int which) {\r\n                            dialog.dismiss();\r\n                        }\r\n                    };\r\n\r\n                    new AlertDialog.Builder(getContext())\r\n                            .setTitle(\"업로드할 이미지 선택\")\r\n                            .setPositiveButton(\"사진촬영\", cameraListener)\r\n                            .setNeutralButton(\"앨범선택\", albumListener)\r\n                            .setNegativeButton(\"취소\", cancelListener)\r\n                            .show();\r\n                }\r\n            });\r\n\r\n            ibt_timer = (ImageButton)itemView.findViewById(R.id.imageButtonTimer);\r\n            ibt_timer.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerTabs, fragment_timer).commit();\r\n                }\r\n            });\r\n        }\r\n    }\r\n\r\n    public void takePhoto() {\r\n        // 카메라 인텐트 실행\r\n        String state = Environment.getExternalStorageState();\r\n        if(Environment.MEDIA_MOUNTED.equals(state)) {\r\n            Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);\r\n            if(takePhotoIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager())!=null){\r\n                File photoFile = null;\r\n                Log.v(\"알림\", \"3\");\r\n                try{\r\n                    photoFile = createImageFile();\r\n                } catch (IOException e){\r\n                    e.printStackTrace();\r\n                }\r\n                if(photoFile!=null){\r\n                    Uri photoURI = FileProvider.getUriForFile(getActivity().getApplicationContext(), \"com.example.studyproject.fileprovider\", photoFile);\r\n                    takePhotoIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoURI);\r\n                    startActivityForResult(takePhotoIntent, FROM_CAMERA);\r\n                }\r\n            }\r\n        } else {\r\n            Log.v(\"알림\", \"저장공간에 접근 불가능\");\r\n        }\r\n    }\r\n\r\n    //사용자 휴대폰 갤러리에 저장\r\n    public File createImageFile() throws IOException{\r\n        String imgFileName = System.currentTimeMillis() + \".jpg\";\r\n        File imageFile= null;\r\n        File storageDir = new File(Environment.getExternalStorageDirectory() + \"/DCIM\", \"honeystudy\");\r\n\r\n        if(!storageDir.exists()){\r\n            //없으면 만들기\r\n            Log.v(\"알림\",\"storageDir 존재 x \" + storageDir.toString());\r\n            storageDir.mkdirs();\r\n        }\r\n        Log.v(\"알림\",\"storageDir 존재함 \" + storageDir.toString());\r\n        imageFile = new File(storageDir,imgFileName);\r\n        mCurrentPhotoPath = imageFile.getAbsolutePath();\r\n        return imageFile;\r\n    }\r\n\r\n    public void addPhotoToGallery(){\r\n        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);\r\n        File f = new File(mCurrentPhotoPath);\r\n        Uri contentUri = Uri.fromFile(f);\r\n        mediaScanIntent.setData(contentUri);\r\n        getActivity().sendBroadcast(mediaScanIntent);\r\n        Toast.makeText(getActivity(),\"사진이 저장되었습니다\",Toast.LENGTH_SHORT).show();\r\n    }\r\n\r\n    public void selectAlbum(){\r\n        //앨범에서 이미지 가져옴\r\n        //앨범 열기\r\n        Intent intent = new Intent(Intent.ACTION_PICK);\r\n        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);\r\n        intent.setType(\"image/*\");\r\n        startActivityForResult(intent, FROM_ALBUM);\r\n    }\r\n\r\n    @Override\r\n    public void onActivityResult(int requestCode, int resultCode, Intent data) {\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        if (resultCode != RESULT_OK) {\r\n            return;\r\n        }\r\n        switch (requestCode) {\r\n            case FROM_ALBUM: {\r\n                //앨범에서 가져오기\r\n                if (data.getData() != null) {\r\n                    try {\r\n                        photoUri = data.getData();\r\n                    } catch (Exception e) {\r\n                        e.printStackTrace();\r\n                    }\r\n                    uploadPhoto();\r\n                }\r\n                break;\r\n            }\r\n\r\n            case FROM_CAMERA: {\r\n                //카메라 촬영\r\n                try {\r\n                    addPhotoToGallery();\r\n                } catch (Exception e) {\r\n                    e.printStackTrace();\r\n                }\r\n                break;\r\n            }\r\n        }\r\n    }\r\n\r\n    private String getFileExtension(Uri uri) {\r\n        ContentResolver cR = getActivity().getContentResolver();\r\n        MimeTypeMap mime = MimeTypeMap.getSingleton();\r\n        return mime.getExtensionFromMimeType(cR.getType(uri));\r\n    }\r\n\r\n    public void uploadPhoto() {\r\n        AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext()); //R.style.추가\r\n        alt_bld.setTitle(\"사진 선택 완료\").setMessage(\"사진을 등록하시겠습니까?\").setCancelable(\r\n                false).setPositiveButton(\"네\",\r\n                new DialogInterface.OnClickListener() {\r\n                    public void onClick(DialogInterface dialog, int id) {\r\n                        StorageReference fileReference = mStorageRef.child(uid+ \"_\"+ System.currentTimeMillis()\r\n                                + \".\" + getFileExtension(photoUri));\r\n                        // String filename = \"\" + System.currentTimeMillis(); //cu + \"_\" +\r\n                        UploadTask uploadTask;\r\n                        Uri file = null;\r\n                        if(flag ==0){\r\n                            //사진촬영\r\n                            file = Uri.fromFile(new File(mCurrentPhotoPath));\r\n                        } else if(flag==1){\r\n                            //앨범선택\r\n                            file = photoUri;\r\n                        }\r\n\r\n                        uploadTask = fileReference.putFile(file);\r\n\r\n                        final ProgressDialog progressDialog = new ProgressDialog(getContext());\r\n                        progressDialog.setMessage(\"업로드중\");\r\n                        progressDialog.show();\r\n\r\n                        uploadTask.addOnFailureListener(new OnFailureListener() {\r\n                            @Override\r\n                            public void onFailure(@NonNull Exception exception) {\r\n                                // Handle unsuccessful uploads\r\n                                Log.v(\"알림\", \"사진 업로드 실패\");\r\n                                progressDialog.dismiss();\r\n                                exception.printStackTrace();\r\n\r\n                            }\r\n                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {\r\n                            @Override\r\n                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {\r\n                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {\r\n                                    @Override\r\n                                    public void onSuccess(Uri uri) {\r\n                                        String downloadUrl = uri.toString();\r\n                                        SimpleDateFormat format1 = new SimpleDateFormat( \"yyyyMMdd HH:mm:ss\");\r\n                                        Calendar time = Calendar.getInstance();\r\n                                        String format_time1 = format1.format(time.getTime());\r\n                                        GalleryDB url = new GalleryDB(format_time1, downloadUrl, uid);\r\n                                        String uploadId = mDatabaseRef.push().getKey();\r\n                                        mDatabaseRef.child(uploadId).setValue(url);\r\n                                        Log.v(\"알림\", \"사진 업로드 성공 \" + downloadUrl);\r\n                                        progressDialog.dismiss();\r\n                                        Toast.makeText(getActivity(), \"사진이 업로드 되었습니다.\", Toast.LENGTH_SHORT).show();\r\n                                    }\r\n                                });\r\n                            }\r\n                        });\r\n                    }\r\n                }).setNegativeButton(\"아니오\",\r\n                new DialogInterface.OnClickListener() {\r\n                    public void onClick(DialogInterface dialog, int id) {\r\n                        // 아니오 클릭. dialog 닫기.\r\n                        dialog.cancel();\r\n                    }\r\n                });\r\n        AlertDialog alert = alt_bld.create();\r\n        alert.show();\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/WeeklyFragment.java	(revision 64e0d51aee561a78eef13d76dc11891cfde1e8d3)
++++ app/src/main/java/com/example/studyproject/WeeklyFragment.java	(date 1622872755250)
+@@ -55,13 +55,13 @@
+ public class WeeklyFragment extends Fragment {
+     private RecyclerView myWeeklyList;
+     private StorageReference mStorageRef;
+-    private DatabaseReference WeeklyRef, WeekRef, mDatabaseRef;
++    private DatabaseReference WeeklyRef, todoRef, mDatabaseRef;
+     private Uri photoUri;
+     private String mCurrentPhotoPath;
+     private static final int FROM_CAMERA = 0;
+     private static final int FROM_ALBUM = 1;
+     private int flag = 0;
+-    private String uid;
++    private String uid, room_name;
+ 
+     public WeeklyFragment() {
+         // Required empty public constructor
+@@ -76,8 +76,12 @@
+         myWeeklyList = (RecyclerView) weeklyView.findViewById(R.id.recyclerviewWeekly);
+         myWeeklyList.setLayoutManager(new LinearLayoutManager(getContext()));
+ 
++        Bundle bundle = getArguments();
++        if(bundle != null) room_name= bundle.getString("key_roomname");
++        Log.v("알림", "roomname:"+room_name);
++
+         WeeklyRef = FirebaseDatabase.getInstance().getReference().child("weekly");
+-        WeekRef = FirebaseDatabase.getInstance().getReference().child("weekly");
++        todoRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
+         mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
+         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
+ 
+@@ -109,30 +113,41 @@
+     public void onStart() {
+         super.onStart();
+ 
+-        FirebaseRecyclerOptions<WeeklyDB> options = new FirebaseRecyclerOptions.Builder<WeeklyDB>()
+-                .setQuery(WeeklyRef, WeeklyDB.class).build();
++        FirebaseRecyclerOptions<MakeRoomDB> options = new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
++                .setQuery(todoRef, MakeRoomDB.class).build();
+ 
+-        FirebaseRecyclerAdapter<WeeklyDB, WeeklyViewHolder> adapter
+-                = new FirebaseRecyclerAdapter<WeeklyDB, WeeklyViewHolder>(options) {
++        FirebaseRecyclerAdapter<MakeRoomDB, WeeklyViewHolder> adapter
++                = new FirebaseRecyclerAdapter<MakeRoomDB, WeeklyViewHolder>(options) {
+             @Override
+-            protected void onBindViewHolder(@NonNull WeeklyViewHolder holder, int position, @NonNull WeeklyDB model) {
+-                String week = getRef(position).getKey();
++            protected void onBindViewHolder(@NonNull WeeklyViewHolder holder, int position, @NonNull MakeRoomDB model) {
++                String key_rn = getRef(position).getKey();
+ 
+-                WeekRef.child(week).addValueEventListener(new ValueEventListener() {
++                todoRef.child(key_rn).addValueEventListener(new ValueEventListener() { //.child(week)
+                     @Override
+                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+-                        if (snapshot.hasChild("weekly")) {
+-                            String week_num = snapshot.child("week").getValue().toString();
+-                            String week_todo = snapshot.child("todo").getValue().toString();
+-
+-                            holder.tv_week.setText(week_num);
+-                            holder.tv_todo.setText(week_todo);
+-                        } else {
+-                            String week_num = snapshot.child("week").getValue().toString();
+-                            String week_todo = snapshot.child("todo").getValue().toString();
+-
+-                            holder.tv_week.setText(week_num);
+-                            holder.tv_todo.setText(week_todo);
++//                        if (snapshot.hasChild("weekly")) {
++//                            String week_num = snapshot.child("week").getValue().toString();
++//                            String week_todo = snapshot.child("
++//
++//                            holder.tv_week.setText(week_num);
++//                            holder.tv_todo.setText(week_todo);
++//                        } else {
++//                            String week_num = snapshot.child("week").getValue().toString();
++//                            String week_todo = snapshot.child("
++//
++//                            holder.tv_week.setText(week_num);
++//                            holder.tv_todo.setText(week_todo);
++//                        }
++                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
++                            Log.v("알림", "1");
++                            MakeRoomDB makeRoomDB = postSnapshot.getValue(MakeRoomDB.class);
++                            if (makeRoomDB.getRoomname().equals(room_name)) {
++                                Log.v("알림", "2");
++                                String rn = postSnapshot.child("roomname").getValue().toString();
++                                holder.tv_week.setText(rn);
++                                String week_todo = postSnapshot.child("roomtodo").getValue().toString();
++                                holder.tv_todo.setText(week_todo);
++                            }
+                         }
+                     }
+ 
+Index: app/src/main/java/com/example/studyproject/HomeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.studyproject;\r\n\r\nimport android.app.VoiceInteractor;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.ActionBar;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.core.app.ActivityCompat;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.lifecycle.Observer;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.firebase.ui.database.FirebaseRecyclerAdapter;\r\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.Query;\r\nimport com.google.firebase.database.ValueEventListener;\r\n\r\nimport java.util.List;\r\n\r\nimport static android.app.Activity.RESULT_OK;\r\n\r\npublic class HomeFragment extends Fragment{\r\n    private Toolbar toolbar_home;\r\n    private RecyclerView recview;\r\n    private View view;\r\n    private DatabaseReference ContactsRef, RoomRef;\r\n\r\n    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기\r\n    String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기\r\n\r\n    Query query = FirebaseDatabase.getInstance().getReference(\"study_rooms\")\r\n            .orderByChild(\"member/name\")\r\n            .equalTo(uid);\r\n\r\n    Button bt_temp;\r\n\r\n    public HomeFragment() {\r\n    }\r\n\r\n\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        setHasOptionsMenu(true);\r\n        view = inflater.inflate(R.layout.fragment_home, container, false);\r\n\r\n        recview=(RecyclerView)view.findViewById(R.id.roomrecyclerview);\r\n        recview.setLayoutManager(new LinearLayoutManager(getContext()));\r\n\r\n        ContactsRef = FirebaseDatabase.getInstance().getReference().child(\"study_rooms\");\r\n        RoomRef = FirebaseDatabase.getInstance().getReference().child(\"study_rooms\");\r\n\r\n        // 툴바 추가\r\n        toolbar_home = (Toolbar) view.findViewById(R.id.toolbarHome);\r\n        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_home);\r\n\r\n        ((AppCompatActivity)getActivity()).setTitle(\"\");\r\n        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);\r\n        ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);\r\n\r\n        // 임시 버튼 HomeFragment->MyStudyFragment\r\n        bt_temp = (Button) view.findViewById(R.id.bt_temp);\r\n        bt_temp.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                ((HomeActivity)getActivity()).replaceFragment(MyStudyFragment.newInstance()); //Fragment 변경\r\n            }\r\n        });\r\n        return view;\r\n    }\r\n\r\n    @Override\r\n    public void onStart() {\r\n        super.onStart();\r\n\r\n        FirebaseRecyclerOptions<MakeRoomDB> options =\r\n                new FirebaseRecyclerOptions.Builder<MakeRoomDB>()\r\n                        .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기\r\n                        .build();\r\n\r\n        FirebaseRecyclerAdapter<MakeRoomDB, HomeFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, HomeFragment.ContactsViewHolder>(options) {\r\n            @Override\r\n            protected void onBindViewHolder(@NonNull final HomeFragment.ContactsViewHolder holder, int position, @NonNull MakeRoomDB model) {\r\n                String roomId = getRef(position).getKey(); // 리사이클러뷰\r\n                final String name = model.getRoomname();\r\n                final String info = model.getRoominfo();\r\n\r\n                // 클릭 시 희서가 만든 데이터로 이동\r\n                holder.itemView.setOnClickListener(new View.OnClickListener() {\r\n                    @Override\r\n                    public void onClick(View v) {\r\n                        Intent intent = new Intent(getActivity(), SearchDetail.class);\r\n                        intent.putExtra(\"Roomname\", \"\"+name);\r\n                        intent.putExtra(\"Roominfo\", info);\r\n                        startActivity(intent);\r\n                    }\r\n                });\r\n\r\n                RoomRef.child(roomId).addValueEventListener(new ValueEventListener() {\r\n                    @Override\r\n                    public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                        if (snapshot.hasChild(\"study_rooms\")) {\r\n                            String room_name = snapshot.child(\"roomname\").getValue().toString();\r\n                            String room_info = snapshot.child(\"roominfo\").getValue().toString();\r\n\r\n                            holder.roomname.setText(room_name);\r\n                            holder.roominfo.setText(room_info);\r\n                        } else {\r\n                            String room_name = snapshot.child(\"roomname\").getValue().toString();\r\n                            String room_info = snapshot.child(\"roominfo\").getValue().toString();\r\n\r\n                            holder.roomname.setText(room_name);\r\n                            holder.roominfo.setText(room_info);\r\n                        }\r\n                    }\r\n\r\n                    @Override\r\n                    public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n                    }\r\n                });\r\n\r\n            }\r\n\r\n            @NonNull\r\n            @Override\r\n            public HomeFragment.ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {\r\n                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.single_room_design, viewGroup, false);\r\n                HomeFragment.ContactsViewHolder viewHolder = new HomeFragment.ContactsViewHolder(view);\r\n                return viewHolder;\r\n            }\r\n        };\r\n        recview.setAdapter(adapter);\r\n        adapter.startListening();\r\n    }\r\n    public static class ContactsViewHolder extends RecyclerView.ViewHolder {\r\n        TextView roomname, roominfo;\r\n\r\n        public ContactsViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            roomname = itemView.findViewById(R.id.studyroomname);\r\n            roominfo = itemView.findViewById(R.id.ggul);\r\n        }\r\n    }\r\n\r\n    //Fragment 변경위한 함수\r\n    public static HomeFragment newInstance() {\r\n        return new HomeFragment();\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/HomeFragment.java	(revision 64e0d51aee561a78eef13d76dc11891cfde1e8d3)
++++ app/src/main/java/com/example/studyproject/HomeFragment.java	(date 1622873739980)
+@@ -3,6 +3,7 @@
+ import android.app.VoiceInteractor;
+ import android.content.Intent;
+ import android.os.Bundle;
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.Menu;
+ import android.view.MenuInflater;
+@@ -79,14 +80,6 @@
+         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);
+ 
+-        // 임시 버튼 HomeFragment->MyStudyFragment
+-        bt_temp = (Button) view.findViewById(R.id.bt_temp);
+-        bt_temp.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                ((HomeActivity)getActivity()).replaceFragment(MyStudyFragment.newInstance()); //Fragment 변경
+-            }
+-        });
+         return view;
+     }
+ 
+@@ -103,19 +96,11 @@
+             @Override
+             protected void onBindViewHolder(@NonNull final HomeFragment.ContactsViewHolder holder, int position, @NonNull MakeRoomDB model) {
+                 String roomId = getRef(position).getKey(); // 리사이클러뷰
+-                final String name = model.getRoomname();
+-                final String info = model.getRoominfo();
++                String name = model.getRoomname();
++                Log.v("알림", "name:"+roomId);
+ 
+-                // 클릭 시 희서가 만든 데이터로 이동
+-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+-                    @Override
+-                    public void onClick(View v) {
+-                        Intent intent = new Intent(getActivity(), SearchDetail.class);
+-                        intent.putExtra("Roomname", ""+name);
+-                        intent.putExtra("Roominfo", info);
+-                        startActivity(intent);
+-                    }
+-                });
++                // 클릭 시 roomname 전달, weekly 설정
++
+ 
+                 RoomRef.child(roomId).addValueEventListener(new ValueEventListener() {
+                     @Override
+@@ -126,6 +111,17 @@
+ 
+                             holder.roomname.setText(room_name);
+                             holder.roominfo.setText(room_info);
++
++                            holder.itemView.setOnClickListener(new View.OnClickListener() {
++                                @Override
++                                public void onClick(View v) {
++                                    ((HomeActivity)getActivity()).replaceFragment(MyStudyFragment.newInstance()); //Fragment 변경
++                                    Bundle bundle = new Bundle();
++                                    bundle.putString("key_roomname", room_name);
++                                    Fragment weeklyFragment = new WeeklyFragment();
++                                    weeklyFragment.setArguments(bundle);
++                                }
++                            });
+                         } else {
+                             String room_name = snapshot.child("roomname").getValue().toString();
+                             String room_info = snapshot.child("roominfo").getValue().toString();
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/backgroundColor\"\r\n    android:orientation=\"vertical\">\r\n\r\n\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/toolbarHome\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/mainColor\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/toolbar_title\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:textColor=\"#FFFFFF\"\r\n            android:text=\"꿀터디\"\r\n            android:fontFamily=\"@font/maplestorylight\"\r\n            android:textSize=\"30sp\" />\r\n\r\n    </androidx.appcompat.widget.Toolbar>\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/roomrecyclerview\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"/>\r\n<!--\r\n    <FrameLayout\r\n        android:id=\"@+id/frameLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"200dp\">\r\n\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView2\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"할일 리스트\"\r\n            android:textSize=\"24sp\" />\r\n\r\n        <fragment\r\n            android:id=\"@+id/todofragment\"\r\n            android:name=\"com.example.studyproject.TodoFragment\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_marginTop=\"35dp\" />\r\n\r\n    </FrameLayout>\r\n-->\r\n    <FrameLayout\r\n        android:id=\"@+id/frameLayout2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"194dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView3\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"My 스터디\"\r\n            android:textSize=\"24sp\" />\r\n\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"horizontal\">\r\n\r\n\r\n\r\n            <Button\r\n                android:id=\"@+id/bt_temp\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"MyStudy임시\" />\r\n        </LinearLayout>\r\n\r\n    </FrameLayout>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_home.xml	(revision 64e0d51aee561a78eef13d76dc11891cfde1e8d3)
++++ app/src/main/res/layout/fragment_home.xml	(date 1622867926056)
+@@ -30,57 +30,4 @@
+         android:id="@+id/roomrecyclerview"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"/>
+-<!--
+-    <FrameLayout
+-        android:id="@+id/frameLayout"
+-        android:layout_width="match_parent"
+-        android:layout_height="200dp">
+-
+-
+-        <TextView
+-            android:id="@+id/textView2"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:text="할일 리스트"
+-            android:textSize="24sp" />
+-
+-        <fragment
+-            android:id="@+id/todofragment"
+-            android:name="com.example.studyproject.TodoFragment"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_marginTop="35dp" />
+-
+-    </FrameLayout>
+--->
+-    <FrameLayout
+-        android:id="@+id/frameLayout2"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_marginBottom="194dp">
+-
+-        <TextView
+-            android:id="@+id/textView3"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:text="My 스터디"
+-            android:textSize="24sp" />
+-
+-
+-        <LinearLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:orientation="horizontal">
+-
+-
+-
+-            <Button
+-                android:id="@+id/bt_temp"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="MyStudy임시" />
+-        </LinearLayout>
+-
+-    </FrameLayout>
+-
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/studyproject/WeeklyDB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.studyproject;\r\n\r\nimport android.widget.Button;\r\n\r\npublic class WeeklyDB {\r\n    public int week;\r\n    public String todo;\r\n\r\n    public WeeklyDB () {\r\n\r\n    }\r\n\r\n    public WeeklyDB (int week, String todo, String camera, String timer) {\r\n        this.week = week;\r\n        this.todo = todo;\r\n    }\r\n\r\n    public int getWeek() { return week; }\r\n    public void setWeek(int week) { this.week = week; }\r\n\r\n    public String getTodo() { return todo; }\r\n    public void setTodo(String todo) { this.todo = todo; }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/studyproject/WeeklyDB.java	(revision 64e0d51aee561a78eef13d76dc11891cfde1e8d3)
++++ app/src/main/java/com/example/studyproject/WeeklyDB.java	(date 1622866436280)
+@@ -5,6 +5,7 @@
+ public class WeeklyDB {
+     public int week;
+     public String todo;
++    public String timer;
+ 
+     public WeeklyDB () {
+ 
+@@ -20,4 +21,7 @@
+ 
+     public String getTodo() { return todo; }
+     public void setTodo(String todo) { this.todo = todo; }
++
++    public String getTImer() { return timer; }
++    public void setTimer(String timer) { this.timer = timer; }
+ }

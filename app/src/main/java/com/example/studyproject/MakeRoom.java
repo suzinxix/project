@@ -1,10 +1,8 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,18 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,13 +38,22 @@ import static java.lang.Integer.parseInt;
 public class MakeRoom extends AppCompatActivity{
     // roomtime1 time2 손보기
 
+    private DatabaseReference mDatabaseRef;
+
     Button bt_makeroom;
     EditText et_roomname;
     ListView lv_roomcategory;
     EditText et_roominfo;
     EditText et_roomauth;
     EditText et_roomperson;
-    EditText[] et_roomtodo = new EditText[8];
+    EditText et_roomtodo1;
+    EditText et_roomtodo2;
+    EditText et_roomtodo3;
+    EditText et_roomtodo4;
+    EditText et_roomtodo5;
+    EditText et_roomtodo6;
+    EditText et_roomtodo7;
+    EditText et_roomtodo8;
     CheckBox[] cb=new CheckBox[7];
     TextView[] tv_days = new TextView[7];
     Switch sw_day, sw_lock, sw_time;
@@ -77,7 +80,14 @@ public class MakeRoom extends AppCompatActivity{
     boolean roomday=false;
     boolean roomlock=false;
     String roomCate="습관";
-    String roomtodo="";
+    String roomtodo1="";
+    String roomtodo2="";
+    String roomtodo3="";
+    String roomtodo4="";
+    String roomtodo5="";
+    String roomtodo6="";
+    String roomtodo7="";
+    String roomtodo8="";
     int roomHow=0;
     public String sort = "roomcategory";
     int[] roomDay = {0,0,0,0,0,0,0};
@@ -100,6 +110,8 @@ public class MakeRoom extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_makeroom);
 
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("study_rooms");
+
         bt_makeroom = (Button) findViewById(R.id.bt_makeroom);
         et_roomname = (EditText) findViewById(R.id.et_roomname);
         et_roominfo = (EditText) findViewById(R.id.et_roominfo);
@@ -111,10 +123,10 @@ public class MakeRoom extends AppCompatActivity{
         rb_auth2=(RadioButton)findViewById(R.id.rb_time);
 
         // 주차별 목표
-        et_roomtodo[0] = (EditText) findViewById(R.id.et_roomtodo1); et_roomtodo[1] = (EditText) findViewById(R.id.et_roomtodo2);
-        et_roomtodo[2] = (EditText) findViewById(R.id.et_roomtodo3); et_roomtodo[3] = (EditText) findViewById(R.id.et_roomtodo4);
-        et_roomtodo[4] = (EditText) findViewById(R.id.et_roomtodo5); et_roomtodo[5] = (EditText) findViewById(R.id.et_roomtodo6);
-        et_roomtodo[6] = (EditText) findViewById(R.id.et_roomtodo7); et_roomtodo[7] = (EditText) findViewById(R.id.et_roomtodo8);
+        et_roomtodo1 = (EditText) findViewById(R.id.et_roomtodo1); et_roomtodo2 = (EditText) findViewById(R.id.et_roomtodo2);
+        et_roomtodo3 = (EditText) findViewById(R.id.et_roomtodo3); et_roomtodo4 = (EditText) findViewById(R.id.et_roomtodo4);
+        et_roomtodo5 = (EditText) findViewById(R.id.et_roomtodo5); et_roomtodo6 = (EditText) findViewById(R.id.et_roomtodo6);
+        et_roomtodo7 = (EditText) findViewById(R.id.et_roomtodo7); et_roomtodo8 = (EditText) findViewById(R.id.et_roomtodo8);
 
         // 인증 요일
         sw_day = (Switch)findViewById(R.id.switch1);
@@ -138,7 +150,7 @@ public class MakeRoom extends AppCompatActivity{
         sw_time = (Switch)findViewById(R.id.switch2);
         bt_stTime.setEnabled(false); bt_edTime.setEnabled(false);
 
-       // 카테고리
+        // 카테고리
         rbs[0] = (RadioButton)findViewById(R.id.rb_1); rbs[1] = (RadioButton)findViewById(R.id.rb_2);
         rbs[2] = (RadioButton)findViewById(R.id.rb_3); rbs[3] = (RadioButton)findViewById(R.id.rb_4);
         rbs[4] = (RadioButton)findViewById(R.id.rb_5);
@@ -294,10 +306,15 @@ public class MakeRoom extends AppCompatActivity{
                 roomdate = new Date(now);
 
                 // 주차별 목표
-                List<String> getRoomtodo = new ArrayList<>();
-                for(int i =0;i<8;i++){
-                    getRoomtodo.add(et_roomtodo[i].getText().toString());
-                }
+                String getRoomToDo1 = et_roomtodo1.getText().toString();
+                String getRoomToDo2 = et_roomtodo2.getText().toString();
+                String getRoomToDo3 = et_roomtodo3.getText().toString();
+                String getRoomToDo4 = et_roomtodo4.getText().toString();
+                String getRoomToDo5 = et_roomtodo5.getText().toString();
+                String getRoomToDo6 = et_roomtodo6.getText().toString();
+                String getRoomToDo7 = et_roomtodo7.getText().toString();
+                String getRoomToDo8 = et_roomtodo8.getText().toString();
+
 
                 // 정보 확인용
                 String res = "이름: "+getRoomname+"\n분류: "+getRoomcategory+"\n정보: "+getRoominfo
@@ -320,8 +337,7 @@ public class MakeRoom extends AppCompatActivity{
                 // 정보 필터링
                 int chkI = checkInfo(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2,
-                        getRoomtodo);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoomToDo1, getRoomToDo2, getRoomToDo3, getRoomToDo4, getRoomToDo5, getRoomToDo6, getRoomToDo7, getRoomToDo8);
                 switch (chkI){
                     case -1:
                         Toast.makeText(MakeRoom.this, "필수 정보를 모두 채워주세요.", Toast.LENGTH_SHORT).show();
@@ -338,7 +354,14 @@ public class MakeRoom extends AppCompatActivity{
                     case -5:
                         Toast.makeText(MakeRoom.this, "인증 시간을 설정해주세요.", Toast.LENGTH_SHORT).show();
                         return;
-                    case -6:
+                    case -11:
+                    case -12:
+                    case -13:
+                    case -14:
+                    case -15:
+                    case -16:
+                    case -17:
+                    case -18:
                         Toast.makeText(MakeRoom.this, "주차 목표를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
                         return;
 
@@ -346,8 +369,35 @@ public class MakeRoom extends AppCompatActivity{
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember,getRoomtodo, roomdate);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember, roomdate);
                 // readRoomDB();
+
+                //주차별 계획 (writeRoom과 다르게 push함)
+                WeeklyDB weeklyDB1 = new WeeklyDB(getRoomToDo1);
+                WeeklyDB weeklyDB2 = new WeeklyDB(getRoomToDo2);
+                WeeklyDB weeklyDB3 = new WeeklyDB(getRoomToDo3);
+                WeeklyDB weeklyDB4 = new WeeklyDB(getRoomToDo4);
+                WeeklyDB weeklyDB5 = new WeeklyDB(getRoomToDo5);
+                WeeklyDB weeklyDB6 = new WeeklyDB(getRoomToDo6);
+                WeeklyDB weeklyDB7 = new WeeklyDB(getRoomToDo7);
+                WeeklyDB weeklyDB8 = new WeeklyDB(getRoomToDo8);
+
+                String weekId1 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId1).setValue(weeklyDB1);
+                String weekId2 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId2).setValue(weeklyDB2);
+                String weekId3 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId3).setValue(weeklyDB3);
+                String weekId4 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId4).setValue(weeklyDB4);
+                String weekId5 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId5).setValue(weeklyDB5);
+                String weekId6 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId6).setValue(weeklyDB6);
+                String weekId7 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId7).setValue(weeklyDB7);
+                String weekId8 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
+                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId8).setValue(weeklyDB8);
 
                 // 이전 search로 돌아가기
                 finish();
@@ -357,12 +407,12 @@ public class MakeRoom extends AppCompatActivity{
     }
 
     private int checkInfo(String roomname, String roomcategory, String roominfo, String roomauth,
-                           String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                           boolean roomlock, Integer roomHow, String time1, String time2,
-                          List<String> roomtodo){
+                          String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
+                          boolean roomlock, Integer roomHow, String time1, String time2,
+                          String roomtodo1, String roomtodo2, String roomtodo3, String roomtodo4, String roomtodo5, String roomtodo6, String roomtodo7, String roomtodo8){
 
         if((roomname.equals(""))||(roominfo.equals(""))
-        ||(roomperson.equals(""))) return -1; // 필수조건 누락
+                ||(roomperson.equals(""))) return -1; // 필수조건 누락
 
         // 시간 조건 확인
         if(parseInt(time1.substring(0,2))> parseInt(time2.substring(0,2))){
@@ -394,11 +444,15 @@ public class MakeRoom extends AppCompatActivity{
             }
         }
 
-        for(int i =0;i<8;i++){
-            if(roomtodo.get(i).equals("")){
-                return -6; // 주차 목표 누락
-            }
-        }
+        //주차 목표 누락
+        if(roomtodo1.equals("")) return -11;
+        if(roomtodo2.equals("")) return -12;
+        if(roomtodo3.equals("")) return -13;
+        if(roomtodo4.equals("")) return -14;
+        if(roomtodo5.equals("")) return -15;
+        if(roomtodo6.equals("")) return -16;
+        if(roomtodo7.equals("")) return -17;
+        if(roomtodo8.equals("")) return -18;
 
         return 0;
     }
@@ -406,10 +460,10 @@ public class MakeRoom extends AppCompatActivity{
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
                               boolean roomlock, Integer roomHow, String time1, String time2,
-                              List<String> roommember, List<String> roomtodo, Date roomdate) {
+                              List<String> roommember, Date roomdate) {
         // String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
-                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomtodo, roomdate);
+                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomdate);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 

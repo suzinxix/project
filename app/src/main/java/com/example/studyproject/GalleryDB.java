@@ -6,13 +6,14 @@ public class GalleryDB {
     public String photoText;
     private String mImageUrl;
     private String mUserId;
+    private String mRoomname;
     private String mKey;
 
     public GalleryDB () {
 
     }
 
-    public GalleryDB (String photoText, String imageUrl, String userId) {
+    public GalleryDB (String photoText, String imageUrl, String userId, String roomname) {
         if (photoText.trim().equals("")) {
             photoText = "No Name";
         } //
@@ -20,6 +21,7 @@ public class GalleryDB {
         this.photoText = photoText;
         mImageUrl = imageUrl;
         mUserId = userId;
+        mRoomname = roomname;
     }
 
     public String getPhotoText() { return photoText; }
@@ -32,11 +34,16 @@ public class GalleryDB {
         mImageUrl = imageUrl;
     }
 
-    public String getUserId() {
-        return mUserId;
-    }
+    public String getUserId() { return mUserId; }
     public void setUserId(String userId) {
         mUserId = userId;
+    }
+
+    public String getRoomname() {
+        return mRoomname;
+    }
+    public void setRoomname(String roomname) {
+        mRoomname = roomname;
     }
 
     @Exclude
