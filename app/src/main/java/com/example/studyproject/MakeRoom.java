@@ -382,22 +382,14 @@ public class MakeRoom extends AppCompatActivity{
                 WeeklyDB weeklyDB7 = new WeeklyDB(getRoomToDo7);
                 WeeklyDB weeklyDB8 = new WeeklyDB(getRoomToDo8);
 
-                String weekId1 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId1).setValue(weeklyDB1);
-                String weekId2 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId2).setValue(weeklyDB2);
-                String weekId3 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId3).setValue(weeklyDB3);
-                String weekId4 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId4).setValue(weeklyDB4);
-                String weekId5 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId5).setValue(weeklyDB5);
-                String weekId6 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId6).setValue(weeklyDB6);
-                String weekId7 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId7).setValue(weeklyDB7);
-                String weekId8 = mDatabaseRef.child(getRoomname).child("roomtodo").push().getKey();
-                mDatabaseRef.child(getRoomname).child("roomtodo").child(weekId8).setValue(weeklyDB8);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("1주차").setValue(weeklyDB1);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("2주차").setValue(weeklyDB2);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("3주차").setValue(weeklyDB3);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("4주차").setValue(weeklyDB4);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("5주차").setValue(weeklyDB5);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("6주차").setValue(weeklyDB6);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("7주차").setValue(weeklyDB7);
+                mDatabaseRef.child(getRoomname).child("roomtodo").child("8주차").setValue(weeklyDB8);
 
                 // 이전 search로 돌아가기
                 finish();

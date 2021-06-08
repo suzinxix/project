@@ -130,12 +130,10 @@ public class WeeklyFragment extends Fragment {
                 todoRef.child(id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String text_week = Integer.toString(position+1);
                         String text_todo = snapshot.child("todo").getValue().toString();
 
-                        holder.tv_week.setText(text_week);
+                        holder.tv_week.setText(id);
                         holder.tv_todo.setText(text_todo);
-
                     }
 
                     @Override
