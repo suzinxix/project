@@ -37,6 +37,7 @@ public class MyStudyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
         Roomname = view.findViewById(R.id.study_title);
 
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             room_name = bundle.getString("key_roomname");
@@ -45,6 +46,7 @@ public class MyStudyFragment extends Fragment {
         // 툴바 추가
         toolbar_mystudy = (Toolbar) view.findViewById(R.id.toolbarMystudy);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_mystudy);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기
 
         Button btn_weekly = (Button) view.findViewById(R.id.buttonWeekly);
         btn_weekly.setOnClickListener(new View.OnClickListener() {
@@ -63,5 +65,17 @@ public class MyStudyFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                ((HomeActivity)getActivity()).replaceFragment(HomeFragment.newInstance());
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
