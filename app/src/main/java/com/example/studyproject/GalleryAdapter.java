@@ -33,7 +33,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     @Override
     public GalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.gallery_layout, parent, false);
-        //DatabaseReference photoTextRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
 
         return new GalleryViewHolder(view);
     }

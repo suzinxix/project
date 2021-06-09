@@ -38,9 +38,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment{
     private Toolbar toolbar_home;
@@ -55,13 +52,14 @@ public class HomeFragment extends Fragment{
 
 
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
-            .orderByChild("member/name")
-            .equalTo(uid);
+            .orderByChild("member/" + uid)
+            .equalTo("true");
 
-    Button bt_temp;
 
     public HomeFragment() {
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,19 +80,6 @@ public class HomeFragment extends Fragment{
         ((AppCompatActivity)getActivity()).setTitle("");
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);
-
-
-
-
-        // 임시 버튼 HomeFragment->MyStudyFragment
-        bt_temp = (Button) view.findViewById(R.id.bt_temp);
-        bt_temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((HomeActivity)getActivity()).replaceFragment(MyStudyFragment.newInstance()); //Fragment 변경
-            }
-        });
-
 
         return view;
     }
@@ -123,11 +108,17 @@ public class HomeFragment extends Fragment{
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("Roomname", ""+name);
-                        mystudyfragment.setArguments(bundle);
-                        transaction.replace(R.id.container, mystudyfragment); // 프레그먼트 변경
-                        transaction.commit(); //저장해라 commit
+                        int pos = holder.getAdapterPosition();
+                        String item_roomId = getRef(pos).getKey();
+
+                        Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                        bundle.putString("key_roomname", item_roomId);//번들에 넘길 값 저장
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        MyStudyFragment myStudyFragment = new MyStudyFragment();//프래그먼트2 선언
+                        myStudyFragment.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
+                        transaction.replace(R.id.container, myStudyFragment);
+                        transaction.commit();
+
                     }
                 });
 

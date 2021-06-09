@@ -2,22 +2,21 @@ package com.example.studyproject;
 
 import android.widget.Button;
 
+import com.google.firebase.database.Exclude;
+
 public class WeeklyDB {
-    public int week;
     public String todo;
+//    public String timer;
 
     public WeeklyDB () {
 
     }
 
-    public WeeklyDB (int week, String todo, String camera, String timer) {
-        this.week = week;
+    public WeeklyDB (String todo) { //, String camera, String timer
         this.todo = todo;
     }
 
-    public int getWeek() { return week; }
-    public void setWeek(int week) { this.week = week; }
-
     public String getTodo() { return todo; }
     public void setTodo(String todo) { this.todo = todo; }
+
 }

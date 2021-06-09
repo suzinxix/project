@@ -23,9 +23,8 @@ public class MakeRoomDB {
     public String roomtime1;
     public String roomtime2;
     public List<String> roommember;
-    public String roomToDo;
+    public List<String> roomToDo;
     public Date roomdate;
-    public String roomWeek;
     public long roomhoney = 0; // 꿀
     public long roomcurperson = 1; // 현재 인원 수
     public long roomneghoney = 0; // 정렬 꿀
@@ -39,7 +38,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, String roomtodo, Date roomdate, String roomweek){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, Date roomdate){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -57,9 +56,7 @@ public class MakeRoomDB {
 
         this.roommember = roommember; // 스터디원
 
-        this.roomToDo = roomtodo; // 할 일
         this.roomdate = roomdate; // 개설 날짜
-        this.roomWeek = roomweek; //  주차
     }
 
 
@@ -137,14 +134,6 @@ public class MakeRoomDB {
 
     public void setRoommember(List<String> roommember) {
         this.roommember = roommember;
-    }
-
-    public String getRoomToDo() {
-        return roomToDo;
-    }
-
-    public void setRoomToDo(String todo) {
-        this.roomToDo=todo;
     }
 
     public long getRoomhoney() {
@@ -229,12 +218,11 @@ public class MakeRoomDB {
         result.put("roomlock", roomlock);
         result.put("roomhow", roomhow);
         result.put("roomtime1", roomtime1);
-        result.put("roomtime2", roomtime1);
+        result.put("roomtime2", roomtime2);
 
         result.put("roommember", roommember);
         result.put("roomtodo", roomToDo);
         result.put("roomdate", roomdate);
-        result.put("roomweek", roomWeek);
 
         result.put("roomhoney", roomhoney); // 꿀
         result.put("roomcurperson", roomcurperson); // 현재 인원

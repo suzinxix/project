@@ -3,12 +3,15 @@ package com.example.studyproject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,22 +24,11 @@ import androidx.fragment.app.FragmentTransaction;
 public class MyStudyFragment extends Fragment {
     Toolbar toolbar_mystudy;
     TextView Roomname;
-    Context context;
-    String sendData, receiveData;
+    String room_name;
 
     //Fragment 변경위한 함수
     public static MyStudyFragment newInstance() {
         return new MyStudyFragment();
-    }
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-
-        //메시지 송수신에 필요한 객체 초기화
-        receiveData = "";
     }
 
     @Override
@@ -45,52 +37,31 @@ public class MyStudyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
         Roomname = view.findViewById(R.id.study_title);
 
-        //Intent intent = new Intent(getActivity(), StudyRoom.class);
-        //startActivity(intent);
-        //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        //transaction.add(R.id.studyView, study).commit();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            room_name = bundle.getString("key_roomname");
+        }
 
         // 툴바 추가
         toolbar_mystudy = (Toolbar) view.findViewById(R.id.toolbarMystudy);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_mystudy);
-        ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        // 스터디 이름 데이터 받기
-        if(getArguments() != null) {
-            receiveData = getArguments().getString("Roomname");
-            Roomname.setText(receiveData);
-        }
-
+        Button btn_weekly = (Button) view.findViewById(R.id.buttonWeekly);
+        btn_weekly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putString("key__roomname", room_name);//번들에 넘길 값 저장
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                BoardFragment boardFragment = new BoardFragment();//프래그먼트2 선언
+                boardFragment.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
+                transaction.replace(R.id.container, boardFragment);
+                transaction.commit();
+                //((HomeActivity)getActivity()).replaceFragment(BoardFragment.newInstance()); //Fragment 변경
+            }
+        });
 
         return view;
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // TODO Add your menu entries here
-        inflater.inflate(R.menu.menu_mystudy, menu) ;
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.weekly:
-                ((HomeActivity)getActivity()).replaceFragment(BoardFragment.newInstance()); //Fragment 변경
-                break;
-            case R.id.chat:
-                // d
-                break;
-            case R.id.board:
-                break;
-            case R.id.setting:
-                break;
-            case R.id.ranking:
-                break;
-            case android.R.id.home:
-                ((HomeActivity)getActivity()).replaceFragment(HomeFragment.newInstance()); //Fragment 변경
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

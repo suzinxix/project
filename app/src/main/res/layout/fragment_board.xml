@@ -9,11 +9,18 @@
         android:id="@+id/toolbarBoard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC107"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/container_mystudy"
-        app:tabMode="scrollable">
+        android:background="@color/mainColor">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="꿀터디"
+            android:fontFamily="@font/maplestorylight"
+            android:textSize="30sp" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout

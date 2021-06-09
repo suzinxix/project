@@ -29,6 +29,7 @@ public class GalleryFragment extends Fragment {
 
     private DatabaseReference mDatabaseRef;
     private List<GalleryDB> mUploads;
+    private String room_name;
 
     public GalleryFragment() {
         // Required empty public constructor
@@ -49,6 +50,11 @@ public class GalleryFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
         String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            room_name= bundle.getString("roomname_btog");
+        }
+
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("gallery_url");
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
@@ -57,7 +63,7 @@ public class GalleryFragment extends Fragment {
                 mUploads.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     GalleryDB galleryDB = postSnapshot.getValue(GalleryDB.class);
-                    if (galleryDB.getUserId().equals(uid)) {
+                    if (galleryDB.getUserId().equals(uid) && galleryDB.getRoomname().equals(room_name)) {
                         galleryDB.setKey(postSnapshot.getKey());
                         mUploads.add(galleryDB);
                     }
