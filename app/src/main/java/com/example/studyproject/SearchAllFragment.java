@@ -180,6 +180,7 @@ public class SearchAllFragment extends Fragment {
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
                             String room_date = snapshot.child("roomdate").getValue().toString();
+                            if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
                             room_index++;
                             holder.roomindex.setText("" + room_index);
@@ -194,6 +195,7 @@ public class SearchAllFragment extends Fragment {
                             String room_person = snapshot.child("roomperson").getValue().toString();
                             String room_cate = snapshot.child("roomcategory").getValue().toString();
                             String room_date = snapshot.child("roomdate").getValue().toString();
+                            if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
                             holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);

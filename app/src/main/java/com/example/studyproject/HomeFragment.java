@@ -151,11 +151,15 @@ public class HomeFragment extends Fragment{
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
 
+                            if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
+
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                         } else {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
+
+                            if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
