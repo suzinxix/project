@@ -35,6 +35,7 @@ public class PersonalPageFragment extends Fragment {
     String myname;
     String nickname;
     Toolbar toolbar_personal;
+    Button stat_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,13 +48,21 @@ public class PersonalPageFragment extends Fragment {
         tv_pnick = (TextView) view.findViewById(R.id.tv_pnick);
         //bt_profileEdit = view.findViewById(R.id.profileEdit);
 
-        // 툴바 추가
-        toolbar_personal = (Toolbar) view.findViewById(R.id.toolbarPersonal);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_personal);
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        stat_btn = (Button) view.findViewById(R.id.stat_btn);
+        stat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PhotoStatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 툴바 추가
+        toolbar_personal = (Toolbar) view.findViewById(R.id.toolbarPersonal);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_personal);
 
         mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override

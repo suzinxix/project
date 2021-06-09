@@ -3,6 +3,7 @@ package com.example.studyproject;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +35,7 @@ public class BoardFragment extends Fragment {
         // 툴바 추가
         toolbar_board = (Toolbar) view.findViewById(R.id.toolbarBoard);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_board);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기
 
         fragment_weekly = new WeeklyFragment();
         fragment_gallery = new GalleryFragment();
@@ -90,4 +92,16 @@ public class BoardFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                ((HomeActivity)getActivity()).replaceFragment(MyStudyFragment.newInstance());
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -32,13 +32,14 @@
         android:layout_margin="30dp"
         android:layout_marginBottom="20dp"
         android:paddingTop="20dp"
-        android:background="#F2F2F2">
+        android:background="@drawable/background_gray">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="20dp">
+
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
@@ -75,6 +76,18 @@
             android:layout_margin="20dp"
             android:text="레벨: 0" />
 
+        <Button
+            android:id="@+id/stat_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_yellow_round"
+            android:minHeight="0dp"
+            android:textColor="#ffffff"
+            android:layout_marginVertical="8dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="14dp"
+            android:text="나의 학습량"/>
 
     </LinearLayout>
 

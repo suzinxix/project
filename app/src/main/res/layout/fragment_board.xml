@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarBoard"
@@ -34,8 +35,9 @@
         app:layout_constraintTop_toTopOf="@+id/container"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextColor="@color/colorPrimary">
+        app:tabSelectedTextColor="@color/mainColor"
+        app:tabTextColor="@android:color/black"
+        app:tabIndicatorColor="@color/mainColor">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -49,9 +51,33 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_gray"
+        android:layout_margin="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/weekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주차별"
+                android:layout_marginLeft="20dp"/>
+
+        </LinearLayout>
+
     <FrameLayout
         android:id="@+id/containerTabs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </FrameLayout>
+    </LinearLayout>
 </LinearLayout>
