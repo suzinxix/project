@@ -305,6 +305,9 @@ public class MakeRoom extends AppCompatActivity{
                 long now = System.currentTimeMillis();
                 roomdate = new Date(now);
 
+                // 꿀
+                Integer ggul = 0;
+
                 // 주차별 목표
                 String getRoomToDo1 = et_roomtodo1.getText().toString();
                 String getRoomToDo2 = et_roomtodo2.getText().toString();
@@ -369,7 +372,7 @@ public class MakeRoom extends AppCompatActivity{
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember, roomdate);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember, roomdate, ggul);
                 // readRoomDB();
 
                 //주차별 계획 (writeRoom과 다르게 push함)
@@ -452,10 +455,10 @@ public class MakeRoom extends AppCompatActivity{
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
                               boolean roomlock, Integer roomHow, String time1, String time2,
-                              List<String> roommember, Date roomdate) {
+                              List<String> roommember, Date roomdate, Integer ggul) {
         // String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
-                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomdate);
+                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomdate, ggul);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 

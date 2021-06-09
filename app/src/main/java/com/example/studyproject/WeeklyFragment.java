@@ -23,13 +23,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,14 +52,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
 public class WeeklyFragment extends Fragment {
     private RecyclerView myWeeklyList;
     private StorageReference mStorageRef;
-    private DatabaseReference WeeklyRef, todoRef, mDatabaseRef;
+    private DatabaseReference WeeklyRef, todoRef, mDatabaseRef, ggulRef;
     private Uri photoUri;
     private String mCurrentPhotoPath;
     private static final int FROM_CAMERA = 0;
@@ -64,7 +69,7 @@ public class WeeklyFragment extends Fragment {
     private int flag = 0;
     private String uid, room_name;
     private List<WeeklyDB> weeklyList;
-
+    int ggul = 0;
     public WeeklyFragment() {
         // Required empty public constructor
     }
@@ -88,6 +93,7 @@ public class WeeklyFragment extends Fragment {
         todoRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("roomtodo");
         mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
+        ggulRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("ggul");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
         uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
@@ -361,9 +367,25 @@ public class WeeklyFragment extends Fragment {
                                         Log.v("알림", "사진 업로드 성공 " + downloadUrl);
                                         progressDialog.dismiss();
                                         Toast.makeText(getActivity(), "사진이 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                        // 꿀 데이터 읽기
+                                        ggulRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                ggul = snapshot.getValue(Integer.class);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                Log.v("알림", "데이터 못 읽음");
+                                            }
+                                        });
+
                                     }
-                                });
+                               });
+                                ggulRef.setValue(ggul+10);
                             }
+
                         });
                     }
                 }).setNegativeButton("아니오",
@@ -375,6 +397,12 @@ public class WeeklyFragment extends Fragment {
                 });
         AlertDialog alert = alt_bld.create();
         alert.show();
+
+        if(ggul == 20) {
+            final FragmentManager fm = getFragmentManager();
+            final LevelupFragment level = new LevelupFragment();
+            level.show(fm, "Level up Fragment");
+        }
     }
 
 

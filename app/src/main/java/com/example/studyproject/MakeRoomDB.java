@@ -29,6 +29,7 @@ public class MakeRoomDB {
     public long roomcurperson = 1; // 현재 인원 수
     public long roomneghoney = 0; // 정렬 꿀
     public long roomnegcurperson = -1; // 정렬 현재 인원수
+    public Integer ggul;
 
     public Map<String, Boolean> stars = new HashMap<>();
 
@@ -38,7 +39,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, Date roomdate){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, Date roomdate, Integer ggul){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -57,8 +58,20 @@ public class MakeRoomDB {
         this.roommember = roommember; // 스터디원
 
         this.roomdate = roomdate; // 개설 날짜
+        this.ggul = ggul;
     }
 
+    public Integer getGgul() {
+        return ggul;
+    }
+
+    public void setGgul(Integer ggul) {
+        this.ggul = ggul;
+    }
+
+    public long getRoomneghoney() {
+        return roomneghoney;
+    }
 
     public Date getRoomdate() {
         return roomdate;
@@ -228,6 +241,8 @@ public class MakeRoomDB {
         result.put("roomcurperson", roomcurperson); // 현재 인원
         result.put("roomneghoney", -1*roomhoney); // 꿀(정렬용 음수)
         result.put("roomnegcurperson", -1*roomcurperson); // 현재 인원(정렬용 음수)
+
+        result.put("ggul", ggul); // 그룹 꿀
         return result;
     }
 }
