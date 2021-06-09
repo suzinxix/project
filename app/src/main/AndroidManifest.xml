@@ -13,9 +13,19 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bee_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -24,8 +34,8 @@
         <!--
         <uses-library
             android:name="com.google.android.wearable"
-            android:required="true" />-->
-
+            android:required="true" />
+        -->
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -50,7 +60,9 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".SearchDetail" />
         <activity android:name=".FindPwActivity" />
-        <activity android:name=".image"/>
+        <activity android:name=".image" />
+        <activity android:name=".MakeRoom" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name="PhotoStatActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -62,23 +74,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MakeRoom" />
-
         <service android:name=".FirebasePushNotificationClass"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE"></action>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
             </intent-filter>
         </service>
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" />
-        </intent>
-    </queries>
 
 </manifest>

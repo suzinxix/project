@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,11 +21,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
+
 
 public class MyStudyFragment extends Fragment {
     Toolbar toolbar_mystudy;
     TextView Roomname;
     String room_name;
+    private DatabaseReference mDatabaseRef;
 
     //Fragment 변경위한 함수
     public static MyStudyFragment newInstance() {
@@ -37,6 +48,7 @@ public class MyStudyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
         Roomname = view.findViewById(R.id.study_title);
 
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             room_name = bundle.getString("key_roomname");
@@ -45,6 +57,14 @@ public class MyStudyFragment extends Fragment {
         // 툴바 추가
         toolbar_mystudy = (Toolbar) view.findViewById(R.id.toolbarMystudy);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar_mystudy);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기
+
+        ImageView iv_graphic = (ImageView)view.findViewById(R.id.imageViewGraphic);
+
+        Picasso.with(getContext())
+                .load("https://firebasestorage.googleapis.com/v0/b/fir-test-1-35648.appspot.com/o/level%2Flevel1%20(1).png?alt=media&token=d80a0960-47be-435a-9d90-7511a804120e")
+                .resize(1250, 1550)
+                .into(iv_graphic);
 
         Button btn_weekly = (Button) view.findViewById(R.id.buttonWeekly);
         btn_weekly.setOnClickListener(new View.OnClickListener() {
@@ -63,5 +83,17 @@ public class MyStudyFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                ((HomeActivity)getActivity()).replaceFragment(HomeFragment.newInstance());
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

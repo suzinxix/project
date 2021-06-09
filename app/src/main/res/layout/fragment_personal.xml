@@ -27,11 +27,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="30dp"
+        android:layout_marginBottom="20dp"
         android:paddingTop="20dp"
-        android:background="#F2F2F2">
+        android:paddingBottom="20dp"
+        android:background="@drawable/background_gray">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,32 +45,50 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/bee" />
+                android:src="@drawable/bee_personal"
+                />
 
             <TextView
                 android:id="@+id/tv_pnick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="40dp"
+                android:textSize="25sp"
+                android:layout_gravity="center"
                 android:text="닉네임: -"/>
 
         </LinearLayout>
-
-
-
-
-        <TextView
-            android:id="@+id/tv_plevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="레벨: 0" />
 
         <TextView
             android:id="@+id/tv_pname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="TextView" />
 
+        <TextView
+            android:id="@+id/tv_plevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="20dp"
+            android:text="레벨: 0" />
+
+        <Button
+            android:id="@+id/stat_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_yellow_round"
+            android:minHeight="0dp"
+            android:textColor="#ffffff"
+            android:layout_marginVertical="8dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="14dp"
+            android:text="나의 학습량"/>
 
     </LinearLayout>
 

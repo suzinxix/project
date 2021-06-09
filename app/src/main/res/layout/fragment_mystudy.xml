@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,13 +28,19 @@
     <ImageView
         android:id="@+id/imageViewGraphic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/buttonWeekly"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="주차별 목표" />
+        android:layout_gravity="center"
+        android:text="주차별 목표"
+        android:textColor="#ffffff"
+        android:background="@drawable/btn_red_round"
+        android:minHeight="0dp"
+        android:layout_marginVertical="8dp"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="14dp"/>
 
 </LinearLayout>
