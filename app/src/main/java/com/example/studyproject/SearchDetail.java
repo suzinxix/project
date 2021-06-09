@@ -135,6 +135,7 @@ public class SearchDetail extends AppCompatActivity {
                                 //Map<String, Object> memberUpdates = new HashMap<>();
                                 //memberUpdates.put("/member/name", uid);
                                 //mDatabaseRef.updateChildren(memberUpdates);
+                                finish();
                             }
                         })
                         .setNegativeButton("아니요", new DialogInterface.OnClickListener() {

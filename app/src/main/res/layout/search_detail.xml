@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/study_title"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:text="TextView"
             style="@style/font_study_name" />
@@ -65,7 +65,7 @@
         <FrameLayout
             android:id="@+id/rectangle_5"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="300dp"
             android:layout_margin="10dp"
             android:background="@drawable/rectangle_575">
 
@@ -110,7 +110,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Button
@@ -119,7 +119,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_report"
                 android:text="신고하기" />
 
@@ -129,7 +129,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_apply"
                 android:text="신청하기" />
 
@@ -139,10 +139,10 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_ask"
                 android:text="문의하기" />
-            />
+
         </LinearLayout>
 
 
