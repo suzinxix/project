@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhotoStatActivity"
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarPersonal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="내 공부량"
+            android:fontFamily="@font/maplestorylight"
+            android:textSize="30sp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/total_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총 출석일수는?"
+        android:textSize="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/maplestorylight"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/time_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주로 집중하는 시간대는? "
+        android:textSize="20dp"
+        android:fontFamily="@font/maplestorylight"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/yoil_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주로 집중하는 요일은?? "
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/maplestorylight"
+        android:layout_gravity="center" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/maplestorylight"/>
+
+
+</LinearLayout>

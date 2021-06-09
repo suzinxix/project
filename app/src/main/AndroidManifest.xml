@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.studyproject">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라, 내부 저장소 접근 권한 설정 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -13,6 +12,16 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,11 +30,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".PhotoStatActivity"></activity>
         <!--
         <uses-library
             android:name="com.google.android.wearable"
-            android:required="true" />-->
-
+            android:required="true" />
+        -->
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -33,7 +43,6 @@
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
-
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -50,7 +59,7 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".SearchDetail" />
         <activity android:name=".FindPwActivity" />
-        <activity android:name=".image"/>
+        <activity android:name=".image" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -64,21 +73,14 @@
 
         <activity android:name=".MakeRoom" />
 
-        <service android:name=".FirebasePushNotificationClass"
+        <service
+            android:name=".FirebasePushNotificationClass"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE"></action>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
             </intent-filter>
         </service>
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="https" />
-        </intent>
-    </queries>
 
 </manifest>

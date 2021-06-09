@@ -54,9 +54,6 @@
 
         </LinearLayout>
 
-
-
-
         <TextView
             android:id="@+id/tv_plevel"
             android:layout_width="wrap_content"
@@ -68,7 +65,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
-
+        <Button
+            android:id="@+id/stat_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_yellow_round"
+            android:minHeight="0dp"
+            android:textColor="#ffffff"
+            android:layout_marginVertical="8dp"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="14dp"
+            android:text="나의 학습량"/>
 
     </LinearLayout>
 
