@@ -117,7 +117,7 @@ public class SearchDetail extends AppCompatActivity {
                                 String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
                                 //DatabaseReference mDatabaseRef = database.getReference("users/" + uid);
 
-                                mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
+                                //mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
                                 mDatabaseRef.child("roomcurperson").setValue(curperson);
                                 mDatabaseRef.child("roomnegcurperson").setValue(-1*curperson);
 
@@ -126,14 +126,6 @@ public class SearchDetail extends AppCompatActivity {
                                 updates.put(uid, "true");
                                 mDatabaseRef.updateChildren(updates);
 
-                                //HashMap<String, Object> params = new HashMap<>();
-                                //params.put("name", uid);
-                                //mDatabaseRef.child("member").updateChildren(params); // 사용자 uid 삽입
-                                //mDatabaseRef.child("member").push().setValue(uid);
-
-                                //Map<String, Object> memberUpdates = new HashMap<>();
-                                //memberUpdates.put("/member/name", uid);
-                                //mDatabaseRef.updateChildren(memberUpdates);
                                 finish();
                             }
                         })

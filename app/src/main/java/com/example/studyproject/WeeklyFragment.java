@@ -397,12 +397,12 @@ public class WeeklyFragment extends Fragment {
                 });
         AlertDialog alert = alt_bld.create();
         alert.show();
-
+        /*
         if(ggul == 20) {
             final FragmentManager fm = getFragmentManager();
             final LevelupFragment level = new LevelupFragment();
             level.show(fm, "Level up Fragment");
-        }
+        }*/
     }
 
 

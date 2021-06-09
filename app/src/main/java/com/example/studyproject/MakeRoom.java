@@ -93,6 +93,7 @@ public class MakeRoom extends AppCompatActivity{
     int[] roomDay = {0,0,0,0,0,0,0};
     Date roomdate;
     String roomweek="";
+    Date joindate;
 
 
     public static String roomTimeSt="0800";
@@ -308,6 +309,9 @@ public class MakeRoom extends AppCompatActivity{
                 // 꿀
                 Integer ggul = 0;
 
+                // 가입날짜
+                joindate = new Date(now);
+
                 // 주차별 목표
                 String getRoomToDo1 = et_roomtodo1.getText().toString();
                 String getRoomToDo2 = et_roomtodo2.getText().toString();
@@ -372,7 +376,7 @@ public class MakeRoom extends AppCompatActivity{
 
                 writeNewRoom(getRoomname, getRoomcategory, getRoominfo, getRoomauth,
                         getRoomperson, getDay, getRoomDay, getTime,
-                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember, roomdate, ggul);
+                        getLock, getRoomauthHow1, getRoomTime1, getRoomTime2, getRoommember, roomdate, ggul, joindate);
                 // readRoomDB();
 
                 //주차별 계획 (writeRoom과 다르게 push함)
@@ -455,10 +459,10 @@ public class MakeRoom extends AppCompatActivity{
     private void writeNewRoom(String roomname, String roomcategory, String roominfo, String roomauth,
                               String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
                               boolean roomlock, Integer roomHow, String time1, String time2,
-                              List<String> roommember, Date roomdate, Integer ggul) {
+                              List<String> roommember, Date roomdate, Integer ggul, Date joindate) {
         // String key = mDatabase.child("rooms").push().getKey();
         MakeRoomDB roomDB = new MakeRoomDB(roomname, roomcategory, roominfo, roomauth, roomperson,
-                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomdate, ggul);
+                roomday, roomWhen, roomtime, roomlock, roomHow, time1, time2, roommember, roomdate, ggul, joindate);
         Map<String, Object> roomValues = roomDB.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
 
