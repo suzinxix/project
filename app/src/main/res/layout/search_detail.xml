@@ -50,8 +50,8 @@
 
     <LinearLayout
         android:id="@+id/fourth"
-        android:layout_width="wrap_content"
-        android:layout_height="750dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/background_gray"
         android:orientation="vertical">
@@ -65,7 +65,7 @@
         <FrameLayout
             android:id="@+id/rectangle_5"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/rectangle_575">
 
@@ -110,38 +110,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/bt_report"
-                android:layout_width="280dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
                 android:background="@drawable/btn_report"
-                android:text="신고하기" />
+                android:text="신고하기"
+                android:textColor="#ffffff"
+                android:minHeight="0dp"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="14dp"/>
 
             <Button
                 android:id="@+id/bt_apply"
-                android:layout_width="280dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
                 android:background="@drawable/btn_apply"
-                android:text="신청하기" />
+                android:text="신청하기"
+                android:textColor="#ffffff"
+                android:minHeight="0dp"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="14dp"/>
 
             <Button
                 android:id="@+id/bt_ask"
-                android:layout_width="280dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
                 android:background="@drawable/btn_ask"
-                android:text="문의하기" />
+                android:text="문의하기"
+                android:textColor="#ffffff"
+                android:minHeight="0dp"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="14dp"/>
             />
         </LinearLayout>
 

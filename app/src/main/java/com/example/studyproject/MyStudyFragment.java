@@ -37,7 +37,6 @@ public class MyStudyFragment extends Fragment {
 
         //메시지 송수신에 필요한 객체 초기화
         receiveData = "";
-        sendData = "프래그먼트2에서 보낸 데이터입니다.";
     }
 
     @Override
@@ -63,8 +62,6 @@ public class MyStudyFragment extends Fragment {
             Roomname.setText(receiveData);
         }
 
-
-       
 
         return view;
     }
