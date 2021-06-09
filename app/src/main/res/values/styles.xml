@@ -78,4 +78,9 @@
         <item name = "android:textSize">25dp</item>
         <item name = "android:textColor">#ffffff</item>
     </style>
+
+    <style name="weekly">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">15dp</item>
+    </style>
 </resources>
