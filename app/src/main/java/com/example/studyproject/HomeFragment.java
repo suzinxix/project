@@ -152,6 +152,7 @@ public class HomeFragment extends Fragment{
                         if (snapshot.hasChild("study_rooms")) {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("roomhoney").getValue().toString();
+                            String room_info = snapshot.child("roominfo").getValue().toString();
 
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
@@ -161,6 +162,7 @@ public class HomeFragment extends Fragment{
                         } else {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("roomhoney").getValue().toString();
+                            String room_info = snapshot.child("roominfo").getValue().toString();
 
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
