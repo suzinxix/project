@@ -79,6 +79,10 @@
         <item name = "android:minHeight">0dp</item>
         <item name = "android:layout_marginVertical">5dp</item>
         <item name = "android:paddingHorizontal">14dp</item>
+    </style>
 
+    <style name="weekly">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">15dp</item>
     </style>
 </resources>

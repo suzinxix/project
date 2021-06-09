@@ -15,16 +15,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:background="@drawable/background_inner_gray"
+            android:background="@drawable/rectangle_gray"
             android:text="Week"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginRight="5dp"/>
 
         <TextView
             android:id="@+id/textViewTodo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/background_inner_gray"
+            android:background="@drawable/rectangle_gray"
             android:text="Todo"
             android:gravity="center"/>
 
