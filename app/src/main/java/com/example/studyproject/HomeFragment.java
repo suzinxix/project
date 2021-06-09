@@ -38,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
 
 public class HomeFragment extends Fragment{
     private Toolbar toolbar_home;
@@ -149,20 +151,22 @@ public class HomeFragment extends Fragment{
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.hasChild("study_rooms")) {
                             String room_name = snapshot.child("roomname").getValue().toString();
-                            String room_info = snapshot.child("roominfo").getValue().toString();
+                            String room_honey = snapshot.child("roomhoney").getValue().toString();
 
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
                             holder.roomname.setText(room_name);
-                            holder.roominfo.setText(room_info);
+                            holder.roomhoney.setText(room_honey + "꿀");
+                            holder.roomday.setText("1일째");
                         } else {
                             String room_name = snapshot.child("roomname").getValue().toString();
-                            String room_info = snapshot.child("roominfo").getValue().toString();
+                            String room_honey = snapshot.child("roomhoney").getValue().toString();
 
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
                             holder.roomname.setText(room_name);
-                            holder.roominfo.setText(room_info);
+                            holder.roomhoney.setText(room_honey +"꿀");
+                            holder.roomday.setText("1일째");
                         }
                         if (snapshot.getValue(User.class) != null) {
                             User post = snapshot.getValue(User.class);
@@ -194,12 +198,13 @@ public class HomeFragment extends Fragment{
         adapter.startListening();
     }
     public static class ContactsViewHolder extends RecyclerView.ViewHolder {
-        TextView roomname, roominfo;
+        TextView roomname, roomhoney, roomday;
 
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
             roomname = itemView.findViewById(R.id.studyroomname);
-            roominfo = itemView.findViewById(R.id.ggul);
+            roomhoney = itemView.findViewById(R.id.ggul);
+            roomday = itemView.findViewById(R.id.day);
         }
     }
 

@@ -30,6 +30,7 @@ public class MakeRoomDB {
     public long roomneghoney = 0; // 정렬 꿀
     public long roomnegcurperson = -1; // 정렬 현재 인원수
     public Integer ggul;
+    public Date joindate;
 
     public Map<String, Boolean> stars = new HashMap<>();
 
@@ -39,7 +40,7 @@ public class MakeRoomDB {
 
     public MakeRoomDB(String roomname, String roomcategory, String roominfo, String roomauth,
                       String roomperson, boolean roomday, List<Integer> roomWhen, boolean roomtime,
-                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, Date roomdate, Integer ggul){
+                      boolean roomlock, Integer roomhow, String time1, String time2, List<String> roommember, Date roomdate, Integer ggul, Date joindate){
         this.roomname = roomname; // 방 이름
         this.roomcategory = roomcategory; // 카테고리 (습관/공부/취미/운동/기타)
         this.roominfo = roominfo; // 소개글
@@ -59,6 +60,15 @@ public class MakeRoomDB {
 
         this.roomdate = roomdate; // 개설 날짜
         this.ggul = ggul;
+        this.joindate = joindate;
+    }
+
+    public Date getJoindate() {
+        return joindate;
+    }
+
+    public void setJoindate(Date joindate) {
+        this.joindate = joindate;
     }
 
     public Integer getGgul() {
