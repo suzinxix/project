@@ -62,6 +62,7 @@
         <activity android:name=".FindPwActivity" />
         <activity android:name=".image" />
         <activity android:name=".MakeRoom" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name="PhotoStatActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

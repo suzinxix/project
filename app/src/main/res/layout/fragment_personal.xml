@@ -32,6 +32,7 @@
         android:layout_margin="30dp"
         android:layout_marginBottom="20dp"
         android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:background="@drawable/background_gray">
 
         <LinearLayout
