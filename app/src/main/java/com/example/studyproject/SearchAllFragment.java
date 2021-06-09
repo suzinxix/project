@@ -123,6 +123,25 @@ public class SearchAllFragment extends Fragment {
                 final Date date = model.getRoomdate();
                 final String person = model.getRoomperson();
 
+
+                // 정보 받아오기 (2)
+                final String roomcate = model.getRoomcategory();
+                final long roomhoney = model.getRoomhoney();
+                final long curperson = model.getRoomcurperson();
+                final String roomauth = model.getRoomauth();
+                final int roomhow = model.getRoomhow();
+                final String roomt1 = model.getRoomtime1();
+                final String roomt2 = model.getRoomtime2();
+                final Boolean roomd = model.getRoomday();
+                final List<Integer> roomwhen = model.getRoomwhen();
+                String roomwhen1="";
+                for(int i=0;i<roomwhen.size();i++){
+                    roomwhen1 += String.valueOf(roomwhen.get(i));
+                }
+                final String roomwhen2 = roomwhen1;
+
+
+
                 // 현재 날짜 형식 변환
                 SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String nowdate = simpleDate.format(date);
@@ -135,6 +154,18 @@ public class SearchAllFragment extends Fragment {
                         intent.putExtra("Roominfo", info);
                         intent.putExtra("Roomdate", nowdate);
                         intent.putExtra("Roomperson", person);
+
+                        // 정보 넘기기 (2)
+                        intent.putExtra("Roomcategory", roomcate);
+                        intent.putExtra("Roomhoney", roomhoney);
+                        intent.putExtra("Roomcurperson", curperson);
+                        intent.putExtra("Roomauth", roomauth);
+                        intent.putExtra("Roomhow", roomhow);
+                        intent.putExtra("Roomtime1", roomt1);
+                        intent.putExtra("Roomtime2", roomt2);
+                        intent.putExtra("Roomday", roomd);
+                        intent.putExtra("Roomwhen", roomwhen2);
+
                         startActivity(intent);
                     }
                 });

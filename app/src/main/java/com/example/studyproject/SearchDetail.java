@@ -51,9 +51,14 @@ public class SearchDetail extends AppCompatActivity {
     //ArrayList<UserStudyRoomDB> dataholder;
 
     MakeRoomDB model;
-    TextView Roomname, Roominfo, Roomperson, Roomdate;
-    ImageView Roompic; long curperson;
-    Button bt;
+    TextView Roomname, Roominfo, Roomperson, Roomdate, Roomcate, Roomhow, Roomauth, Roomday;
+    ImageView Roompic;
+    Button bt; String temp, z1="", z2="", z3="", z4="";
+
+    String roomcategory; long roomhoney; long curperson; // 카테고리,  꿀, 현재인원
+    int roomauth, roomhow; String roomtime1, roomtime2; // 방식 (횟수/시간)
+    Boolean roomday; String roomwhen; // 요일 설정
+
     public SearchDetail(){
     }
 
@@ -67,7 +72,10 @@ public class SearchDetail extends AppCompatActivity {
         Roomdate=findViewById(R.id.study_make);
         Roomperson=findViewById(R.id.study_member);
         Roompic=findViewById(R.id.study_picture);
-
+        Roomcate=findViewById(R.id.study_cate);
+        Roomhow=findViewById(R.id.study_how);
+        Roomauth=findViewById(R.id.study_auth);
+        Roomday=findViewById(R.id.study_day);
         // SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         //String getTime = simpleDate.format(mDate);
 
@@ -76,13 +84,54 @@ public class SearchDetail extends AppCompatActivity {
         String date = getIntent().getStringExtra("Roomdate");
         String person = getIntent().getStringExtra("Roomperson");
         curperson = getIntent().getLongExtra("Roomcurperson", 0);
-        curperson += 1;
+
+        temp = getIntent().getStringExtra("Roomauth");
+        roomauth = 0;
+        if(!temp.equals("")) roomauth = Integer.parseInt(temp);
+
+        roomhoney = getIntent().getLongExtra("Roomhoney",0);
+        roomhow = getIntent().getIntExtra("Roomhow",0);
+
+        roomcategory = getIntent().getStringExtra("Roomcategory");
+        roomtime1 = getIntent().getStringExtra("Roomtime1");
+        roomtime2 = getIntent().getStringExtra("Roomtime2");
+        roomday = getIntent().getBooleanExtra("Roomday", false);
+        roomwhen = getIntent().getStringExtra("Roomwhen");
+
 
         Roomname.setText(name);
         Roominfo.setText(info);
         Roomdate.setText("개설 날짜         " + date);
-        Roomperson.setText("멤버                " + person + "명");
+        Roomperson.setText("멤버                  " + curperson +"/" +person + "명");
         Roompic.setImageResource(R.drawable.book);
+
+        Roomcate.setText("카테고리          "+roomcategory);
+        String roomHowText=""; int h1, m1, h2, m2;
+        if(roomhow==0){
+            roomHowText="횟수";
+            Roomauth.setText("인증 횟수         일주일에  "+roomauth+"회");
+        }
+        else if(roomhow==1) {
+            roomHowText = "시간";
+            h1 = Integer.parseInt(roomtime1.substring(0,2));
+            m1 = Integer.parseInt(roomtime1.substring(2,4));
+            if(h1==0) z1="0"; if(m1==0) z2="0";
+            h2 = Integer.parseInt(roomtime2.substring(0,2));
+            m2 = Integer.parseInt(roomtime2.substring(2,4));
+            if(h2==0) z3="0"; if(m2==0) z4="0";
+            Roomauth.setText("인증 시간         "+z1+h1+"시 "+z2+m1+"분 ~ "+z3+h2+"시 "+z4+m2+"분");
+        }
+        Roomhow.setText("인증 방식         "+roomHowText);
+
+        String days = ""; String day[] = {"월", "화", "수", "목", "금", "토", "일"};
+        if(roomday){
+            for(int i =0;i<roomwhen.length();i++){
+                if(roomwhen.charAt(i)=='1'){
+                    days += day[i]+ " ";
+                }
+            }
+            Roomday.setText("인증 요일        "+days);
+        }
 
         /* 카테고리 별 이미지 입히고 싶은데 실패함
         if(model.roomcategory=="공부")
@@ -119,6 +168,7 @@ public class SearchDetail extends AppCompatActivity {
                                 //DatabaseReference mDatabaseRef = database.getReference("users/" + uid);
 
                                 mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
+                                curperson += 1;
                                 mDatabaseRef.child("roomcurperson").setValue(curperson);
                                 mDatabaseRef.child("roomnegcurperson").setValue(-1*curperson);
 
@@ -126,6 +176,7 @@ public class SearchDetail extends AppCompatActivity {
                                 Map<String, Object> updates = new HashMap<String,Object>();
                                 updates.put(uid, "true");
                                 mDatabaseRef.updateChildren(updates);
+                                finish();
 
                                 //HashMap<String, Object> params = new HashMap<>();
                                 //params.put("name", uid);
@@ -135,7 +186,6 @@ public class SearchDetail extends AppCompatActivity {
                                 //Map<String, Object> memberUpdates = new HashMap<>();
                                 //memberUpdates.put("/member/name", uid);
                                 //mDatabaseRef.updateChildren(memberUpdates);
-                                finish();
                             }
                         })
                         .setNegativeButton("아니요", new DialogInterface.OnClickListener() {

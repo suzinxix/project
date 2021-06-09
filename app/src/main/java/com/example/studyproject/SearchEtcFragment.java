@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class SearchEtcFragment extends Fragment {
     private RecyclerView recview_6;
@@ -62,14 +63,31 @@ public class SearchEtcFragment extends Fragment {
                         .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기
                         .build();
 
-        FirebaseRecyclerAdapter<MakeRoomDB, SearchEtcFragment.ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, SearchEtcFragment.ContactsViewHolder> (options) {
+        FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<MakeRoomDB, ContactsViewHolder> (options) {
             @Override
-            protected void onBindViewHolder(@NonNull final SearchEtcFragment.ContactsViewHolder holder, int position, @NonNull final MakeRoomDB model) {
+            protected void onBindViewHolder(@NonNull final ContactsViewHolder holder, int position, @NonNull final MakeRoomDB model) {
                 final String roomID = getRef(position).getKey();
                 final String name = model.getRoomname();
                 final String info = model.getRoominfo();
                 final Date date = model.getRoomdate();
                 final String person = model.getRoomperson();
+
+                // 정보 받아오기 (2)
+                final String roomcate = model.getRoomcategory();
+                final long roomhoney = model.getRoomhoney();
+                final long curperson = model.getRoomcurperson();
+                final String roomauth = model.getRoomauth();
+                final int roomhow = model.getRoomhow();
+                final String roomt1 = model.getRoomtime1();
+                final String roomt2 = model.getRoomtime2();
+                final Boolean roomd = model.getRoomday();
+                final List<Integer> roomwhen = model.getRoomwhen();
+                String roomwhen1="";
+                for(int i=0;i<roomwhen.size();i++){
+                    roomwhen1 += String.valueOf(roomwhen.get(i));
+                }
+                final String roomwhen2 = roomwhen1;
+
 
                 // 현재 날짜 형식 변환
                 SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -83,6 +101,16 @@ public class SearchEtcFragment extends Fragment {
                         intent.putExtra("Roominfo", info);
                         intent.putExtra("Roomdate", nowdate);
                         intent.putExtra("Roomperson", person);
+                        // 정보 넘기기 (2)
+                        intent.putExtra("Roomcategory", roomcate);
+                        intent.putExtra("Roomhoney", roomhoney);
+                        intent.putExtra("curperson", curperson);
+                        intent.putExtra("Roomauth", roomauth);
+                        intent.putExtra("Roomhow", roomhow);
+                        intent.putExtra("Roomtime1", roomt1);
+                        intent.putExtra("Roomtime2", roomt2);
+                        intent.putExtra("Roomday", roomd);
+                        intent.putExtra("Roomwhen", roomwhen2);
                         startActivity(intent);
                     }
                 });
@@ -125,9 +153,9 @@ public class SearchEtcFragment extends Fragment {
 
             @NonNull
             @Override
-            public SearchEtcFragment.ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+            public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.singlerowdesign, viewGroup, false);
-                SearchEtcFragment.ContactsViewHolder viewHolder = new SearchEtcFragment.ContactsViewHolder(view);
+                ContactsViewHolder viewHolder = new ContactsViewHolder(view);
                 return viewHolder;
             }
         };
