@@ -122,6 +122,28 @@ public class HomeFragment extends Fragment{
                     }
                 });
 
+                // 이름 불러오기
+                mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        // Get Post object and use the values to update the UI
+                        if (dataSnapshot.getValue(User.class) != null) {
+                            User post = dataSnapshot.getValue(User.class);
+                            nickname = post.getNickname();
+                            text_nick.setText(nickname);
+                            Log.w("FireBaseData", "getData" + post.toString());
+                        } else {
+                            //Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
+                    }
+                });
+
                 mDatabase.child("study_rooms").child(roomId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -151,27 +173,6 @@ public class HomeFragment extends Fragment{
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Log.w("FireBaseData", "loadPost:onCancelled", error.toException());
-                    }
-                });
-                // 이름 불러오기
-                mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        // Get Post object and use the values to update the UI
-                        if (dataSnapshot.getValue(User.class) != null) {
-                            User post = dataSnapshot.getValue(User.class);
-                            nickname = post.getNickname();
-                            text_nick.setText(nickname);
-                            Log.w("FireBaseData", "getData" + post.toString());
-                        } else {
-                            //Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Getting Post failed, log a message
-                        Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
                     }
                 });
 

@@ -162,7 +162,6 @@ public class SearchDetail extends AppCompatActivity {
                                 FirebaseDatabase  database = FirebaseDatabase.getInstance();
                                 DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/member"); // 해당 스터디룸 찾아 들어가기
 
-
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
                                 String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
                                 //DatabaseReference mDatabaseRef = database.getReference("users/" + uid);
