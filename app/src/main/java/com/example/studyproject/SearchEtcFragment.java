@@ -126,8 +126,8 @@ public class SearchEtcFragment extends Fragment {
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
 
-                            room_index++;
-                            holder.roomindex.setText("" + room_index);
+//                            room_index++;
+//                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                             holder.roomperson.setText(room_person + "명");

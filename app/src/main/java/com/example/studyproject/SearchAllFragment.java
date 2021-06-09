@@ -175,15 +175,14 @@ public class SearchAllFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int room_index=1;
                         if(snapshot.hasChild("study_rooms")){
-
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
                             String room_person = snapshot.child("roomperson").getValue().toString();
                             String room_date = snapshot.child("roomdate").getValue().toString();
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
-                            room_index++;
-                            holder.roomindex.setText("" + room_index);
+//                            room_index++;
+//                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                             holder.roomperson.setText(room_person + "명");
@@ -197,7 +196,7 @@ public class SearchAllFragment extends Fragment {
                             String room_date = snapshot.child("roomdate").getValue().toString();
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
-                            holder.roomindex.setText("" + room_index);
+//                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                             holder.roomperson.setText(room_person + "명");
