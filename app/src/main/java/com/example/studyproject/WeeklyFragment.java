@@ -101,7 +101,7 @@ public class WeeklyFragment extends Fragment {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(getActivity(), "권한 허가", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "권한 허가", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -232,17 +232,10 @@ public class WeeklyFragment extends Fragment {
 
     public void takePhoto() {
         // 카메라 인텐트 실행
-        Log.v("알림", "0");
         String state = Environment.getExternalStorageState();
         if(Environment.MEDIA_MOUNTED.equals(state)) {
-            Log.v("알림", "1");
-
             Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Log.v("알림", "2");
-
             if(takePhotoIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager())!=null){
-                Log.v("알림", "3");
-
                 File photoFile = null;
                 try{
                     photoFile = createImageFile();
@@ -328,13 +321,8 @@ public class WeeklyFragment extends Fragment {
     }
 
     private String getFileExtension(Uri uri) {
-        Log.v("알림", "5");
         ContentResolver cR = getActivity().getContentResolver();
-        if (cR == null) Log.v("알림", "null"); //아님
-
-        Log.v("알림", "6");
         MimeTypeMap mime = MimeTypeMap.getSingleton();
-        Log.v("알림", "7");
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
@@ -343,15 +331,14 @@ public class WeeklyFragment extends Fragment {
         alt_bld.setTitle("사진 선택 완료").setMessage("사진을 등록하시겠습니까?").setCancelable(
                 false).setPositiveButton("네",
                 new DialogInterface.OnClickListener() {
+
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.v("알림", "4");
-                        Log.v("알림", getFileExtension(photoUri));
+                        Log.v("알림", "photoUri: "+photoUri);
                         StorageReference fileReference = mStorageRef.child(uid+ "_"+ System.currentTimeMillis()
                                 + "." + getFileExtension(photoUri));
 
                         UploadTask uploadTask;
                         Uri file = null;
-                        Log.v("알림", "9");
 
                         if(flag == 0){
                             //사진촬영
