@@ -35,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
@@ -62,8 +63,8 @@ public class SearchDetail extends AppCompatActivity {
     int roomauth, roomhow; String roomtime1, roomtime2; // 방식 (횟수/시간)
     Boolean roomday; String roomwhen; // 요일 설정
 
-    int joinyear = 0;
-    int joinmonth = 0;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
+    String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
     public SearchDetail(){
     }
@@ -90,6 +91,7 @@ public class SearchDetail extends AppCompatActivity {
         String date = getIntent().getStringExtra("Roomdate");
         String person = getIntent().getStringExtra("Roomperson");
         curperson = getIntent().getLongExtra("Roomcurperson", 0);
+        DatabaseReference joinRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(name).child("member");
 
         temp = getIntent().getStringExtra("Roomauth");
         roomauth = 0;
@@ -139,18 +141,20 @@ public class SearchDetail extends AppCompatActivity {
             Roomday.setText("인증 요일        "+days);
         }
 
-        /* 카테고리 별 이미지 입히고 싶은데 실패함
-        if(model.roomcategory=="공부")
-            Roompic.setImageResource(R.drawable.book);
-        else if(model.roomcategory=="습관")
-            Roompic.setImageResource(R.drawable.habbit);
-        else if(model.roomcategory=="운동")
-            Roompic.setImageResource(R.drawable.exercise);
-        else if(model.roomcategory=="취미")
-            Roompic.setImageResource(R.drawable.hobby);
-        else if(model.roomcategory=="기타")
-            Roompic.setImageResource(R.drawable.study);
-         */
+        Roompic.setImageResource(R.drawable.book); // default
+        switch(roomcategory){
+            case "습관":
+                Roompic.setImageResource(R.drawable.habbit);
+            case "공부":
+                Roompic.setImageResource(R.drawable.book);
+            case "취미":
+                Roompic.setImageResource(R.drawable.hobby);
+            case "운동":
+                Roompic.setImageResource(R.drawable.exercise);
+            case "기타":
+                Roompic.setImageResource(R.drawable.book); // 이 친구 파일을 못 찾겠오
+        }
+
 
         //mDatabase = FirebaseDatabase.getInstance().getReference();
         bt = findViewById(R.id.bt_apply);
@@ -164,31 +168,49 @@ public class SearchDetail extends AppCompatActivity {
                         .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // 파이어베이스에 가입한 사용자 멤버 정보 추가
-                                FirebaseDatabase  database = FirebaseDatabase.getInstance();
-                                DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/member"); // 해당 스터디룸 찾아 들어가기
-                                DatabaseReference personRef = database.getReference("study_rooms/" + name);
+                                joinRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        // 중복 가입 불허
+                                        if (!snapshot.child(uid).exists()) {
+                                            // 파이어베이스에 가입한 사용자 멤버 정보 추가
+                                            FirebaseDatabase  database = FirebaseDatabase.getInstance();
+                                            DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/member"); // 해당 스터디룸 찾아 들어가기
+                                            DatabaseReference personRef = database.getReference("study_rooms/" + name);
 
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
-                                String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
+                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
+                                            String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
-                                Map<String, Object> updates = new HashMap<String,Object>();
-                                updates.put(uid, "true");
-                                mDatabaseRef.updateChildren(updates);
-                                // 사용자 가입한 날짜
-                                long now = System.currentTimeMillis();
-                                Date joinDate = new Date(now);
-                                mDatabaseRef.child(uid + "/joined").setValue("true");
-                                mDatabaseRef.child(uid + "/joinDate").setValue(joinDate);
+                                            Map<String, Object> updates = new HashMap<String,Object>();
+                                            updates.put(uid, "true");
+                                            mDatabaseRef.updateChildren(updates);
+                                            // 사용자 가입한 날짜
+                                            long now = System.currentTimeMillis();
+                                            Date joinDate = new Date(now);
+                                            mDatabaseRef.child(uid + "/joined").setValue("true");
+                                            mDatabaseRef.child(uid + "/joinDate").setValue(joinDate);
 
-                                // 값 더해서 파이어베이스에 저장
-                                mDatabaseRef.child(uid + "/joinDate/year").setValue(ServerValue.increment(1900));
-                                mDatabaseRef.child(uid + "/joinDate/month").setValue(ServerValue.increment(1));
+                                            // 값 더해서 파이어베이스에 저장
+                                            mDatabaseRef.child(uid + "/joinDate/year").setValue(ServerValue.increment(1900));
+                                            mDatabaseRef.child(uid + "/joinDate/month").setValue(ServerValue.increment(1));
 
-                                personRef.child("roomcurperson").setValue(ServerValue.increment(1));
-                                personRef.child("roomnegcurperson").setValue(ServerValue.increment(-1));
+                                            personRef.child("roomcurperson").setValue(ServerValue.increment(1));
+                                            personRef.child("roomnegcurperson").setValue(ServerValue.increment(-1));
 
-                                finish();
+                                            Toast.makeText(SearchDetail.this, "가입을 축하드립니다.", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                        else {
+                                            Toast.makeText(SearchDetail.this, "이미 가입한 스터디입니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
                             }
                         })
                         .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
