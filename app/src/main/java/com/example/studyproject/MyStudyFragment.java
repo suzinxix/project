@@ -91,7 +91,6 @@ public class MyStudyFragment extends Fragment {
                                 .resize(1250, 1550)
                                 .into(iv_graphic);
                     }
-
                 }
             }
 
