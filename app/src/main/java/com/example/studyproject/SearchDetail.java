@@ -167,16 +167,10 @@ public class SearchDetail extends AppCompatActivity {
                                 // 파이어베이스에 가입한 사용자 멤버 정보 추가
                                 FirebaseDatabase  database = FirebaseDatabase.getInstance();
                                 DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/member"); // 해당 스터디룸 찾아 들어가기
+                                DatabaseReference personRef = database.getReference("study_rooms/" + name);
 
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
                                 String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
-                                //DatabaseReference mDatabaseRef = database.getReference("users/" + uid);
-
-                                //mDatabaseRef.child("member").child("name").setValue(uid); // 사용자 uid 삽입
-                                curperson += 1;
-                                mDatabaseRef.child("roomcurperson").setValue(curperson);
-                                mDatabaseRef.child("roomnegcurperson").setValue(-1*curperson);
-
 
                                 Map<String, Object> updates = new HashMap<String,Object>();
                                 updates.put(uid, "true");
@@ -190,6 +184,9 @@ public class SearchDetail extends AppCompatActivity {
                                 // 값 더해서 파이어베이스에 저장
                                 mDatabaseRef.child(uid + "/joinDate/year").setValue(ServerValue.increment(1900));
                                 mDatabaseRef.child(uid + "/joinDate/month").setValue(ServerValue.increment(1));
+
+                                personRef.child("roomcurperson").setValue(ServerValue.increment(1));
+                                personRef.child("roomnegcurperson").setValue(ServerValue.increment(-1));
 
                                 finish();
                             }
