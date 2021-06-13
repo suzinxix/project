@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -59,6 +61,9 @@ public class SearchDetail extends AppCompatActivity {
     String roomcategory; long roomhoney; long curperson; // 카테고리,  꿀, 현재인원
     int roomauth, roomhow; String roomtime1, roomtime2; // 방식 (횟수/시간)
     Boolean roomday; String roomwhen; // 요일 설정
+
+    int joinyear = 0;
+    int joinmonth = 0;
 
     public SearchDetail(){
     }
@@ -181,6 +186,10 @@ public class SearchDetail extends AppCompatActivity {
                                 Date joinDate = new Date(now);
                                 mDatabaseRef.child(uid + "/joined").setValue("true");
                                 mDatabaseRef.child(uid + "/joinDate").setValue(joinDate);
+
+                                // 값 더해서 파이어베이스에 저장
+                                mDatabaseRef.child(uid + "/joinDate/year").setValue(ServerValue.increment(1900));
+                                mDatabaseRef.child(uid + "/joinDate/month").setValue(ServerValue.increment(1));
 
                                 finish();
                             }

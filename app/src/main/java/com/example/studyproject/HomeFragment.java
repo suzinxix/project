@@ -38,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -153,32 +154,48 @@ public class HomeFragment extends Fragment{
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         // 현재 시간 계산
                         Calendar getToday = Calendar.getInstance();
-                        getToday.setTime(new Date()); //금일 날짜
+                        getToday.setTime(new Date()); // 현재 날짜
                         if (snapshot.hasChild("study_rooms")) {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("roomhoney").getValue().toString();
-                            String room_day = snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
+                            String room_day = snapshot.child("member/" + uid + "/joinDate/year").getValue().toString() + "-"
+                                    +snapshot.child("member/" + uid + "/joinDate/month").getValue().toString() + "-"
+                                    +snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
 
-                            SimpleDateFormat format1 = new SimpleDateFormat ( "dd");
-                            String format_time1 = format1.format(getToday.getTime());
-                            int today = Integer.parseInt(format_time1);
-                            int joined = Integer.parseInt(room_day);
+                            try {
+                                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(room_day);
+                                Calendar cmpDate = Calendar.getInstance();
+                                cmpDate.setTime(date); //특정 일자
 
+                                long diffSec = (getToday.getTimeInMillis() - cmpDate.getTimeInMillis()) / 1000;
+                                long diffDays = diffSec / (24*60*60); //일자수 차이
+                                holder.roomday.setText(diffDays + "일째");
+                            } catch (Exception e) {
+                                Log.v("알림", "데이터 못 읽음");
+                            }
                             holder.roomname.setText(room_name);
                             holder.roomhoney.setText(room_honey + "꿀");
-                            holder.roomday.setText(today-joined + "일째");
                         } else {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("roomhoney").getValue().toString();
-                            String room_day = snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
-                            SimpleDateFormat format1 = new SimpleDateFormat ( "dd");
-                            String format_time1 = format1.format(getToday.getTime());
-                            int today = Integer.parseInt(format_time1);
-                            int joined = Integer.parseInt(room_day);
+                            String room_day = snapshot.child("member/" + uid + "/joinDate/year").getValue().toString() + "-"
+                                    +snapshot.child("member/" + uid + "/joinDate/month").getValue().toString() + "-"
+                                    +snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
 
+                            try {
+                                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(room_day);
+                                Calendar cmpDate = Calendar.getInstance();
+                                cmpDate.setTime(date); //특정 일자
+
+                                long diffSec = (getToday.getTimeInMillis() - cmpDate.getTimeInMillis()) / 1000;
+                                long diffDays = diffSec / (24*60*60); //일자수 차이
+                                holder.roomday.setText(diffDays + "일째");
+                            } catch (Exception e) {
+                                Log.v("알림", "데이터 못 읽음");
+                            }
                             holder.roomname.setText(room_name);
-                            holder.roomhoney.setText(room_honey +"꿀");
-                            holder.roomday.setText(today-joined + "일째");
+                            holder.roomhoney.setText(room_honey + "꿀");
+
                         }
                     }
 
