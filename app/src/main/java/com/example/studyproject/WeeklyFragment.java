@@ -181,7 +181,7 @@ public class WeeklyFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             flag = 0;
                             takePhoto();
-                            uploadPhoto();
+
                         }
                     };
 
@@ -230,10 +230,17 @@ public class WeeklyFragment extends Fragment {
 
     public void takePhoto() {
         // 카메라 인텐트 실행
+        Log.v("알림", "0");
         String state = Environment.getExternalStorageState();
         if(Environment.MEDIA_MOUNTED.equals(state)) {
+            Log.v("알림", "1");
+
             Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Log.v("알림", "2");
+
             if(takePhotoIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager())!=null){
+                Log.v("알림", "3");
+
                 File photoFile = null;
                 try{
                     photoFile = createImageFile();
@@ -247,7 +254,6 @@ public class WeeklyFragment extends Fragment {
                 }
             }
         } else {
-            Log.v("알림", "저장공간에 접근 불가능");
         }
     }
 
@@ -275,6 +281,7 @@ public class WeeklyFragment extends Fragment {
         mediaScanIntent.setData(contentUri);
         getActivity().sendBroadcast(mediaScanIntent);
         Toast.makeText(getActivity(),"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
+        uploadPhoto();
     }
 
     public void selectAlbum(){
@@ -293,6 +300,16 @@ public class WeeklyFragment extends Fragment {
             return;
         }
         switch (requestCode) {
+            case FROM_CAMERA: {
+                //카메라 촬영
+                try {
+                    addPhotoToGallery();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+
             case FROM_ALBUM: {
                 //앨범에서 가져오기
                 if (data.getData() != null) {
@@ -305,22 +322,17 @@ public class WeeklyFragment extends Fragment {
                 }
                 break;
             }
-
-            case FROM_CAMERA: {
-                //카메라 촬영
-                try {
-                    addPhotoToGallery();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
         }
     }
 
     private String getFileExtension(Uri uri) {
+        Log.v("알림", "5");
         ContentResolver cR = getActivity().getContentResolver();
+        if (cR == null) Log.v("알림", "null"); //아님
+
+        Log.v("알림", "6");
         MimeTypeMap mime = MimeTypeMap.getSingleton();
+        Log.v("알림", "7");
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
@@ -330,11 +342,16 @@ public class WeeklyFragment extends Fragment {
                 false).setPositiveButton("네",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Log.v("알림", "4");
+                        Log.v("알림", getFileExtension(photoUri));
                         StorageReference fileReference = mStorageRef.child(uid+ "_"+ System.currentTimeMillis()
                                 + "." + getFileExtension(photoUri));
+
                         UploadTask uploadTask;
                         Uri file = null;
-                        if(flag ==0){
+                        Log.v("알림", "9");
+
+                        if(flag == 0){
                             //사진촬영
                             file = Uri.fromFile(new File(mCurrentPhotoPath));
                         } else if(flag==1){

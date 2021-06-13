@@ -18,8 +18,4 @@ public class WeeklyDB {
 
     public String getTodo() { return todo; }
     public void setTodo(String todo) { this.todo = todo; }
-
-    public String getTimer() { return timer; }
-    public void setTimer(String timer) { this.timer = timer; }
-
 }
