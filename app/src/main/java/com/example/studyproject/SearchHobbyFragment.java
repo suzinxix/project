@@ -114,7 +114,7 @@ public class SearchHobbyFragment extends Fragment {
                 RoomRef.child(roomID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int room_index=1;
+//                        int room_index=1;
                         if(snapshot.hasChild("study_rooms")){
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
@@ -135,7 +135,7 @@ public class SearchHobbyFragment extends Fragment {
                             String room_cate = snapshot.child("roomcategory").getValue().toString();
                             if(room_info.length() > 10) room_info = room_info.substring(0, 10)+"…";
 
-                            holder.roomindex.setText("" + room_index);
+//                            holder.roomindex.setText("" + room_index);
                             holder.roomname.setText(room_name);
                             holder.roominfo.setText(room_info);
                             holder.roomperson.setText(room_person + "명");
@@ -170,7 +170,7 @@ public class SearchHobbyFragment extends Fragment {
         //View v;
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
-            roomindex = itemView.findViewById(R.id.text_index);
+//            roomindex = itemView.findViewById(R.id.text_index);
             roomname = itemView.findViewById(R.id.text_1);
             roominfo = itemView.findViewById(R.id.text_2);
             roomperson = itemView.findViewById(R.id.text_3);

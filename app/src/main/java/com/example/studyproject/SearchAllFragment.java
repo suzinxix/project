@@ -173,7 +173,7 @@ public class SearchAllFragment extends Fragment {
                 RoomRef.child(roomID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int room_index=1;
+//                        int room_index=1;
                         if(snapshot.hasChild("study_rooms")){
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_info = snapshot.child("roominfo").getValue().toString();
@@ -234,7 +234,7 @@ public class SearchAllFragment extends Fragment {
         //View v;
         public ContactsViewHolder(@NonNull View itemView) {
             super(itemView);
-            roomindex = itemView.findViewById(R.id.text_index);
+//            roomindex = itemView.findViewById(R.id.text_index);
             roomname = itemView.findViewById(R.id.text_1);
             roominfo = itemView.findViewById(R.id.text_2);
             roomperson = itemView.findViewById(R.id.text_3);

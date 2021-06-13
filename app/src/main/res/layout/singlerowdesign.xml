@@ -17,7 +17,6 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_toRightOf="@+id/text_index"
             android:text="Your room name" />
 
         <TextView
