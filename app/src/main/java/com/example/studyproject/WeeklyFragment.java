@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,14 +62,13 @@ import static android.app.Activity.RESULT_OK;
 public class WeeklyFragment extends Fragment {
     private RecyclerView myWeeklyList;
     private StorageReference mStorageRef;
-    private DatabaseReference WeeklyRef, todoRef, mDatabaseRef, ggulRef;
+    private DatabaseReference todoRef, mDatabaseRef, ggulRef;
     private Uri photoUri;
     private String mCurrentPhotoPath;
     private static final int FROM_CAMERA = 0;
     private static final int FROM_ALBUM = 1;
     private int flag = 0;
     private String uid, room_name;
-    private List<WeeklyDB> weeklyList;
     int ggul = 0;
     public WeeklyFragment() {
         // Required empty public constructor
@@ -82,14 +82,12 @@ public class WeeklyFragment extends Fragment {
 
         myWeeklyList = (RecyclerView) weeklyView.findViewById(R.id.recyclerviewWeekly);
         myWeeklyList.setLayoutManager(new LinearLayoutManager(getContext()));
-        weeklyList = new ArrayList<>();
 
         Bundle bundle = getArguments();
         if(bundle != null) {
             room_name= bundle.getString("key_roomname");
         }
 
-        WeeklyRef = FirebaseDatabase.getInstance().getReference().child("weekly");
         todoRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("roomtodo");
         mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
@@ -215,7 +213,16 @@ public class WeeklyFragment extends Fragment {
             ibt_timer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerTabs, fragment_timer).commit();
+                    int weeknum = getAdapterPosition();
+                    String week = Integer.toString(weeknum+1)+"주차";
+                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                    bundle.putString("key_roomname", room_name);
+                    bundle.putString("weekname", week);//번들에 넘길 값 저장
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    TimerFragment timerFragment = new TimerFragment();//프래그먼트2 선언
+                    timerFragment.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
+                    transaction.replace(R.id.containerTabs, timerFragment);
+                    transaction.commit();
                 }
             });
         }
@@ -228,7 +235,6 @@ public class WeeklyFragment extends Fragment {
             Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if(takePhotoIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager())!=null){
                 File photoFile = null;
-                Log.v("알림", "3");
                 try{
                     photoFile = createImageFile();
                 } catch (IOException e){
