@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -80,8 +78,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                     if(snapshot.getValue() != null) {
                         timer = snapshot.getValue().toString();
                         timer_num = timer.split(":");
-                        timer_s = Integer.parseInt(timer_num[0])*3600 + Integer.parseInt(timer_num[1])*60 + Integer.parseInt(timer_num[2]);
                         tv_time.setText(timer);
+                        timer_s = Integer.parseInt(timer_num[0])*3600 + Integer.parseInt(timer_num[1])*60 + Integer.parseInt(timer_num[2]);
                     }
                 }
 

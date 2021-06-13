@@ -92,11 +92,6 @@ public class HomeFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        MyStudyFragment mystudyfragment = new MyStudyFragment();
-        FragmentTransaction transaction = ((AppCompatActivity) getActivity()).getSupportFragmentManager().beginTransaction();
-
-
-
         FirebaseRecyclerOptions<MakeRoomDB> options =
                 new FirebaseRecyclerOptions.Builder<MakeRoomDB>()
                         .setQuery(query, MakeRoomDB.class) // 노드 데이터 읽어오기

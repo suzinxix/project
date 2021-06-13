@@ -34,8 +34,9 @@ import org.jetbrains.annotations.NotNull;
 public class MyStudyFragment extends Fragment {
     Toolbar toolbar_mystudy;
     TextView Roomname;
-    String room_name;
-    private DatabaseReference mDatabaseRef;
+    String room_name, ggul_str;
+    int ggul_int;
+    private DatabaseReference ggulRef;
 
     //Fragment 변경위한 함수
     public static MyStudyFragment newInstance() {
@@ -60,11 +61,45 @@ public class MyStudyFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기
 
         ImageView iv_graphic = (ImageView)view.findViewById(R.id.imageViewGraphic);
+        ggulRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("ggul");
 
-        Picasso.with(getContext())
-                .load("https://firebasestorage.googleapis.com/v0/b/fir-test-1-35648.appspot.com/o/level%2Flevel1%20(1).png?alt=media&token=d80a0960-47be-435a-9d90-7511a804120e")
-                .resize(1250, 1550)
-                .into(iv_graphic);
+        ggulRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue() != null) {
+                    ggul_str = snapshot.getValue().toString();
+                    ggul_int = Integer.parseInt(ggul_str);
+
+                    if (0 <= ggul_int && ggul_int < 30) { //level1
+                        Picasso.with(getContext())
+                                .load("https://firebasestorage.googleapis.com/v0/b/fir-test-1-35648.appspot.com/o/level%2Flevel0%20(1).png?alt=media&token=6824a1ec-d68e-4628-b5fe-3765f6d80ebb")
+                                .resize(1250, 1550)
+                                .into(iv_graphic);
+                    } else if (30 <= ggul_int && ggul_int < 60) { //level2
+                        Picasso.with(getContext())
+                                .load("https://firebasestorage.googleapis.com/v0/b/fir-test-1-35648.appspot.com/o/level%2Flevel1%20(1).png?alt=media&token=d80a0960-47be-435a-9d90-7511a804120e")
+                                .resize(1250, 1550)
+                                .into(iv_graphic);
+                    } else if (60 <= ggul_int && ggul_int < 100) { //level3
+                        Picasso.with(getContext())
+                                .load("https://firebasestorage.googleapis.com/v0/b/fir-test-1-35648.appspot.com/o/level%2Flevel2%20(1).png?alt=media&token=32de6e43-0270-4344-a336-167feb70db63")
+                                .resize(1250, 1550)
+                                .into(iv_graphic);
+                    } else if (100 <= ggul_int) { //level4
+                        Picasso.with(getContext())
+                                .load("https://firebasestorage.googleapis.com/v0/b/fir-test-1-35648.appspot.com/o/level%2Flevel3%20(1).png?alt=media&token=4e80a81f-701e-493f-a89c-b2a0cac297f6")
+                                .resize(1250, 1550)
+                                .into(iv_graphic);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         Button btn_weekly = (Button) view.findViewById(R.id.buttonWeekly);
         btn_weekly.setOnClickListener(new View.OnClickListener() {
