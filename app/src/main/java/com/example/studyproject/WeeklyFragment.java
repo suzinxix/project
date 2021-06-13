@@ -40,6 +40,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -62,7 +63,7 @@ import static android.app.Activity.RESULT_OK;
 public class WeeklyFragment extends Fragment {
     private RecyclerView myWeeklyList;
     private StorageReference mStorageRef;
-    private DatabaseReference todoRef, mDatabaseRef, ggulRef;
+    private DatabaseReference todoRef, mDatabaseRef, ggulRef, honeyRef;
     private Uri photoUri;
     private String mCurrentPhotoPath;
     private static final int FROM_CAMERA = 0;
@@ -92,6 +93,7 @@ public class WeeklyFragment extends Fragment {
         mStorageRef = FirebaseStorage.getInstance().getReference().child("gallery");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("gallery_url");
         ggulRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("ggul");
+        honeyRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("roomneghoney");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
         uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
@@ -391,22 +393,28 @@ public class WeeklyFragment extends Fragment {
                                         progressDialog.dismiss();
                                         Toast.makeText(getActivity(), "사진이 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
 
+
+                                        ggulRef.setValue(ServerValue.increment(10));
+                                        honeyRef.setValue(ServerValue.increment(-10));
+
                                         // 꿀 데이터 읽기
+                                        /*
                                         ggulRef.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 ggul = snapshot.getValue(Integer.class);
+
                                             }
 
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError error) {
                                                 Log.v("알림", "데이터 못 읽음");
                                             }
-                                        });
-
+                                        });*/
+                                        // roomeghoney
                                     }
                                });
-                                ggulRef.setValue(ggul+10);
+
                             }
 
                         });

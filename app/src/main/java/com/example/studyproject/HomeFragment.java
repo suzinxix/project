@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment{
                         getToday.setTime(new Date()); // 현재 날짜
                         if (snapshot.hasChild("study_rooms")) {
                             String room_name = snapshot.child("roomname").getValue().toString();
-                            String room_honey = snapshot.child("roomhoney").getValue().toString();
+                            String room_honey = snapshot.child("ggul").getValue().toString();
                             String room_day = snapshot.child("member/" + uid + "/joinDate/year").getValue().toString() + "-"
                                     +snapshot.child("member/" + uid + "/joinDate/month").getValue().toString() + "-"
                                     +snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
@@ -172,7 +172,7 @@ public class HomeFragment extends Fragment{
                             holder.roomhoney.setText(room_honey + "꿀");
                         } else {
                             String room_name = snapshot.child("roomname").getValue().toString();
-                            String room_honey = snapshot.child("roomhoney").getValue().toString();
+                            String room_honey = snapshot.child("ggul").getValue().toString();
                             String room_day = snapshot.child("member/" + uid + "/joinDate/year").getValue().toString() + "-"
                                     +snapshot.child("member/" + uid + "/joinDate/month").getValue().toString() + "-"
                                     +snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
