@@ -77,13 +77,11 @@ public class SearchAllFragment extends Fragment {
         bt_sort.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                cnt++; if(cnt>2) cnt=0;
+                cnt++; if(cnt>1) cnt=0;
                 switch (cnt){
                     case 0:
                         sort1 = "roomname"; bt_text="이름 순"; break;
                     case 1:
-                        sort1 = "roomnegcurperson"; bt_text="회원수 순"; break;
-                    case 2:
                         sort1 = "roomneghoney"; bt_text="꿀 순"; break;
                 }
                 query = FirebaseDatabase.getInstance().getReference("study_rooms")
@@ -92,6 +90,7 @@ public class SearchAllFragment extends Fragment {
                 onStart();
             }
         });
+
 
         if(sch&&!(searchKey.equals(""))) { // 검색 결과가 존재할 때
            query = FirebaseDatabase.getInstance().getReference("study_rooms")

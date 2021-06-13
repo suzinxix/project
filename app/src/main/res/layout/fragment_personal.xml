@@ -67,6 +67,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            style="@style/detail_text"
             android:text="TextView" />
 
         <TextView
@@ -75,6 +76,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_margin="20dp"
+            style="@style/detail_text"
             android:text="레벨: 0" />
 
         <Button

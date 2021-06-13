@@ -393,25 +393,8 @@ public class WeeklyFragment extends Fragment {
                                         progressDialog.dismiss();
                                         Toast.makeText(getActivity(), "사진이 업로드 되었습니다.", Toast.LENGTH_SHORT).show();
 
-
                                         ggulRef.setValue(ServerValue.increment(10));
                                         honeyRef.setValue(ServerValue.increment(-10));
-
-                                        // 꿀 데이터 읽기
-                                        /*
-                                        ggulRef.addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                ggul = snapshot.getValue(Integer.class);
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-                                                Log.v("알림", "데이터 못 읽음");
-                                            }
-                                        });*/
-                                        // roomeghoney
                                     }
                                });
 
