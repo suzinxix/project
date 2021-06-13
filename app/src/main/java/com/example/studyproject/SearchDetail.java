@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
@@ -175,6 +176,11 @@ public class SearchDetail extends AppCompatActivity {
                                 Map<String, Object> updates = new HashMap<String,Object>();
                                 updates.put(uid, "true");
                                 mDatabaseRef.updateChildren(updates);
+                                // 사용자 가입한 날짜
+                                long now = System.currentTimeMillis();
+                                Date joinDate = new Date(now);
+                                mDatabaseRef.child(uid + "/joined").setValue("true");
+                                mDatabaseRef.child(uid + "/joinDate").setValue(joinDate);
 
                                 finish();
                             }

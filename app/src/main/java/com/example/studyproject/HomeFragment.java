@@ -38,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -54,7 +56,7 @@ public class HomeFragment extends Fragment{
 
 
     Query query = FirebaseDatabase.getInstance().getReference("study_rooms")
-            .orderByChild("member/" + uid)
+            .orderByChild("member/" + uid + "/joined")
             .equalTo("true");
 
 
@@ -149,20 +151,34 @@ public class HomeFragment extends Fragment{
                 mDatabase.child("study_rooms").child(roomId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // 현재 시간 계산
+                        Calendar getToday = Calendar.getInstance();
+                        getToday.setTime(new Date()); //금일 날짜
                         if (snapshot.hasChild("study_rooms")) {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("roomhoney").getValue().toString();
+                            String room_day = snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
+
+                            SimpleDateFormat format1 = new SimpleDateFormat ( "dd");
+                            String format_time1 = format1.format(getToday.getTime());
+                            int today = Integer.parseInt(format_time1);
+                            int joined = Integer.parseInt(room_day);
 
                             holder.roomname.setText(room_name);
                             holder.roomhoney.setText(room_honey + "꿀");
-                            holder.roomday.setText("1일째");
+                            holder.roomday.setText(today-joined + "일째");
                         } else {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("roomhoney").getValue().toString();
+                            String room_day = snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
+                            SimpleDateFormat format1 = new SimpleDateFormat ( "dd");
+                            String format_time1 = format1.format(getToday.getTime());
+                            int today = Integer.parseInt(format_time1);
+                            int joined = Integer.parseInt(room_day);
 
                             holder.roomname.setText(room_name);
                             holder.roomhoney.setText(room_honey +"꿀");
-                            holder.roomday.setText("1일째");
+                            holder.roomday.setText(today-joined + "일째");
                         }
                     }
 
