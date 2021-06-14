@@ -20,10 +20,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -474,25 +477,25 @@ public class MakeRoom extends AppCompatActivity{
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(MakeRoom.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
                          // 파이어베이스에 가입한 사용자 멤버 정보 추가
-                                            FirebaseDatabase  database = FirebaseDatabase.getInstance();
-                                            DatabaseReference mDatabaseRef = database.getReference("study_rooms/" +name +"/member"); // 해당 스터디룸 찾아 들어가기
-                                            DatabaseReference personRef = database.getReference("study_rooms/" + name);
+                        FirebaseDatabase  database = FirebaseDatabase.getInstance();
+                        DatabaseReference mDatabaseRef = database.getReference("study_rooms/" + roomname +"/member"); // 해당 스터디룸 찾아 들어가기
+                        DatabaseReference personRef = database.getReference("study_rooms/" + roomname);
 
-                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
-                                            String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저 정보 가져오기
+                        String uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
 
-                                            Map<String, Object> updates = new HashMap<String,Object>();
-                                            updates.put(uid, "true");
-                                            mDatabaseRef.updateChildren(updates);
-                                            // 사용자 가입한 날짜
-                                            long now = System.currentTimeMillis();
-                                            Date joinDate = new Date(now);
-                                            mDatabaseRef.child(uid + "/joined").setValue("true");
-                                            mDatabaseRef.child(uid + "/joinDate").setValue(joinDate);
+                        Map<String, Object> updates = new HashMap<String,Object>();
+                        updates.put(uid, "true");
+                        mDatabaseRef.updateChildren(updates);
+                        // 사용자 가입한 날짜
+                        long now = System.currentTimeMillis();
+                        Date joinDate = new Date(now);
+                        mDatabaseRef.child(uid + "/joined").setValue("true");
+                        mDatabaseRef.child(uid + "/joinDate").setValue(joinDate);
 
-                                            // 값 더해서 파이어베이스에 저장
-                                            mDatabaseRef.child(uid + "/joinDate/year").setValue(ServerValue.increment(1900));
-                                            mDatabaseRef.child(uid + "/joinDate/month").setValue(ServerValue.increment(1));
+                        // 값 더해서 파이어베이스에 저장
+                        mDatabaseRef.child(uid + "/joinDate/year").setValue(ServerValue.increment(1900));
+                        mDatabaseRef.child(uid + "/joinDate/month").setValue(ServerValue.increment(1));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
