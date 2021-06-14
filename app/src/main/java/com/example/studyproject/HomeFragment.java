@@ -1,7 +1,10 @@
 package com.example.studyproject;
 
+import android.app.AlertDialog;
 import android.app.VoiceInteractor;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,13 +43,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment{
+    private ArrayList<HomeFragment> homeFragments;
     private Toolbar toolbar_home;
     private RecyclerView recview;
+    private RecyclerView.Adapter adapter;
     private View view;
     private DatabaseReference mDatabase;
     TextView text_nick;
@@ -69,14 +76,13 @@ public class HomeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
         text_nick = (TextView) view.findViewById(R.id.textviewNickanme);
-
 
         recview=(RecyclerView)view.findViewById(R.id.roomrecyclerview);
         recview.setLayoutManager(new LinearLayoutManager(getContext()));
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
 
         // 툴바 추가
         toolbar_home = (Toolbar) view.findViewById(R.id.toolbarHome);
@@ -85,6 +91,7 @@ public class HomeFragment extends Fragment{
         ((AppCompatActivity)getActivity()).setTitle("");
         ((HomeActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((HomeActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_notification_icon);
+
 
         return view;
     }
@@ -101,6 +108,8 @@ public class HomeFragment extends Fragment{
             @Override
             protected void onBindViewHolder(@NonNull final HomeFragment.ContactsViewHolder holder, int position, @NonNull MakeRoomDB model) {
                 String roomId = getRef(position).getKey(); // 리사이클러뷰
+
+
                 final String name = model.getRoomname();
                 final String info = model.getRoominfo();
 
@@ -118,7 +127,36 @@ public class HomeFragment extends Fragment{
                         myStudyFragment.setArguments(bundle);//번들을 프래그먼트2로 보낼 준비
                         transaction.replace(R.id.container, myStudyFragment);
                         transaction.commit();
+                    }
+                });
 
+                // 롱클릭 시 스터디룸
+               holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int pos = holder.getAdapterPosition();
+                        String item_roomId = getRef(pos).getKey();
+
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(item_roomId).child("member").child(uid);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("중요") //제목
+                                .setMessage("선택하신 스터디룸에 탈퇴하시겠습니까?")
+                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mDatabase.removeValue();
+                                        recview.getAdapter().notifyDataSetChanged();
+                                    }
+                                })
+                                .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                        builder.show();
+                        return true;
                     }
                 });
 
@@ -150,7 +188,8 @@ public class HomeFragment extends Fragment{
                         // 현재 시간 계산
                         Calendar getToday = Calendar.getInstance();
                         getToday.setTime(new Date()); // 현재 날짜
-                        if (snapshot.hasChild("study_rooms")) {
+
+                        if (snapshot.child("member").child(uid).exists()) {
                             String room_name = snapshot.child("roomname").getValue().toString();
                             String room_honey = snapshot.child("ggul").getValue().toString();
                             String room_day = snapshot.child("member/" + uid + "/joinDate/year").getValue().toString() + "-"
@@ -170,28 +209,8 @@ public class HomeFragment extends Fragment{
                             }
                             holder.roomname.setText(room_name);
                             holder.roomhoney.setText(room_honey + "꿀");
-                        } else {
-                            String room_name = snapshot.child("roomname").getValue().toString();
-                            String room_honey = snapshot.child("ggul").getValue().toString();
-                            String room_day = snapshot.child("member/" + uid + "/joinDate/year").getValue().toString() + "-"
-                                    +snapshot.child("member/" + uid + "/joinDate/month").getValue().toString() + "-"
-                                    +snapshot.child("member/" + uid + "/joinDate/date").getValue().toString();
-
-                            try {
-                                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(room_day);
-                                Calendar cmpDate = Calendar.getInstance();
-                                cmpDate.setTime(date); //특정 일자
-
-                                long diffSec = (getToday.getTimeInMillis() - cmpDate.getTimeInMillis()) / 1000;
-                                long diffDays = diffSec / (24*60*60); //일자수 차이
-                                holder.roomday.setText(diffDays + "일째");
-                            } catch (Exception e) {
-                                Log.v("알림", "데이터 못 읽음");
-                            }
-                            holder.roomname.setText(room_name);
-                            holder.roomhoney.setText(room_honey + "꿀");
-
                         }
+
                     }
 
                     @Override
