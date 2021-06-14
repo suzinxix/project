@@ -1,6 +1,7 @@
 package com.example.studyproject;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class GalleryFragment extends Fragment {
     private RecyclerView GalleryPhotoList;
     private GalleryAdapter galleryAdapter;
 
-    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseRef, nicknameRef;
     private List<GalleryDB> mUploads;
     private String room_name;
 
@@ -56,6 +57,7 @@ public class GalleryFragment extends Fragment {
         }
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("gallery_url");
+        nicknameRef = FirebaseDatabase.getInstance().getReference().child("users");
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -63,7 +65,7 @@ public class GalleryFragment extends Fragment {
                 mUploads.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     GalleryDB galleryDB = postSnapshot.getValue(GalleryDB.class);
-                    if (galleryDB.getUserId().equals(uid) && galleryDB.getRoomname().equals(room_name)) {
+                    if (galleryDB.getRoomname().equals(room_name)) {
                         galleryDB.setKey(postSnapshot.getKey());
                         mUploads.add(galleryDB);
                     }

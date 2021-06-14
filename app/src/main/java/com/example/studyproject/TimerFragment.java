@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 public class TimerFragment extends Fragment implements View.OnClickListener {
@@ -25,7 +26,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     Button ibt_start;
     Button bt_quit;
     WeeklyFragment fragment_weekly;
-    private DatabaseReference timerRef;
+    private DatabaseReference timerRef, ggulRef, honeyRef;
     final static int Init = 0;
     final static int Run = 1;
     final static int Pause = 2;
@@ -54,12 +55,19 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         }
 
         timerRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("roomtodo").child(weekname).child("timer");
+        ggulRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("ggul");
+        honeyRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("roomneghoney");
 
         bt_quit =  (Button)view.findViewById(R.id.buttonQuit);
         bt_quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timerRef.setValue(getTimeOut());
+
+                if (3600000 < getTimeOut_now()) {
+                    ggulRef.setValue(ServerValue.increment(10));
+                    honeyRef.setValue(ServerValue.increment(-10));
+                };
 
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putString("key_roomname", room_name);//번들에 넘길 값 저장
@@ -140,5 +148,12 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         long outTime = timer_s*1000 + now - myBaseTime;
         String easy_outTime = String.format("%02d:%02d:%02d", outTime/ 1000/ 3600, outTime/1000 / 60 %60, (outTime/1000)%60);
         return easy_outTime;
+    }
+
+    //현재시간을 계속 구해서 출력하는 메소드
+    long getTimeOut_now(){
+        long now = SystemClock.elapsedRealtime(); //애플리케이션이 실행되고나서 실제로 경과된 시간
+        long outTime = now - myBaseTime;
+        return outTime;
     }
 }
