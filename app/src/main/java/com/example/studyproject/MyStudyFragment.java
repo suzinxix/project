@@ -33,10 +33,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class MyStudyFragment extends Fragment {
     Toolbar toolbar_mystudy;
-    TextView Roomname;
+    TextView Roomname, toolbar_title;
     String room_name, ggul_str;
     int ggul_int;
-    private DatabaseReference ggulRef;
 
     //Fragment 변경위한 함수
     public static MyStudyFragment newInstance() {
@@ -47,13 +46,15 @@ public class MyStudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true); // 메뉴가 있음을 알림
         View view = inflater.inflate(R.layout.fragment_mystudy, container, false);
-        Roomname = view.findViewById(R.id.study_title);
-
 
         Bundle bundle = getArguments();
         if (bundle != null) {
             room_name = bundle.getString("key_roomname");
         }
+
+        Roomname = view.findViewById(R.id.study_title);
+        toolbar_title = view.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(room_name);
 
         // 툴바 추가
         toolbar_mystudy = (Toolbar) view.findViewById(R.id.toolbarMystudy);
@@ -61,7 +62,7 @@ public class MyStudyFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기
 
         ImageView iv_graphic = (ImageView)view.findViewById(R.id.imageViewGraphic);
-        ggulRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("ggul");
+        DatabaseReference ggulRef = FirebaseDatabase.getInstance().getReference().child("study_rooms").child(room_name).child("ggul");
 
         ggulRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,11 +121,9 @@ public class MyStudyFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
-                ((HomeActivity)getActivity()).replaceFragment(HomeFragment.newInstance());
-                return true;
-            }
+        if (item.getItemId() == android.R.id.home) {//toolbar의 back키 눌렀을 때 동작
+            ((HomeActivity) getActivity()).replaceFragment(HomeFragment.newInstance());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

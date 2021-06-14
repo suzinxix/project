@@ -248,7 +248,6 @@ public class WeeklyFragment extends Fragment {
                     startActivityForResult(takePhotoIntent, FROM_CAMERA);
                 }
             }
-        } else {
         }
     }
 
